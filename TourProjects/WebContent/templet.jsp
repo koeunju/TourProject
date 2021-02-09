@@ -6,6 +6,7 @@
 <html lang="en">
 <head>
 <title>Bootstrap 4 Website Example</title>
+ <link rel="stylesheet" type="text/css" href="css/style.css">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -18,7 +19,6 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
- <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
 <body>
@@ -44,11 +44,9 @@
 		</div>
 	</nav>
 
-
 	<div id="title">
-		<img src="image/title1.png">
+	<img src="image/title1.png" style="width:100%">
 	</div>
-
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark"  id="font1">
 		<a class="navbar-brand" href="#">Menu</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -85,7 +83,7 @@
 
 
 <div class="jumbotron text-center" style="margin-bottom:0">
-  <img src="image/logo.png">
+  <img src="image/logo.png" style="width:20%">
 </div>
 	
 

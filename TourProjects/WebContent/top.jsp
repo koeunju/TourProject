@@ -46,7 +46,7 @@
 
 
 	<div id="title">
-		<img src="image/title1.png">
+	<img src="image/title1.png" style="width:100%">
 	</div>
 
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark"  id="font1">
