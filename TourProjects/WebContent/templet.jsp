@@ -18,19 +18,11 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<style>
-* {
-	margin: 0;
-	padding: 0;
-}
-
-#title {
-	background-color: #C9C0B1;
-}
-</style>
+ <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
+
 <body>
-	<nav class="navbar navbar-expand-md navbar-dark bg-dark text-white">
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark text-white" id="font1">
 		<div
 			class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
 			<ul class="navbar-nav mr-auto">
@@ -57,7 +49,7 @@
 		<img src="image/title1.png">
 	</div>
 
-	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark"  id="font1">
 		<a class="navbar-brand" href="#">Menu</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#collapsibleNavbar">
@@ -87,7 +79,7 @@
 	</nav>
 
     <div class="m-5 p-3 text-center" style="border:1px solid gray; border-radius:15px">
-      <h1>test</h1>
+      <h1 id="font2">test</h1>
     </div>
 
 
