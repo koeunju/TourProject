@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="cos">
+    <CLASSES>
+      <root url="jar://C:/Program Files/Apache Software Foundation/Tomcat 9.0/lib/cos.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
