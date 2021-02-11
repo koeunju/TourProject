@@ -7,30 +7,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6c5509ee-7fce-46bb-854c-bc3aa4953c91" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TourProjects/.classpath" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TourProjects/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TourProjects/.project" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TourProjects/.settings/.jsdtscope" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TourProjects/.settings/org.eclipse.jdt.core.prefs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TourProjects/.settings/org.eclipse.wst.common.component" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TourProjects/.settings/org.eclipse.wst.common.project.facet.core.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TourProjects/.settings/org.eclipse.wst.jsdt.ui.superType.container" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TourProjects/.settings/org.eclipse.wst.jsdt.ui.superType.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TourProjects/WebContent/META-INF/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TourProjects/WebContent/WEB-INF/web.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TourProjects/WebContent/css/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TourProjects/WebContent/foot.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TourProjects/WebContent/image/head.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TourProjects/WebContent/image/head1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TourProjects/WebContent/image/logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TourProjects/WebContent/image/title.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TourProjects/WebContent/image/title1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TourProjects/WebContent/templet.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TourProjects/WebContent/test.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TourProjects/WebContent/top.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/TourProject_war_exploded.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/cos.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/mybatis_3_5_6.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/ojdbc8.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/tomcat_dbcp.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TourProject.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TourProject/common/config/mybatis-config.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/config/mybatis-config.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/META-INF/context.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/WEB-INF/Command.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/WEB-INF/lib/cos.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/WEB-INF/lib/mybatis-3.5.6.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/WEB-INF/lib/ojdbc8.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/WEB-INF/lib/tomcat-dbcp.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/WEB-INF/web.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/foot.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/image/head.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/image/head1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/image/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/image/title.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/image/title1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/templet.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/test.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/top.jsp" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,6 +158,7 @@
       <option name="presentableId" value="Default" />
       <updated>1613062889742</updated>
       <workItem from="1613062895306" duration="2132000" />
+      <workItem from="1613071154291" duration="31000" />
     </task>
     <servers />
   </component>
