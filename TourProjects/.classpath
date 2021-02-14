@@ -10,8 +10,15 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk-15.0.1">
 		<attributes>
+			<attribute name="module" value="true"/>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="src/taglibs-standard-compat-1.2.5.jar"/>
+	<classpathentry kind="lib" path="src/taglibs-standard-impl-1.2.5.jar"/>
+	<classpathentry kind="lib" path="src/taglibs-standard-jstlel-1.2.5.jar"/>
+	<classpathentry kind="lib" path="src/taglibs-standard-spec-1.2.5.jar"/>
+	<classpathentry kind="lib" path="src/mybatis-3.5.6.jar"/>
+	<classpathentry kind="lib" path="src/ojdbc8.jar"/>
 	<classpathentry kind="output" path="build/WEB-INF/classes"/>
 </classpath>
