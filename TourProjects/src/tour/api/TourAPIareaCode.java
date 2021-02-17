@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
         import java.io.BufferedReader;
         import java.io.IOException;
 
-public class TourAPI {
+public class TourAPIareaCode {
     public static void main(String[] args) throws IOException {
         StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=ZuZnL2Q6L4AGTl9CCEG3WVuxf%2Fs4ch23XtpWSX6jM1CsM9kvNS8JHgilZXFDJsIQLPQKvKXDLNhBrkfQtPQvtA%3D%3D"); /*Service Key*/

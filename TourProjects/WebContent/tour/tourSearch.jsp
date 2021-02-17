@@ -3,7 +3,7 @@
 <c:set var="myctx" value="${pageContext.request.contextPath}"/>
 <jsp:include page="/top.jsp"/>
 
-<script src="/js/tour.js"></script>
+<script src="./js/tour.js"></script>
 
 <div>
     <form name="tourF" id="tourF" action="tourList.do" method="get">
