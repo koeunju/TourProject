@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="common.mapper.ProductMapper">
+
+	<select id="getProductList" resultType="product">
+		SELECT * FROM PRODUCT
+	</select>
+
+	<select id="getCategory" resultType="category">
+		SELECT * FROM PRODUCT_CATEGORY ORDER BY 1 ASC
+	</select>
+	
+	<select id="selectByCategory" resultType="product" parameterType="string">
+	    SELECT * FROM PRODUCT WHERE CG_NUM =#{VALUE}
+	</select>
+	
+</mapper>

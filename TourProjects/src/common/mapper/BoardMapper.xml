@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="common.mapper.BoardMapper">
+
+    <select id="totalCount" resultType="int">
+		select count(*) cnt from board
+	</select>
+
+    <!-- 글작성 -->
+    <insert id="insertBoard" parameterType="Board">
+        <selectKey keyProperty="idx" resultType="int" order="BEFORE">
+            select board_seq.nextval from dual
+        </selectKey>
+        <!-- 내용 드가야함@@@@@@@@@@@@@@@@ -->
+        insert into board(bnum,btitle,bcontent,bdate,bupload1,bupload2,bupload3,cg_num)
+        values(#{idx},#{btitle},#{bcontent},sysdate,#{bupload1:VARCHAR},#{bupload2:VARCHAR},#{bupload3:VARCHAR},#{cg_num})
+    </insert>
+
+    <!-- 글목록 -->
+    <select id="getBoardList" resultType="Board">
+      select * from board order by bnum desc
+   </select>
+
+    <!-- 글검색 -->
+
+    <!-- 글상세 -->
+
+    <update id="updateReadnum" parameterType="String">
+      update board set binquiry = binquiry+1 where bnum=#{bnum}
+   </update>
+    <select id="getBoard" resultType="Board" parameterType="String">
+      select * from board where bnum=#{bnum} 
+   </select>
+
+    <!-- 글조회수 -->
+
+    <!-- 글삭제 -->
+
+    <!-- 글수정 -->
+
+</mapper>

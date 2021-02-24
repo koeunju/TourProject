@@ -1,16 +1,21 @@
-package tour.controller;
+package user.controller;
 
 import common.controller.AbstractAction;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class TourSearchAction extends AbstractAction {
+public class LoginAction extends AbstractAction {
+
+    public LoginAction() {
+
+    }
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
-        this.setViewPage("tour/tourKeyword.jsp");
+        this.setViewPage("user/login.jsp");
         this.setRedirect(false);
+		
     }
 }
