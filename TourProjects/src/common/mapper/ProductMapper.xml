@@ -4,17 +4,57 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="common.mapper.ProductMapper">
+	<select id="getProductTotalCount" resultType="int">
+        select count(*) cnt from product
+    </select>
 
-	<select id="getProductList" resultType="product">
-		SELECT * FROM PRODUCT
+	<select id="getProdList" resultType="product" parameterType="hashmap">
+	  	select * from(
+	select a.*,row_number() over(order by pnum desc) rn from product a  )
+	where rn between #{start} and #{end}
 	</select>
 
 	<select id="getCategory" resultType="category">
-		SELECT * FROM PRODUCT_CATEGORY ORDER BY 1 ASC
+		select * from product_category order by 1 asc
 	</select>
-	
+
 	<select id="selectByCategory" resultType="product" parameterType="string">
-	    SELECT * FROM PRODUCT WHERE CG_NUM =#{VALUE}
+	    select * from product where cg_num =#{value}
+	</select>
+
+	<select id="selectByPnum" resultType="product" parameterType="string">
+		select
+		<include refid="product_column"/>
+		from prodcut where pnum=#{pnum}
+	</select>
+
+	<sql id="product_column">
+	    pnum, pname, pcontent, price,
+	    nvl(pimage, 'noimage.png') pimage,
+	    nvl(pimage2, 'noimage.png') pimage2,
+	    nvl(pimage3, 'noimage.png') pimage3,
+	    cg_num
+	</sql>
+
+	<select id="getFindTotalCount" resultType="int">
+		select count(pnum) from product
+		<include refid="findWhere"/>
+	</select>
+
+	<sql id="findWhere">
+		<if test="_parameter!=null">
+			<where>
+				pname like '%'||#{findKeyword}||'%'
+			</where>
+		</if>
+	</sql>
+
+	<select id="getFindList" resultType="product" parameterType="map">
+		select * from(
+		select a.*,row_number() over(order by pnum desc) rn from product a
+		<include refid="findWhere"/>
+		)
+		where rn between #{start} and #{end}
 	</select>
 	
 </mapper>

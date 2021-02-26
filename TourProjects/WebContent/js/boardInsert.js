@@ -14,8 +14,6 @@ $(function(){
             $bcontent.focus();
             return;
         }
-
-
         $('#boardF').submit();
     })
 })

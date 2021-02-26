@@ -6,133 +6,123 @@ import java.sql.*;
 
 
 public class BoardVO implements Serializable {
-	   
-	   private int bnum;
-	   private String btitle;
-	   private String bcontent;
-	   private int binquiry;
-	   private Date bdate;
-	   private String bupload1;
-	   private String bupload2;
-	   private String bupload3;
-	   private int brecommend;
-	   private int idx;
-	   private int cg_num;
-	   //0-자유게시판 1-이달의 여행지 2- 고객센터
-	   public BoardVO() {
-	      
-	   }
 
-	public BoardVO(int bnum, String btitle, String bcontent, int binquiry, Date bdate, String bupload1,
-			String bupload2, String bupload3, int brecommend, int idx, int cg_num) {
-		super();
-		this.bnum = bnum;
-		this.btitle = btitle;
-		this.bcontent = bcontent;
-		this.binquiry = binquiry;
-		this.bdate = bdate;
-		this.bupload1 = bupload1;
-		this.bupload2 = bupload2;
-		this.bupload3 = bupload3;
-		this.brecommend = brecommend;
-		this.idx = idx;
-		this.cg_num = cg_num;
-	}
+    private int bnum;
+    private String btitle;
+    private String bcontent;
+    private int binquiry;
+    private Date bdate;
+    private String bupload1;
+    private String bupload2;
+    private String bupload3;
+    private int brecommend;
+    private int idx;
+    private int cg_num;
 
-	public int getBnum() {
-		return bnum;
-	}
+    //0-자유게시판 1-이달의 여행지 2- 고객센터
 
-	public void setBnum(int bnum) {
-		this.bnum = bnum;
-	}
+    public BoardVO(int bnum, String btitle, String bcontent, int binquiry, Date bdate, String bupload1, String bupload2,
+                   String bupload3, int brecommend, int idx, int cg_num) {
+        super();
+        this.bnum = bnum;
+        this.btitle = btitle;
+        this.bcontent = bcontent;
+        this.binquiry = binquiry;
+        this.bdate = bdate;
+        this.bupload1 = bupload1;
+        this.bupload2 = bupload2;
+        this.bupload3 = bupload3;
+        this.brecommend = brecommend;
+        this.idx = idx;
+        this.cg_num = cg_num;
+    }
 
-	public String getBtitle() {
-		return btitle;
-	}
+    public int getBnum() {
+        return bnum;
+    }
 
-	public void setBtitle(String btitle) {
-		this.btitle = btitle;
-	}
+    public void setBnum(int bnum) {
+        this.bnum = bnum;
+    }
 
-	public String getBcontent() {
-		return bcontent;
-	}
+    public String getBtitle() {
+        return btitle;
+    }
 
-	public void setBcontent(String bcontent) {
-		this.bcontent = bcontent;
-	}
+    public void setBtitle(String btitle) {
+        this.btitle = btitle;
+    }
 
-	public int getBinquiry() {
-		return binquiry;
-	}
+    public String getBcontent() {
+        return bcontent;
+    }
 
-	public void setBinquiry(int binquiry) {
-		this.binquiry = binquiry;
-	}
+    public void setBcontent(String bcontent) {
+        this.bcontent = bcontent;
+    }
 
-	public Date getDate() {
-		return bdate;
-	}
+    public int getBinquiry() {
+        return binquiry;
+    }
 
-	public void setDate(Date date) {
-		this.bdate = date;
-	}
+    public void setBinquiry(int binquiry) {
+        this.binquiry = binquiry;
+    }
 
-	public String getBupload1() {
-		return bupload1;
-	}
+    public Date getBdate() {
+        return bdate;
+    }
 
-	public void setBupload1(String bupload1) {
-		this.bupload1 = bupload1;
-	}
+    public void setBdate(Date bdate) {
+        this.bdate = bdate;
+    }
 
-	public String getBupload2() {
-		return bupload2;
-	}
+    public String getBupload1() {
+        return bupload1;
+    }
 
-	public void setBupload2(String bupload2) {
-		this.bupload2 = bupload2;
-	}
+    public void setBupload1(String bupload1) {
+        this.bupload1 = bupload1;
+    }
 
-	public String getBupload3() {
-		return bupload3;
-	}
+    public String getBupload2() {
+        return bupload2;
+    }
 
-	public void setBupload3(String bupload3) {
-		this.bupload3 = bupload3;
-	}
+    public void setBupload2(String bupload2) {
+        this.bupload2 = bupload2;
+    }
 
-	public int getBrecommend() {
-		return brecommend;
-	}
+    public String getBupload3() {
+        return bupload3;
+    }
 
-	public void setBrecommend(int brecommend) {
-		this.brecommend = brecommend;
-	}
+    public void setBupload3(String bupload3) {
+        this.bupload3 = bupload3;
+    }
 
-	public int getIdx() {
-		return idx;
-	}
+    public int getBrecommend() {
+        return brecommend;
+    }
 
-	public void setIdx(int idx) {
-		this.idx = idx;
-	}
+    public void setBrecommend(int brecommend) {
+        this.brecommend = brecommend;
+    }
 
-	public int getCg_num() {
-		return cg_num;
-	}
+    public int getIdx() {
+        return idx;
+    }
 
-	public void setCg_num(int cg_num) {
-		this.cg_num = cg_num;
-	}
+    public void setIdx(int idx) {
+        this.idx = idx;
+    }
 
-	public Date getBdate() {
-		return bdate;
-	}
+    public int getCg_num() {
+        return cg_num;
+    }
 
-	public void setBdate(Date bdate) {
-		this.bdate = bdate;
-	}
+    public void setCg_num(int cg_num) {
+        this.cg_num = cg_num;
+    }
 
 }

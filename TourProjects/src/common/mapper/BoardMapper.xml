@@ -11,12 +11,11 @@
 
     <!-- 글작성 -->
     <insert id="insertBoard" parameterType="Board">
-        <selectKey keyProperty="idx" resultType="int" order="BEFORE">
+        <selectKey keyProperty="bnum" resultType="int" order="BEFORE">
             select board_seq.nextval from dual
         </selectKey>
-        <!-- 내용 드가야함@@@@@@@@@@@@@@@@ -->
-        insert into board(bnum,btitle,bcontent,bdate,bupload1,bupload2,bupload3,cg_num)
-        values(#{idx},#{btitle},#{bcontent},sysdate,#{bupload1:VARCHAR},#{bupload2:VARCHAR},#{bupload3:VARCHAR},#{cg_num})
+        insert into board(bnum, btitle, bcontent, binquiry, bdate, bupload1, bupload2, bupload3, brecommend, idx, cg_num)
+        values(#{bnum}, #{btitle}, #{bcontent}, 0, sysdate, #{bupload1:VARCHAR}, #{bupload2:VARCHAR}, #{bupload3:VARCHAR}, 0, 0, 0)
     </insert>
 
     <!-- 글목록 -->
@@ -26,18 +25,20 @@
 
     <!-- 글검색 -->
 
-    <!-- 글상세 -->
-
+    <!-- 글조회수 -->
     <update id="updateReadnum" parameterType="String">
       update board set binquiry = binquiry+1 where bnum=#{bnum}
    </update>
+
+    <!-- 글상세 -->
     <select id="getBoard" resultType="Board" parameterType="String">
       select * from board where bnum=#{bnum} 
    </select>
 
-    <!-- 글조회수 -->
-
     <!-- 글삭제 -->
+    <delete id="deleteBoard" parameterType="string">
+       delete from board where bnum=#{bnum}
+    </delete>
 
     <!-- 글수정 -->
 

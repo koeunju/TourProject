@@ -58,4 +58,14 @@ public class BoardDAOMyBatis extends DAOMyBatisBase {
         }
     }//----------------------------------
 
+    public int deleteBoard(String bnum) { // 글 삭제
+        try {
+            ses = this.getSessionFactory().openSession(true);
+            int n = ses.delete(NS + ".deleteBoard", bnum);
+            return n;
+        } finally {
+            close();
+        }
+    }// ----------------------------------
+
 }

@@ -14,14 +14,19 @@ public class TourListAction extends AbstractAction {
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
         String keyword = req.getParameter("keyword");
+        String pageNo = req.getParameter("pageNo");
 
         if (keyword == null || keyword.trim().isEmpty()) {
             keyword = "서울";
         }
 
+        if (pageNo == null || pageNo.trim().isEmpty()) {
+            pageNo = "1";
+        }
+
         TourAPIKeyword api = new TourAPIKeyword();
-        
-        String searchKeyword = api.TourAPIKeyword(keyword);
+
+        String searchKeyword = api.TourAPIKeyword(keyword, pageNo);
 
         req.setAttribute("searchKeyword", searchKeyword);
 

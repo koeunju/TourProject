@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,12 +31,12 @@
         <ul class="navbar-nav ml-auto">
             <c:if test="${loginUser eq null}">
                 <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/login.do">로그인</a></li>
+                <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/join.do">회원가입</a>
             </c:if>
             <c:if test="${loginUser ne null}">
                 <li class="nav-link"><a class="nav-link" href='#'>${loginUser.id}님</a></li>
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/logout.do">로그아웃</a></li>
             </c:if>
-            <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/join.do">회원가입</a>
         </ul>
     </div>
 </nav>

@@ -7,8 +7,8 @@
 	<typeAliases>
 		<typeAlias type="board.model.BoardVO" alias="Board" />
 		<typeAlias type="user.model.UserVO" alias="user" />
-		<!-- <typeAlias type="point.model.ProductVO" alias="product"/> <typeAlias 
-			type="point.model.Product_CategoryVO" alias="category" /> -->
+		<typeAlias type="point.model.ProductVO" alias="product" />
+		<typeAlias type="point.model.Product_CategoryVO" alias="category" />
 	</typeAliases>
 	<!-- 데이터베이스 트랜잭션 관리자 설정=========== -->
 	<environments default="production">
@@ -37,6 +37,6 @@
 		<mapper resource="common/mapper/ReviewMapper.xml" />
 		<mapper resource="common/mapper/UserMapper.xml" />
 		<mapper resource="common/mapper/BoardMapper.xml" />
-		<!-- <mapper resource="common/mapper/ProdcutMapper.xml"/> -->
+		<mapper resource="common/mapper/ProductMapper.xml"/>
 	</mappers>
 </configuration>

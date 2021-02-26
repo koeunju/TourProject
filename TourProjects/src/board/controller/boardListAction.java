@@ -3,6 +3,7 @@ package board.controller;
 import java.util.List;
 
 import common.controller.AbstractAction;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,9 +15,9 @@ public class boardListAction extends AbstractAction {
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
         BoardDAOMyBatis dao = new BoardDAOMyBatis();
-               
+
         List<BoardVO> bList = dao.getBoardList();
-        
+
         req.setAttribute("boardList", bList);
 
         this.setViewPage("/board/boardList.jsp");
