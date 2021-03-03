@@ -2,6 +2,7 @@ package user.model;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import common.model.DAOMyBatisBase;
@@ -34,15 +35,15 @@ public class UserDAOMyBatis extends DAOMyBatisBase {
     public UserVO loginCheck(String id, String pwd) throws NotUserException {
         UserVO user = login(id, pwd);
         if (user == null) {
-            //아이디가 존재하지 않는 경우 => 예외 발생
+            // 아이디가 존재하지 않는 경우 => 예외 발생
             throw new NotUserException(id + "란 아이디는 존재하지 않아요");
         }
-        //비밀번호 일치 여부 체크
+        // 비밀번호 일치 여부 체크
         String dbPwd = user.getPwd();
         if (!pwd.equals(dbPwd)) {
             throw new NotUserException("비밀번호가 일치하지 않아요");
         }
-        return user;//아이디와 비번이 일치한 경우 user반환
+        return user; // 아이디와 비번이 일치한 경우 user반환
     }
 
     public UserVO login(String id, String pwd) {
@@ -52,6 +53,107 @@ public class UserDAOMyBatis extends DAOMyBatisBase {
             map.put("id", id);
             map.put("pwd", pwd);
             return ses.selectOne(NS + ".loginCheck", map);
+        } finally {
+            close();
+        }
+    }
+
+    // 여기부터 admin
+    // 유저 list
+    public List<UserVO> getUserList() {
+        try {
+            ses = this.getSessionFactory().openSession();
+            List<UserVO> arr = ses.selectList(NS + ".getUserList");
+            return arr;
+        } finally {
+            close();
+        }
+    }
+
+    // 유저리스트 몇명인지
+    public List<UserVO> getUserList(int start, int end) {
+        try {
+            Map<String, Integer> map = new HashMap<>();
+            map.put("start", start);
+            map.put("end", end);
+
+            ses = this.getSessionFactory().openSession();
+            List<UserVO> arr = ses.selectList(NS + ".getUserList", map);
+            return arr;
+        } finally {
+            close();
+        }
+    }
+
+    // 유저 총 몇명
+    public int getUserTotalCount() {
+        try {
+            ses = this.getSessionFactory().openSession();
+            int cnt = ses.selectOne(NS + ".totalCount");
+            return cnt;
+        } finally {
+            close();
+        }
+    }
+
+    // 유저 정보 삭제
+    public int deleteUser(String idx) {
+        try {
+            ses = this.getSessionFactory().openSession(true);
+            int n = ses.delete(NS + ".deleteUser", idx);
+            return n;
+        } finally {
+            close();
+        }
+
+    }
+
+    // 유저 정보 수정
+    public int updateUser(UserVO user) {
+        try {
+            ses = this.getSessionFactory().openSession(true);
+            int n = ses.update(NS + ".updateUser", user);
+            return n;
+        } finally {
+            close();
+        }
+    }
+
+    // 유저 정보 수정할때 정보가져오는 메소드
+    public UserVO getUser(String idx) {
+        try {
+            ses = getSessionFactory().openSession();
+            UserVO vo = ses.selectOne(NS + ".getUser", idx);
+            return vo;
+        } finally {
+            close();
+        }
+    }
+
+    // myPage
+    public List<UserVO> selectMy(String idx) {
+        try {
+            ses = this.getSessionFactory().openSession();
+            List<UserVO> user = ses.selectList(NS + ".selectMy", idx);
+            return user;
+        } finally {
+            close();
+        }
+    }
+
+    public UserVO checkPwd(String idx) {
+        try {
+            ses = this.getSessionFactory().openSession();
+            return ses.selectOne(NS + ".checkPwd", idx);
+        } finally {
+            close();
+        }
+    }
+
+    public int updateMyInfo(UserVO user) {
+        try {
+            ses = this.getSessionFactory().openSession(true);
+            return ses.update(NS + ".updateMyInfo", user);
         } finally {
             close();
         }

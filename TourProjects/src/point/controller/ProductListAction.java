@@ -19,8 +19,8 @@ public class ProductListAction extends AbstractAction {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-        HttpSession session = req.getSession();
 
+        HttpSession session = req.getSession();
 
         String cpStr = req.getParameter("cpage");
         if (cpStr == null || cpStr.trim().isEmpty()) {
@@ -32,10 +32,9 @@ public class ProductListAction extends AbstractAction {
         if (psStr == null || psStr.trim().isEmpty()) {
             psStr = (String) session.getAttribute("pageSize");
             if (psStr == null || psStr.trim().isEmpty()) {
-                psStr = "5";
+                psStr = "8";
             }
         }
-
 
         session.setAttribute("pageSize", psStr);
 
@@ -43,7 +42,6 @@ public class ProductListAction extends AbstractAction {
         if (cpage < 1) {
             cpage = 1;
         }
-
 
         ProductDAOMyBatis dao = new ProductDAOMyBatis();
 
@@ -62,7 +60,7 @@ public class ProductListAction extends AbstractAction {
 
         List<ProductVO> bList = dao.getProdList(start, end);
 
-        int pagingBlock = 5;
+        int pagingBlock = 8;
         int prevBlock = 0, nextBlock = 0;
         System.out.println("pageCount====" + pageCount);
         prevBlock = (cpage - 1) / pagingBlock * pagingBlock;
@@ -82,12 +80,7 @@ public class ProductListAction extends AbstractAction {
 
         req.setAttribute("cList", clist);
 
-        System.out.println("-----------------------test-------------------");
-        System.out.println("4 : " + cpage);
-
-
         this.setViewPage("point/main.jsp");
         this.setRedirect(false);
-
     }
 }

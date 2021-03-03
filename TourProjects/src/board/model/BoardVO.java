@@ -19,7 +19,19 @@ public class BoardVO implements Serializable {
     private int idx;
     private int cg_num;
 
-    //0-자유게시판 1-이달의 여행지 2- 고객센터
+    // 0-자유게시판 1-이달의 여행지 2- 고객센터
+
+    public BoardVO() {
+    }
+
+    public BoardVO(int bnum, String btitle, String bcontent, String bupload1, String bupload2, String bupload3) {
+        this.bnum = bnum;
+        this.btitle = btitle;
+        this.bcontent = bcontent;
+        this.bupload1 = bupload1;
+        this.bupload2 = bupload2;
+        this.bupload3 = bupload3;
+    }
 
     public BoardVO(int bnum, String btitle, String bcontent, int binquiry, Date bdate, String bupload1, String bupload2,
                    String bupload3, int brecommend, int idx, int cg_num) {

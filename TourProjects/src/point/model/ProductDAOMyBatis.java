@@ -8,8 +8,8 @@ import java.util.Map;
 import common.model.DAOMyBatisBase;
 
 public class ProductDAOMyBatis extends DAOMyBatisBase {
-    private final String NS = "common.mapper.ProductMapper";
 
+    private final String NS = "common.mapper.ProductMapper";
 
     /*카테고리 목록*/
     public List<Product_CategoryVO> getCategory() {
@@ -33,7 +33,6 @@ public class ProductDAOMyBatis extends DAOMyBatisBase {
         }
     }
 
-
     public ProductVO selectByPnum(String pnum) {
         try {
             ses = this.getSessionFactory().openSession(true);
@@ -44,7 +43,6 @@ public class ProductDAOMyBatis extends DAOMyBatisBase {
         }
     }
 
-
     public int getFindTotalCount(String findKeyword) {
         try {
             ses = this.getSessionFactory().openSession(true);
@@ -54,7 +52,6 @@ public class ProductDAOMyBatis extends DAOMyBatisBase {
             close();
         }
     }
-
 
     public List<ProductVO> getFindList(int start, int end, String findKeyword) {
         try {
@@ -70,7 +67,6 @@ public class ProductDAOMyBatis extends DAOMyBatisBase {
 
     }
 
-
     public int getProductTotalCount() {
         try {
             ses = this.getSessionFactory().openSession(true);
@@ -80,7 +76,6 @@ public class ProductDAOMyBatis extends DAOMyBatisBase {
             close();
         }
     }
-
 
     public List<ProductVO> getProdList(int start, int end) {
         try {
@@ -94,7 +89,18 @@ public class ProductDAOMyBatis extends DAOMyBatisBase {
         } finally {
             close();
         }
+    }
 
+    /** 여기부터 admin입니다*/
+    /** 상품등록하는 메소드*/
+    public int insertProduct(ProductVO product) {
+        try {
+            ses = this.getSessionFactory().openSession(true);
+            int n = ses.insert(NS + ".insertProduct", product);
+            return n;
+        } finally {
+            close();
+        }
     }
 
 }

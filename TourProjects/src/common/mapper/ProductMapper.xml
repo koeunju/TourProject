@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="common.mapper.ProductMapper">
 	<select id="getProductTotalCount" resultType="int">
@@ -14,7 +14,7 @@
 	where rn between #{start} and #{end}
 	</select>
 
-	<select id="getCategory" resultType="category">
+	<select id="getCategory" resultType="PCategory">
 		select * from product_category order by 1 asc
 	</select>
 
@@ -25,7 +25,7 @@
 	<select id="selectByPnum" resultType="product" parameterType="string">
 		select
 		<include refid="product_column"/>
-		from prodcut where pnum=#{pnum}
+		from product where pnum=#{pnum}
 	</select>
 
 	<sql id="product_column">
@@ -56,5 +56,15 @@
 		)
 		where rn between #{start} and #{end}
 	</select>
-	
+
+	<!-- 여기부터 admin입니다 -->
+	<!-- 상품등록 -->
+	<insert id="insertProduct" parameterType="product">
+		<selectKey keyProperty="pnum" resultType="int" order="BEFORE">
+			select product_seq.nextval from dual
+		</selectKey>
+		insert into product(pnum, pname, pcontent, price, pimage, pimage2, pimage3, cg_num)
+		values(#{pnum}, #{pname}, #{pcontent},#{price}, #{pimage:VARCHAR}, #{pimage2:VARCHAR}, #{pimage3:VARCHAR}, 0)
+	</insert>
+
 </mapper>

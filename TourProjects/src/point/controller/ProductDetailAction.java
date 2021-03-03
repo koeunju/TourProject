@@ -14,18 +14,15 @@ public class ProductDetailAction extends AbstractAction {
 
         String pnum = req.getParameter("pnum");
 
-
         if (pnum == null || pnum.trim().isEmpty()) {
             this.setViewPage("index.do");
             this.setRedirect(true);
             return;
         }
 
-
         ProductDAOMyBatis dao = new ProductDAOMyBatis();
 
         ProductVO item = dao.selectByPnum(pnum);
-
 
         req.setAttribute("item", item);
 

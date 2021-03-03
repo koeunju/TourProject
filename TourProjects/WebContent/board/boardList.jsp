@@ -1,10 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="/top.jsp"/>
 
 <div id="wrap" align="center">
+
     <h2>자유게시판</h2>
 
     <!-- 검색폼 -->
@@ -46,6 +47,71 @@
                 <td></td>
             </tr>
         </c:forEach>
+
+        <!-- 페이징 시작 -->
+        <tr>
+            <td colspan="3" class="text-center">
+                <ul class="pagination justify-content-center">
+                    <c:if test="${prevBlock>0}">
+                        <li class="page-item">
+                            <a class="page-link" href="boardList.do?cpage=${prevBlock}#bbs">
+                                Prev ${pagingBlock}개</a>
+                        </li>
+                    </c:if>
+                    <!-- 페이지블럭 처리---------------------------- -->
+
+                    <c:forEach var="i" begin="${prevBlock+1}" end="${nextBlock-1}" step="1">
+                        <%-- [ ${i} ] --%>
+                        <c:if test="${i<pageCount+1 }">
+                            <li class="page-item <c:if test="${cpage eq i}">active</c:if>">
+                                <a class="page-link"
+                                   href="boardList.do?cpage=${i}&pageSize=${pageSize}#bbs">
+                                        ${i}
+                                </a>
+                            </li>
+                        </c:if>
+                    </c:forEach>
+                    <!--  ------------------------------------------->
+                    <c:if test="${nextBlock <pageCount+1}">
+                        <li class="page-item">
+                            <a class="page-link" href="boardList.do?cpage=${nextBlock}#bbs">
+                                Next ${pagingBlock}개</a>
+                        </li>
+                    </c:if>
+
+                </ul>
+            </td>
+
+            <!-- 총게시물 -->
+            <td colspan="2">
+                <span class="text-primary">총게시글수: <c:out value="${totalCount}"/>개</span>
+                <br>
+
+            </td>
+        </tr>
+
+        <!-- 함수 -->
+        <script type="text/javascript">
+            $(function () {
+                $('#findF').on('submit', function () {
+                    var $type = $('#findType');
+                    var $keyword = $('#findKeyword');
+                    if ($type.val() == 0) {
+                        alert('검색 유형을 선택하세요');
+                        $type.focus();
+                        return false;
+                    }
+                    if (!$keyword.val()) {
+                        alert('검색어를 입력하세요');
+                        $keyword.focus();
+                        return false;
+                    }
+                    return true;
+                })
+            })
+        </script>
+
+
     </table>
 </div>
 
@@ -56,6 +122,5 @@
         </button>
     </td>
 </tr>
-
 
 <jsp:include page="/foot.jsp"/>

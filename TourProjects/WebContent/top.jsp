@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,13 +14,12 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
-<body>
-<nav class="navbar navbar-expand-md navbar-dark bg-dark text-white" id="font1">
-    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark text-white"
+     id="font1">
+    <div
+            class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">관리자 페이지</a>
-            </li>
+            <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/admin.do">관리자 페이지</a></li>
         </ul>
     </div>
     <div class="mx-auto order-0">
@@ -30,12 +29,13 @@
             class="navbar-collapse collapse w-100 order-1 dual-collapse2 text-white">
         <ul class="navbar-nav ml-auto">
             <c:if test="${loginUser eq null}">
-                <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/login.do">로그인</a></li>
-                <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/join.do">회원가입</a>
-            </c:if>
-            <c:if test="${loginUser ne null}">
-                <li class="nav-link"><a class="nav-link" href='#'>${loginUser.id}님</a></li>
-                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/logout.do">로그아웃</a></li>
+            <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/login.do">로그인</a></li>
+            <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/join.do">회원가입</a>
+                </c:if>
+                <c:if test="${loginUser ne null}">
+            <li class="nav-item"><a class="nav-link" href='#'>${loginUser.id}님</a></li>
+            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/logout.do">로그아웃</a></li>
+                <li class="nav-link active"><a id="test" class="nav-link" href="${pageContext.request.contextPath}/mypageHome.do?idx=${loginUser.idx}">마이페이지</a>
             </c:if>
         </ul>
     </div>

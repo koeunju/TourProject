@@ -16,6 +16,7 @@ public class ProductFindAction extends AbstractAction {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+
         HttpSession session = req.getSession();
 
         String findKeyword = req.getParameter("findKeyword");
@@ -47,7 +48,7 @@ public class ProductFindAction extends AbstractAction {
 
         int cpage = Integer.parseInt(cpStr.trim());
         if (cpage < 1) {
-            cpage = 1;//1페이지를 기본값으로 설정
+            cpage = 1; // 1페이지를 기본값으로 설정
         }
 
         // 검색한 총 상품 수 가져오기
@@ -90,5 +91,4 @@ public class ProductFindAction extends AbstractAction {
         this.setRedirect(false);
 
     }
-
 }
