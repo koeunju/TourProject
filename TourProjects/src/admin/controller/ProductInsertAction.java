@@ -19,7 +19,6 @@ public class ProductInsertAction extends AbstractAction {
 
         ServletContext app = req.getServletContext();
         String upDir = app.getRealPath("product/Upload");
-        System.out.println(upDir);
 
         DefaultFileRenamePolicy df = new DefaultFileRenamePolicy();
         MultipartRequest mr = new MultipartRequest(req, upDir, 100 * 1024 * 1024, "UTF-8", df);
@@ -31,13 +30,12 @@ public class ProductInsertAction extends AbstractAction {
         String pimage = mr.getFilesystemName("pimage");
         String pimage2 = mr.getFilesystemName("pimage2");
         String pimage3 = mr.getFilesystemName("pimage3");
-
-        ProductVO product = new ProductVO(0, pname, pcontent, price, pimage, pimage2, pimage3, null);
+        String Cg_num = mr.getParameter("Cg_num");
+        ProductVO product = new ProductVO(0, pname, pcontent, price, pimage, pimage2, pimage3, Cg_num);
 
         ProductDAOMyBatis dao = new ProductDAOMyBatis();
 
         int n = dao.insertProduct(product);
-
 
         String str = (n > 0) ? "등록성공" : "등록실패";
         String loc = (n > 0) ? "pointshopList.do" : "javascript:history.back()";

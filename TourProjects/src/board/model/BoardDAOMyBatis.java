@@ -43,6 +43,20 @@ public class BoardDAOMyBatis extends DAOMyBatisBase {
         }
     }// ----------------------------------------------
 
+    public List<BoardVO> getBoardList2(int start, int end) { //고객센터
+        try {
+            Map<String, Integer> map = new HashMap<>();
+            map.put("start", start);
+            map.put("end", end);
+
+            ses = this.getSessionFactory().openSession();
+            List<BoardVO> arr = ses.selectList(NS + ".getBoardList2", map);
+            return arr;
+        } finally {
+            close();
+        }
+    }// ----------------------------------------------
+
     public int insertBoard(BoardVO board) { // 글 입력
         try {
             ses = this.getSessionFactory().openSession(true);
@@ -108,4 +122,25 @@ public class BoardDAOMyBatis extends DAOMyBatisBase {
             close();
         }
     }
+
+    public List<CategoryVO> getCategory() {
+        try {
+            ses = this.getSessionFactory().openSession();
+            List<CategoryVO> cList = ses.selectList(NS + ".getCategory");
+            return cList;
+        } finally {
+            close();
+        }
+    }//----------------------------------
+
+    public List<CategoryVO> selectByCategory(String Code) {
+        try {
+            ses = this.getSessionFactory().openSession();
+            List<CategoryVO> bList
+                    = ses.selectList(NS + ".selectByCategory", Code);
+            return bList;
+        } finally {
+            close();
+        }
+    }//--------------------------------
 }

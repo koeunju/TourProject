@@ -1,35 +1,27 @@
 package board.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import board.model.*;
 import common.controller.AbstractAction;
 
-import java.util.List;
 
-
-public class boardEditFormAction extends AbstractAction {
+public class boardFormAction2 extends AbstractAction {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
-        String bnum = req.getParameter("bnum");
-
-        if (bnum == null || bnum.trim().isEmpty()) {
-            this.setRedirect(true);
-            this.setViewPage("boardList.do");
-            return;
-        }
-
         BoardDAOMyBatis dao = new BoardDAOMyBatis();
-        BoardVO board = dao.getBoard(bnum);
 
         List<CategoryVO> cateList = dao.getCategory();
         req.setAttribute("getCategory", cateList);
+        req.setAttribute("msg", "index");
 
-        req.setAttribute("board", board);
-        this.setViewPage("board/boardEdit.jsp");
+        this.setViewPage("board/boardInsert2.jsp");
         this.setRedirect(false);
     }
+
 }

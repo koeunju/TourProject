@@ -32,27 +32,23 @@ public class UserDAOMyBatis extends DAOMyBatisBase {
         }
     }
 
-    public UserVO loginCheck(String id, String pwd) throws NotUserException {
-        UserVO user = login(id, pwd);
-        if (user == null) {
-            // 아이디가 존재하지 않는 경우 => 예외 발생
-            throw new NotUserException(id + "란 아이디는 존재하지 않아요");
-        }
-        // 비밀번호 일치 여부 체크
-        String dbPwd = user.getPwd();
-        if (!pwd.equals(dbPwd)) {
-            throw new NotUserException("비밀번호가 일치하지 않아요");
-        }
-        return user; // 아이디와 비번이 일치한 경우 user반환
-    }
+    public UserVO loginCheck(String id, String pwd) {
 
-    public UserVO login(String id, String pwd) {
         try {
             ses = this.getSessionFactory().openSession();
             Map<String, String> map = new HashMap<>();
             map.put("id", id);
             map.put("pwd", pwd);
             return ses.selectOne(NS + ".loginCheck", map);
+        } finally {
+            close();
+        }
+    }
+
+    public String checkState(String id) {
+        try {
+            ses = this.getSessionFactory().openSession();
+            return ses.selectOne(NS + ".checkState", id);
         } finally {
             close();
         }

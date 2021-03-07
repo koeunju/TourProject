@@ -62,7 +62,7 @@ public class ProductByCategoryAction extends AbstractAction {
 
         int pagingBlock = 5;
         int prevBlock = 0, nextBlock = 0;
-        System.out.println("pageCount====" + pageCount);
+
         prevBlock = (cpage - 1) / pagingBlock * pagingBlock;
         nextBlock = prevBlock + (pagingBlock + 1);
 

@@ -12,7 +12,6 @@
         $(function () {
             $('#findF').on('submit', function () {
                 var $keyword = $('#findKeyword');
-
                 if (!$keyword.val()) {
                     alert('검색어를 입력하세요');
                     $keyword.focus();
@@ -45,16 +44,28 @@
             </div>
         </c:if>
         <c:if test="${prodList ne null and not empty prodList }">
-            <c:forEach var="item" items="${prodList}" varStatus="state">
-
+            <c:forEach var="pd" items="${prodList}" varStatus="state">
                 <div class="col-md-3">
-                    <a href="prodDetail.do?pnum=${item.pnum}"> <img
-                            src="product_images/${item.pimage}" class="rounded img-fluid"
-                            style="height: 220px"/>
-                    </a> <br>
-                    <br>
-                    <h6>${item.pname}</h6>
-                        ${item.price}
+                    <c:if test="${pd.pimage eq null or empty pd.pimage}">
+                        <a href="prodDetail.do?pnum=${pd.pnum}"> <img
+                                src="product_images/noimage.png" class="rounded img-fluid"
+                                style="height: 100px"/>
+                        </a>
+                        <br>
+                        <br>
+                    </c:if>
+                    <c:if test="${pd.pimage ne null and not empty pd.pimage }">
+                        <a href="prodDetail.do?pnum=${pd.pnum}"> <img
+                                src="product_images/${pd.pimage}" class="rounded img-fluid"
+                                style="height: 100px"/>
+                        </a>
+                        <br>
+                        <br>
+                    </c:if>
+                    <h6>
+                        <a href="prodDetail.do?pnum=${pd.pnum}">${pd.pname}</a>
+                    </h6>
+                        ${pd.price}
                     <H1 class="badge badge-info">Point</H1>
                 </div>
             </c:forEach>

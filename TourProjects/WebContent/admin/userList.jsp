@@ -46,7 +46,8 @@
                         <th data-sort="int">회원번호</th>
                         <th data-sort="string">회원이름</th>
                         <th data-sort="date">가입일</th>
-                        <th data-sort="int">상태변경</th>
+                        <th data-sort="int">회원상태</th>
+                        <th>포인트</th>
                         <th>회원수정</th>
                         <th>회원탈퇴</th>
                     </tr>
@@ -76,7 +77,29 @@
                                     <fmt:formatDate value="${user.indate}" pattern="yyyy-MM-dd"/>
                                 </td>
                                 <td>
-                                    <c:out value="${user.stat}"/>
+
+                                    <c:if test="${user.stat==1 }">
+                                        활동회원
+
+                                    </c:if>
+
+                                    <c:if test="${user.stat==3 }">
+
+                                        휴먼회원
+
+                                    </c:if>
+
+                                    <c:if test="${user.stat==4 }">
+                                        탈퇴회원
+
+
+                                    </c:if>
+                                    <c:if test="${user.stat==9 }">
+                                        관리자
+                                    </c:if>
+                                </td>
+                                <td>
+                                    <c:out value="${user.point}"/>포인트
                                 </td>
                                 <td>
                                     <a href="userEdit.do?idx=${user.idx}">회원수정</a>

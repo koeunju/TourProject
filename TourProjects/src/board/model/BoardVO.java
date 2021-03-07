@@ -24,13 +24,14 @@ public class BoardVO implements Serializable {
     public BoardVO() {
     }
 
-    public BoardVO(int bnum, String btitle, String bcontent, String bupload1, String bupload2, String bupload3) {
+    public BoardVO(int bnum, String btitle, String bcontent, String bupload1, String bupload2, String bupload3, int cg_num) {
         this.bnum = bnum;
         this.btitle = btitle;
         this.bcontent = bcontent;
         this.bupload1 = bupload1;
         this.bupload2 = bupload2;
         this.bupload3 = bupload3;
+        this.cg_num = cg_num;
     }
 
     public BoardVO(int bnum, String btitle, String bcontent, int binquiry, Date bdate, String bupload1, String bupload2,

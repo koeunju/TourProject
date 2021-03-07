@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import board.model.*;
 import common.controller.AbstractAction;
 
+import java.util.List;
+
 public class boardViewAction extends AbstractAction {
 
     @Override
@@ -23,7 +25,9 @@ public class boardViewAction extends AbstractAction {
         boolean bool = dao.updateReadnum(idx.trim());
 
         BoardVO board = dao.getBoard(idx.trim());
+        List<CategoryVO> cateList = dao.getCategory();
 
+        req.setAttribute("getCategory", cateList);
         req.setAttribute("board", board);
 
         this.setViewPage("board/boardView.jsp");

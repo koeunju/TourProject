@@ -18,6 +18,11 @@
 	select * from member where id=#{id} and pwd=#{pwd}
 	</select>
 
+	<!-- 회원 상태 조회 -->
+	<select id="checkState" resultType="String" parameterType="String">
+      select stat from member where id=#{id}
+   </select>
+
 	<!-- admin -->
 	<!--유저 총 카운트 -->
 	<select id="totalCount" resultType="int">
@@ -36,9 +41,9 @@
 	</delete>
 
 	<!-- 유저 정보 수정 --> <!-- 회원상태와 기타 추가 -->
-	<update id="updateUser" parameterType="user">
-		update member set id=#{id}, pwd=#{pwd},
-		email=#{email} , name=#{name}, tel=#{tel}
+	<update id="updateUser" parameterType="user" >
+		update member set  pwd=#{pwd},
+		email=#{email} , name=#{name}, tel=#{tel}, stat=#{stat}, point=#{point}
 		where idx=#{idx}
 	</update>
 

@@ -62,9 +62,7 @@ public class boardFindAction extends AbstractAction {
 
         int totalCount = dao.getFindTotalCount(findType, findKeyword);
 
-
         int pageSize = Integer.parseInt(psStr.trim()); // trim(앞 뒤 공백 제거)
-
 
         int pageCount = (totalCount - 1) / pageSize + 1;
 

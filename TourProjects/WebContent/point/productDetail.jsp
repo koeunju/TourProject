@@ -24,7 +24,6 @@
 
 </script>
 
-
 <div>
     <div align="center" class="row">
         <c:if test="${item eq null}">
@@ -45,17 +44,15 @@
                     <tr>
                         <td align="center" width="50%">
                             <img src="product_images/${item.pimage}"
-                                 class="img-fluid magnify" data-magnifyby="2" style="width: 70%;">
+                                 class="img-fluid magnify"  data-magnifyby="2" style="width: 50%;">
                             <!-- </a> -->
                         </td>
-                        <td align="left" width="50%" class="pl-5">
-                                <%-- 상품번호: ${item.pnum}  <br> --%>
+                        <td align="left"  width="50%" class="pl-5">
                             상품이름: ${item.pname} <br>
                             가격:<span style="color:red;font-weight:bold">
 				<fmt:formatNumber value="${item.price}"
-                                  pattern="###,###"/>
-			</span>
-                            <H1 class="badge badge-info">Point</H1><br>
+                                  pattern="###,###" />
+			</span><H1 class="badge badge-info">Point</H1><br>
                             <!-- form시작---------- -->
                             <form name="frm" id="frm" method="POST">
                                 <!-- 상품번호를 hidden으로 넘기자------ -->
@@ -63,19 +60,18 @@
                             </form>
                             <!-- form end------------ -->
                             <button type="button" onclick="goOrder()"
-                                    class="btn btn-warning">구매하기
-                            </button>
+                                    class="btn btn-warning">구매하기</button>
 
                         </td>
                     </tr>
                     <tr style="border:0">
                         <td align="center">
                             <img src="product_images/${item.pimage2}"
-                                 class="img-fluid img-thumbnail" style="width: 70%;">
+                                 class="img-fluid img-thumbnail"  style="width: 50%;">
                         </td>
                         <td align="center">
                             <img src="product_images/${item.pimage3}"
-                                 class="img-fluid img-thumbnail" style="width: 70%;">
+                                 class="img-fluid img-thumbnail"  style="width: 50%;">
                         </td>
                     </tr>
                     <tr>
@@ -86,11 +82,9 @@
                     </tr>
                     </tbody>
                 </table>
-            </div>
-            <!-- col end -->
+            </div><!-- col end -->
         </c:if>
     </div><!-- row end -->
 </div>
-<script type="text/javascript">
-</script>
+
 <jsp:include page="/foot.jsp"/>

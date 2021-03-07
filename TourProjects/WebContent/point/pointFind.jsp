@@ -23,6 +23,7 @@
             })
         })
     </script>
+
     <c:set var="myctx" value="${pageContext.request.contextPath}"/>
     <div class="col-sm-9 text-center">
         <!-- 검색폼------------------------------------- -->
@@ -49,14 +50,22 @@
 
             <c:if test="${bList ne null and not empty bList}">
                 <h3 class="text-center m-4">[${findKeyword}] 검색결과</h3>
-                <br>
+                <br><br>
                 <c:forEach var="pd" items="${bList}" varStatus="state">
                     <div class="col-md-3">
-                        <a href="prodDetail.do?pnum=${pd.pnum}"> <img
-                                src="product_images/${pd.pimage}" class="rounded img-fluid"
-                                style="height: 220px"/>
-                        </a> <br> <br>
-                        <h6>${pd.pname}</h6>
+                        <c:if test="${pd.pimage eq null or empty pd.pimage}">
+                            <a href="prodDetail.do?pnum=${pd.pnum}"> <img
+                                    src="product_images/noimage.png" class="rounded img-fluid"
+                                    style="height: 100px"/>
+                            </a> <br> <br>
+                        </c:if>
+                        <c:if test="${pd.pimage ne null and not empty pd.pimage }">
+                            <a href="prodDetail.do?pnum=${pd.pnum}"> <img
+                                    src="product_images/${pd.pimage}" class="rounded img-fluid"
+                                    style="height: 100px"/>
+                            </a> <br> <br>
+                        </c:if>
+                        <h6><a href="prodDetail.do?pnum=${pd.pnum}">${pd.pname}</a></h6>
                             ${pd.price}
                         <H1 class="badge badge-info">Point</H1>
                     </div>

@@ -49,22 +49,31 @@
             <c:if test="${bList ne null and not empty bList}">
                 <c:forEach var="pd" items="${bList}" varStatus="state">
                     <div class="col-md-3">
-                        <a href="prodDetail.do?pnum=${pd.pnum}"> <img
-                                src="product_images/${pd.pimage}" class="rounded img-fluid"
-                                style="height: 220px"/>
-                        </a> <br> <br>
+                        <c:if test="${pd.pimage eq null or empty pd.pimage}">
+                            <a href="prodDetail.do?pnum=${pd.pnum}"> <img
+                                    src="product_images/noimage.png" class="rounded img-fluid"
+                                    style="height: 100px"/>
+                            </a> <br> <br>
+                        </c:if>
+                        <c:if test="${pd.pimage ne null and not empty pd.pimage }">
+                            <a href="prodDetail.do?pnum=${pd.pnum}"> <img
+                                    src="product_images/${pd.pimage}" class="rounded img-fluid"
+                                    style="height: 100px"/>
+                            </a> <br> <br>
+                        </c:if>
                         <h6>${pd.pname}</h6>
                             ${pd.price}
-                        <H1 class="badge badge-info">Point</H1>
+                        <h1 class="badge badge-info">Point</h1>
                     </div>
                 </c:forEach>
             </c:if>
+
             <div class="container">
                 <ul class="pagination justify-content-center">
                     <!-- 페이지블럭 처리---------------------------- -->
-                    <c:forEach var="i" begin="${prevBlock +1 }" end="${nextBlock - 1}"
+                    <c:forEach var="i" begin="${prevBlock+1}" end="${nextBlock-1}"
 						step="1"><!-- 여기가 for(int i = prevBlock+1;i<nextBlock-1;i++)이랑 같은거에욤 -->
-                    <c:if test="${i < pageCount + 1 }">
+                    <c:if test="${i<pageCount+1 }">
                         <li class="page-item <c:if test="${cpage eq i}">active</c:if>">
                             <a class="page-link"
                                href="point.do?cpage=${i}&pageSize=${pageSize}#bbs">
@@ -73,7 +82,7 @@
                     </c:if>
                     </c:forEach>
                     <!--  ------------------------------------------->
-                    <c:if test="${nextBlock < pageCount + 1}">
+                    <c:if test="${nextBlock < pageCount+1 }">
                         <li class="page-item">
                             <a class="page-link"
                                href="point.do?cpage=${nextBlock}#bbs">
@@ -81,11 +90,13 @@
                         </li>
 
                     </c:if>
+
                 </ul>
                 <h6>전체 상품 개수: ${totalCount }</h6>
             </div>
         </div>
     </div>
 </div>
+
 
 <jsp:include page="/foot.jsp"/>

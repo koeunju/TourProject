@@ -30,30 +30,39 @@ public class LoginEndAction extends AbstractAction {
         }
 
         UserDAOMyBatis dao = new UserDAOMyBatis();
-        try {
-            UserVO user = dao.loginCheck(id, pwd);
-            //user 가 null이 아니라면=> 회원 인증받은 것이므로
-            //세션에 user를 저장 (loginUser라는 key로 저장하기)
-            HttpSession ses = req.getSession();
-            if (user != null) {
-                ses.setAttribute("loginUser", user);
-                //세션에 저장
-                //아이디 저장에 체크했다면/안했다면
-                Cookie ck = new Cookie("uid", user.getId());
-                if (saveId != null) {
-                    ck.setMaxAge(7 * 24 * 60 * 60);//7일간 보관
-                } else {
-                    ck.setMaxAge(0);//쿠키 삭제
-                }
-                ck.setPath("/");
-                res.addCookie(ck);
+        String stat = dao.checkState(id);
+
+        if (stat.equals("4")) {
+            String msg = "탈퇴회원입니다. 고객센터에 문의하여 주십시오";
+            String loc = "index.do"; // 일단은 메인페이지로 가게 고객센터 완성되면 고객센터로
+            CommonUtil.addMsgLoc(req, msg, loc);
+            this.setViewPage("/msg.jsp");
+            this.setRedirect(false);
+            return;
+        }
+
+        UserVO user = dao.loginCheck(id, pwd);
+        // user 가 null이 아니라면=> 회원 인증받은 것이므로
+        // 세션에 user를 저장 (loginUser라는 key로 저장하기)
+        HttpSession ses = req.getSession();
+        if (user != null) {
+            ses.setAttribute("loginUser", user);
+            // 세션에 저장
+            // 아이디 저장에 체크했다면/안했다면
+            Cookie ck = new Cookie("uid", user.getId());
+            if (saveId != null) {
+                ck.setMaxAge(7 * 24 * 60 * 60); // 7일간 보관
+            } else {
+                ck.setMaxAge(0); // 쿠키 삭제
             }
-        } catch (NotUserException e) {
-            String msg = e.getMessage();
-            CommonUtil.addMsgBack(req, msg);
+            ck.setPath("/");
+            res.addCookie(ck);
+
+        } else {
             this.setRedirect(false);
             this.setViewPage("/msg.jsp");
             return;
+
         }
 
         this.setViewPage(myctx + "/index.do");
