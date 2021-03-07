@@ -9,20 +9,21 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
-
 @WebFilter("/*")
 public class EncodingFilter implements Filter {
 
-    public void destroy() {
-    }
 
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        request.setCharacterEncoding("UTF-8");
+	public void destroy() {
+	}
 
-        chain.doFilter(request, response);
-    }
+	public void doFilter(ServletRequest request, ServletResponse response,
+			FilterChain chain) throws IOException, ServletException {
+		 request.setCharacterEncoding("UTF-8");
+		
+		chain.doFilter(request, response);
+	}
 
-    public void init(FilterConfig fConfig) throws ServletException {
-    }
+	public void init(FilterConfig fConfig) throws ServletException {
+	}
 
 }

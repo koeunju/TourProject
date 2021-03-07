@@ -19,6 +19,7 @@ public class MypageHEditEndAction extends AbstractAction {
         String pwd = req.getParameter("mypwd");
         String email = req.getParameter("myemail");
         String tel = req.getParameter("mytel");
+        String st = req.getParameter("mystat");
 
         if (myidx == null || myidx.trim().isEmpty()) {
             this.setViewPage("mypageHEdit.do");
@@ -26,13 +27,12 @@ public class MypageHEditEndAction extends AbstractAction {
             return;
         }
         int idx = Integer.parseInt(myidx);
-
+        int state = Integer.parseInt(st);
+        System.out.println(state);
         // 여기 버튼 인식되게 수정하기!
 
-        System.out.println("ttest");
-
         UserDAOMyBatis dao = new UserDAOMyBatis();
-        UserVO user = new UserVO(idx, null, pwd, email, name, tel, 0, null, 0);
+        UserVO user = new UserVO(idx, null, pwd, email, name, tel, state, null, 0);
         int n = dao.updateMyInfo(user);
 
         this.setViewPage("mypageHome.do?idx=" + myidx);

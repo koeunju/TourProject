@@ -7,23 +7,9 @@ function ready(){
 	alert('준비중에 있습니다.');
 }
 
-</script><!-- 메뉴사이드바 -->
-<nav class="navbar navbar-expand-sm bg-white navbar-white" id="font1">
-	<a class="navbar-brand" href="#">My Page</a>
-	<button class="navbar-toggler " type="button" data-toggle="collapse"
-		data-target="#mypageNavbar">
-
-		<i class="fas fa-bars"></i>
-	</button>
-	<div class="collapse navbar-collapse" id="mypageNavbar">
-		<ul class="navbar-nav">
-			<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/mypageHome.do">내정보확인</a></li>
-			<li class="nav-item"><a class="nav-link" href="#" onclick="ready()">찜한여행지</a></li>
-			<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/mypageWrite.do">내가 쓴 글</a></li>
-
-		</ul>
-	</div>
-</nav>
+</script>
+<!-- 메뉴사이드바 -->
+<jsp:include page="menubar.jsp"/>
 <!-- 내정보 -->
 <div class="container">
 	<div class="m-5 p-3 text-center"
@@ -39,12 +25,14 @@ function ready(){
 				<th style="width:10%">조회수</th>
 				<th style="width:20%">작성일</th>
 			</tr>
+			<c:forEach var="board" items="${board }">
 			<tr>
-			<td><a>a</a></td>
-			<td><a>a</a></td>
+			<td><a>${board.cg_num }</a></td>
+			<td><a>${board.btitle }</a></td>
 			<td><a>a</a></td>
 			<td><a>a</a></td>
 			</tr>
+			</c:forEach>
 		</table>
 	</div>
 	<!-- 내정보 div -->

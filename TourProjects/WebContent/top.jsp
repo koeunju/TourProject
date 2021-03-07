@@ -19,7 +19,9 @@
     <div
             class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
+         <c:if test="${loginUser.stat==9}">
             <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/admin.do">관리자 페이지</a></li>
+            </c:if>
         </ul>
     </div>
     <div class="mx-auto order-0">
@@ -33,9 +35,9 @@
             <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/join.do">회원가입</a>
                 </c:if>
                 <c:if test="${loginUser ne null}">
-            <li class="nav-item"><a class="nav-link" href='#'>${loginUser.id}님</a></li>
-            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/logout.do">로그아웃</a></li>
-                <li class="nav-link active"><a id="test" class="nav-link" href="${pageContext.request.contextPath}/mypageHome.do?idx=${loginUser.idx}">마이페이지</a>
+            <li class="nav-item active"><a class="nav-link" href='#'>${loginUser.id}님</a></li>
+            <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/logout.do">로그아웃</a></li>
+                <li class="nav-item active"><a id="test" class="nav-link" href="${pageContext.request.contextPath}/mypageHome.do?idx=${loginUser.idx}">마이페이지</a>
             </c:if>
         </ul>
     </div>

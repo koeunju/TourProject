@@ -104,5 +104,10 @@
     <select id="selectByCategory" resultType="Board" parameterType="string">
 	    select * from board where cg_num =#{value}
 	</select>
+	 <!-- 내정보에서 글 검색 -->
+    <select id="selectMyWrite" parameterType="int" resultType="Board">
+    	select * from board where idx=#{idx}
+    </select>
+	
 
 </mapper>

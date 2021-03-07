@@ -143,4 +143,15 @@ public class BoardDAOMyBatis extends DAOMyBatisBase {
             close();
         }
     }//--------------------------------
+    
+    //마이페이지 글 확인
+    
+	public List<BoardVO> selectMyWrite(int idx) {
+		try {
+			ses=this.getSessionFactory().openSession();
+			return ses.selectList(NS+".selectMyWrite", idx);
+		} finally {
+			close();
+		}
+	}
 }

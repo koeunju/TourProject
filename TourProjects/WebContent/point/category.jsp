@@ -8,7 +8,7 @@
     <c:forEach var="up" items="${cList}" varStatus="st">
         <li class="nav-tabs">
             <a class="nav-link active"
-               href="#" id="downCate${st.index}" onclick="showItem('${up.getCg_num()}')">
+               href="productByCate.do?cgnum=${up.getCg_num()}">
                     ${up.getCg_name()}
             </a>
         </li>

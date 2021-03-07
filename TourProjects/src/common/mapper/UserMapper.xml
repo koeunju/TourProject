@@ -52,19 +52,28 @@
 		select * from member where idx=#{idx}
 	</select>
 
-	<!-- my mypage-->
+<!-- my mypage -->
 	<!-- 마이페이지에서 내정보 불러올때 -->
 	<select id="selectMy" resultType="user" parameterType="String">
-	select * from member where idx=#{idx}
+		select * from member where idx=#{idx}
 	</select>
 
 	<!-- 내정보 수정에서 비밀번호 재확인 -->
 	<select id="checkPwd" resultType="user" parameterType="String">
-	select * from member where idx=#{idx}
+		select * from member where idx=#{idx}
 	</select>
 
 	<!-- 유저정보 업데이트 -->
 	<update id="updateMyInfo" parameterType="user">
-		update member set name = #{name}, pwd = #{pwd}, email = #{email}, tel = #{tel} where idx = #{idx}
+		update member set name =
+		#{name}, pwd = #{pwd}, email = #{email}, tel = #{tel}, stat=#{stat}
+		where idx = #{idx}
 	</update>
+
+	<!-- 유저 탈퇴 처리 -->
+	<update id="leaveMember" parameterType="String">
+		update member set stat=4
+		where idx=#{idx}
+	</update>
+
 </mapper>

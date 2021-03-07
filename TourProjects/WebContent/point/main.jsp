@@ -61,7 +61,7 @@
                                     style="height: 100px"/>
                             </a> <br> <br>
                         </c:if>
-                        <h6>${pd.pname}</h6>
+                      <h6><a href="prodDetail.do?pnum=${pd.pnum}">${pd.pname}</a></h6>
                             ${pd.price}
                         <h1 class="badge badge-info">Point</h1>
                     </div>

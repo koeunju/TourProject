@@ -1,5 +1,7 @@
 package mypage.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,7 +13,12 @@ public class MypageHEditAction extends AbstractAction {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+    	String idx = req.getParameter("idx");
 
+        UserDAOMyBatis userdao = new UserDAOMyBatis();
+        List<UserVO> uList = userdao.selectMy(idx);
+        req.setAttribute("user", uList);
+        
         this.setViewPage("/mypage/mypageHEdit.jsp");
         this.setRedirect(false);
 

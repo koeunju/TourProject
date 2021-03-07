@@ -17,7 +17,9 @@ import java.util.Set;
 @WebServlet(
         urlPatterns = {"*.do"},
         initParams = {
-                @WebInitParam(name = "config", value = "D:\\JavaWork\\TourProject\\web\\WEB-INF\\Command.properties") // 각자 경로에 맞게 설정
+                @WebInitParam(name = "config", 
+//                		value = "D:\\JavaWork\\TourProject\\web\\WEB-INF\\Command.properties") // 각자 경로에 맞게 설정
+                value = "C:\\Users\\USER\\git\\TourProject_\\TourProjects\\WebContent\\WEB-INF\\Command.properties") // 각자 경로에 맞게 설정
         }
 )
 

@@ -83,7 +83,7 @@
         <br>
         <form name="meF" id="meF" action="userEditEnd.do" method="POST">
             <!-- 내상태  -->
-            <c:forEach var="user" items="${user}">
+            
                 <h5 class="text-right font-weight-bold" id="font1">내 상태</h5>
                 <c:if test="${user.stat==1}">
                     <h6 class="text-right font-weight-bold text-success">활동회원</h6>
@@ -201,7 +201,7 @@
                     </tr>
 
                 </table>
-            </c:forEach>
+ 
 
             <div class="container text-right">
                 <input type="hidden" id="res" name="res">

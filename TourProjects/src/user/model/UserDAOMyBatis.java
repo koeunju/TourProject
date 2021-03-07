@@ -127,6 +127,7 @@ public class UserDAOMyBatis extends DAOMyBatisBase {
     }
 
     // myPage
+    //내정보 검색
     public List<UserVO> selectMy(String idx) {
         try {
             ses = this.getSessionFactory().openSession();
@@ -137,6 +138,7 @@ public class UserDAOMyBatis extends DAOMyBatisBase {
         }
     }
 
+    //비밀번호 확인
     public UserVO checkPwd(String idx) {
         try {
             ses = this.getSessionFactory().openSession();
@@ -146,6 +148,7 @@ public class UserDAOMyBatis extends DAOMyBatisBase {
         }
     }
 
+    //내정보 업데이트
     public int updateMyInfo(UserVO user) {
         try {
             ses = this.getSessionFactory().openSession(true);
@@ -154,4 +157,15 @@ public class UserDAOMyBatis extends DAOMyBatisBase {
             close();
         }
     }
+//멤버탈퇴
+	public int leaveMember(String idx) {
+		try {
+			ses =this.getSessionFactory().openSession(true);
+			return ses.update(NS+".leaveMember",idx);
+		} finally {
+			close();
+		}
+	}
+
+
 }
