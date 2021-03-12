@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 타입 별칭 설정============================  -->
+<!--    <typeAliases>
+        <typeAlias type="board.model.BoardVO" alias="Board"/>
+        <typeAlias type="board.model.CategoryVO" alias="BCategory"/>
+        <typeAlias type="user.model.UserVO" alias="user"/>
+        <typeAlias type="point.model.ProductVO" alias="product"/>
+        <typeAlias type="point.model.Product_CategoryVO" alias="PCategory" />
+    </typeAliases>
+
+    &lt;!&ndash; 매퍼 정의================================ &ndash;&gt;
+    <mappers>
+        <mapper resource="common/mapper/SampleMapper.xml"/>
+        <mapper resource="common/mapper/TourMapper.xml"/>
+        <mapper resource="common/mapper/ReviewMapper.xml"/>
+        <mapper resource="common/mapper/UserMapper.xml"/>
+        <mapper resource="common/mapper/BoardMapper.xml"/>
+        <mapper resource="common/mapper/ProductMapper.xml"/>
+    </mappers>-->
+</configuration>

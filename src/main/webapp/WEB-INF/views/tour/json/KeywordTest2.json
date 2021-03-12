@@ -1,0 +1,36 @@
+{
+  "response": {
+    "header": {
+      "resultCode": "0000",
+      "resultMsg": "OK"
+    },
+    "body": {
+      "items": {
+        "item": {
+          "addr1": "경기도 고양시 일산동구 중앙로 1283",
+          "addr2": "(장항동)",
+          "areacode": 31,
+          "booktour": 0,
+          "cat1": "A02",
+          "cat2": "A0206",
+          "cat3": "A02060500",
+          "contentid": 130593,
+          "contenttypeid": 14,
+          "createdtime": 20050603000000,
+          "firstimage": "http:\/\/tong.visitkorea.or.kr\/cms\/resource\/07\/700707_image2_1.jpg",
+          "firstimage2": "http:\/\/tong.visitkorea.or.kr\/cms\/resource\/07\/700707_image3_1.jpg",
+          "mapx": 126.7720983146,
+          "mapy": 37.6604590745,
+          "mlevel": 6,
+          "modifiedtime": 20201126111315,
+          "readcount": 17370,
+          "sigungucode": 2,
+          "title": "롯데갤러리(일산)"
+        }
+      },
+      "numOfRows": 10,
+      "pageNo": 1,
+      "totalCount": 1
+    }
+  }
+}
