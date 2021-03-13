@@ -55,7 +55,7 @@
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/tourSearch.do">관광지 추천</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/tourSearch">관광지 추천</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">게시판</a>

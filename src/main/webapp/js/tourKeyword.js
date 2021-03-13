@@ -8,7 +8,7 @@ $(function () {
             $('#keyword').focus();
             return;
         }
-        let url = "tourList.do?keyword=" + keyword + "&pageNo=" + pstart;
+        let url = "tourList?keyword=" + keyword + "&pageNo=" + pstart;
         send(url, keyword, 1);
     })
 })
@@ -86,7 +86,7 @@ function showPage(total, keyword, display, pageNo) { // 페이징 처리
 }
 
 function fetch(keyword, start, pageNo) { // 페이지
-    let url = "tourList.do?keyword=" + keyword + "&pageNo=" + pageNo;
+    let url = "tourList?keyword=" + keyword + "&pageNo=" + pageNo;
     send(url, keyword, pageNo);
 }
 
@@ -167,7 +167,7 @@ function showList(items, total, keyword) { // 검색결과 1
 function send2(item, keyword) { // 특정 키워드 검색시
     $.ajax({
         type: 'get',
-        url: "tourList.do?keyword=" + keyword,
+        url: "tourList?keyword=" + keyword,
         dataType: 'json',
         cache: false
     }).done((data) => {
@@ -256,7 +256,7 @@ function showList2(item, keyword) { // 특정 키워드 검색시 리스트
 function send3(keyword) { // 검색 결과 없을시
     $.ajax({
         type: 'get',
-        url: "tourList.do?keyword=" + keyword,
+        url: "tourList?keyword=" + keyword,
         dataType: 'json',
         cache: false
     }).done((data) => {
@@ -276,7 +276,7 @@ function showList3(keyword) { // 검색 결과 없을시 리스트
 function Detail(contentId) { // 디테일
     $.ajax({
         type: 'get',
-        url: 'tourDt.do?contentid=' + contentId,
+        url: 'tourDt?contentId=' + contentId,
         dataType: 'json',
         cache: 'false'
     }).done((res) => {
@@ -291,7 +291,7 @@ function Detail(contentId) { // 디테일
 function sendImg(dtItems, contentId) { // 사진
     $.ajax({
         type: 'get',
-        url: 'tourImg.do?contentid=' + contentId,
+        url: 'tourImg?contentId=' + contentId,
         dataType: 'json',
         cache: 'false'
     }).done((res) => {
