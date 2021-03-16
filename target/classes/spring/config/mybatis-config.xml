@@ -6,11 +6,14 @@
     <!-- 타입 별칭 설정============================  -->
  <typeAliases>
         <typeAlias type="com.t4er.user.model.UserVO" alias="User"/>
+        <typeAlias type="com.t4er.point.model.ProductVO" alias="Product"/>
+        <typeAlias type="com.t4er.point.model.Product_CategoryVO" alias="PCategory"/>
     </typeAliases>
     
 
  
     <mappers>
         <mapper resource="spring/mapper/UserMapper.xml"/>
+        <mapper resource="spring/mapper/ProductMapper.xml"/>
     </mappers>
 </configuration>

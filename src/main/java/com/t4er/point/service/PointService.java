@@ -1,0 +1,18 @@
+package com.t4er.point.service;
+
+import java.util.List;
+
+import com.t4er.point.model.ProductVO;
+import com.t4er.point.model.Product_CategoryVO;
+
+public interface PointService {
+	
+	/*Pspec 별로 상품 정보 가져오기*/
+	public List<ProductVO> selectByPspec(String pspec);
+	/*카테고리별 상품정보 가져오기*/
+	public List<ProductVO> selectByCategory(String code);
+	/**상품번호로 특정 상품 정보 가져오기*/
+	public ProductVO selectByPnum(Integer pnum);
+
+    public List<Product_CategoryVO> getCategory();
+}
