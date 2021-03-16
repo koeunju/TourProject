@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 타입 별칭 설정============================  -->
+ <typeAliases>
+        <typeAlias type="com.t4er.user.model.UserVO" alias="User"/>
+    </typeAliases>
+    
+
+ 
+    <mappers>
+        <mapper resource="spring/mapper/UserMapper.xml"/>
+    </mappers>
+</configuration>

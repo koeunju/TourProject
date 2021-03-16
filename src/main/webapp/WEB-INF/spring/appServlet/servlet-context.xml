@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--애너테이션 인식-->
+    <annotation-driven/>
+
+    <!--정적자원 매핑
+    정적인 파일들(css, 이미지파일들, html파일들)에 대한 요청이 왔을 때 조차도 DispactherServlet이
+	요청을 받아 해당 요청과 매핑된 컨트롤러를 찾아 실행시키려고 한다. 그러한 수고를 하지 않도록
+	resources태그로 설정을 하면 해당 디렉토리에 있는 파일들은 정적인 파일로 인식하고 서비를 해준다
+    -->
+    <resources mapping="/resources/**" location="/resources/"/>
+    <resources mapping="/image/**" location="/image/"/>
+    <resources mapping="/product_images/**" location="/product_images/" />
+    <resources mapping="/css/**" location="/css/"/>
+    <resources mapping="/js/**" location="/js/"/>
+    <resources mapping="/upload/**" location="/upload/"/>
+
+    <!--viewResolver 설정-->
+    <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <beans:property name="prefix" value="/WEB-INF/views/" />
+        <beans:property name="suffix" value=".jsp" />
+    </beans:bean>
+
+    <!-- com.my.tis패키지에 등록된 어노테이션들을 스캔해서 객체로 메모리에 올려주도록 하는 기능 -->
+    <context:component-scan base-package="com.t4er.admin, com.t4er.board, com.t4er.common" />
+    <context:component-scan base-package="com.t4er.mypage, com.t4er.olan, com.t4er.point"/>
+    <context:component-scan base-package="com.t4er.review, com.t4er.tour, com.t4er.user"/>
+
+    <!-- MultipartResolver 설정 ==================
+        주의: id는 반드시 multipartResolver로 등록해야 한다
+            다른 id를 주면 DispatcherServlet이 MultipartResolver로 인식하지 않는다
+     -->
+    <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <beans:property name="defaultEncoding" value="UTF-8"/>
+        <beans:property name="maxUploadSize" value="-1"/>
+        <!-- -1값을 주면 업로드 용량 무제한  -->
+    </beans:bean>
+
+    <!-- Interceptor 설정 =====================  -->
+    <!--<interceptors>
+        <interceptor>
+            <mapping path="/user/**"/>
+            <mapping path="/admin/**"/>
+            <beans:bean class="com.my.common.interceptor.LoginCheckInterceptor"/>
+        </interceptor>
+        <interceptor>
+            <mapping path="/admin/**"/>
+            <beans:bean class="com.my.common.interceptor.AdminCheckInterceptor"/>
+        </interceptor>
+    </interceptors> -->
+
+    <!-- MessageResource ======================= -->
+    <!--<beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <beans:property name="defaultEncoding" value="UTF-8"/>
+        <beans:property name="basename" value="classpath:spring/message/messagesAnnotation"/>
+    </beans:bean> -->
+	
+	
+	
+</beans:beans>

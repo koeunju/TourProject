@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+   xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+      http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+		<!-- context, mybatis-spring 네임스페이스 추가  -->
+	
+	<!-- [1] DataSource 빈 등록  
+			<1> DriverManagerDataSource
+			<2> JNDI 사용하는 방법: 톰캣 server.xml에 등록된 DataSource를 찾아 빈으로 등록하는 방법
+			<3> HikariCP 커넥션풀을 이용하는 방법
+	-->
+		<!-- <1> DriverManagerDataSource -->
+		<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+			<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
+			<property name="url" value="jdbc:oracle:thin:@192.168.219.105:1521:XE"/>
+			<property name="username" value="t4er"/>
+			<property name="password" value="t4er"/>			
+		</bean>
+		
+		<!-- <2> JNDI를 이용해서 DBCP를 록업하는 방법  -->
+		<bean id="jndiDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+			<property name="jndiName" value="java:comp/env/Tourdb"/>
+		</bean>
+		
+		<!-- <3> Hikari CP 풀을 이용하는 방법  -->
+		<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+			<property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
+			<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:XE"/>
+			<property name="username" value="t4er"/>
+			<property name="password" value="t4er"/>		
+		</bean>
+		
+		<bean id="hikariDataSource" class="com.zaxxer.hikari.HikariDataSource"
+		destroy-method="close">
+			<constructor-arg ref="hikariConfig"/>
+		</bean>
+	
+	<!-- [2] SqlSessionFactoryBean 빈 등록  -->
+		<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+			<property name="dataSource" ref="hikariDataSource"/>
+			<property name="configLocation" value="classpath:spring/config/mybatis-config.xml"/>
+		</bean>
+	
+	<!-- [3] SqlSessionTemplate 빈 등록  -->
+		<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+			<constructor-arg ref="sqlSessionFactoryBean"/>
+		</bean>
+	
+	<!-- [4] mybatis-spring:scan 설정  
+		여기에 설정된 패키지의 인터페이스들을 scan해서 해당 인터페이스를 구현한 
+		객체(Proxy)를 스프링이 대신 생성해준다
+	--> 
+      <mybatis-spring:scan base-package="com.t4er.user.mapper"/>    
+</beans>
