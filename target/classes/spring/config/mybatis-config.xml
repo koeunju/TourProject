@@ -4,21 +4,22 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <!-- 타입 별칭 설정============================  -->
-<!--    <typeAliases>
-        <typeAlias type="board.model.BoardVO" alias="Board"/>
+    <typeAliases>
+       <!-- <typeAlias type="board.model.BoardVO" alias="Board"/>
         <typeAlias type="board.model.CategoryVO" alias="BCategory"/>
         <typeAlias type="user.model.UserVO" alias="user"/>
         <typeAlias type="point.model.ProductVO" alias="product"/>
-        <typeAlias type="point.model.Product_CategoryVO" alias="PCategory" />
+        <typeAlias type="point.model.Product_CategoryVO" alias="PCategory" />-->
+        <typeAlias type="com.t4er.review.model.ReviewVO" alias="Review" />
     </typeAliases>
 
-    &lt;!&ndash; 매퍼 정의================================ &ndash;&gt;
+    <!-- 매퍼 정의================================ -->
     <mappers>
-        <mapper resource="common/mapper/SampleMapper.xml"/>
-        <mapper resource="common/mapper/TourMapper.xml"/>
-        <mapper resource="common/mapper/ReviewMapper.xml"/>
-        <mapper resource="common/mapper/UserMapper.xml"/>
-        <mapper resource="common/mapper/BoardMapper.xml"/>
-        <mapper resource="common/mapper/ProductMapper.xml"/>
-    </mappers>-->
+        <mapper resource="spring/mapper/SampleMapper.xml"/>
+<!--        <mapper resource="spring/mapper/TourMapper.xml"/>-->
+        <mapper resource="spring/mapper/ReviewMapper.xml"/>
+<!--        <mapper resource="spring/mapper/UserMapper.xml"/>-->
+<!--        <mapper resource="spring/mapper/BoardMapper.xml"/>-->
+<!--        <mapper resource="spring/mapper/ProductMapper.xml"/>-->
+    </mappers>
 </configuration>

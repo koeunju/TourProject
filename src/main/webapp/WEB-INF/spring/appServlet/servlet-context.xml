@@ -15,13 +15,16 @@
 	요청을 받아 해당 요청과 매핑된 컨트롤러를 찾아 실행시키려고 한다. 그러한 수고를 하지 않도록
 	resources태그로 설정을 하면 해당 디렉토리에 있는 파일들은 정적인 파일로 인식하고 서비를 해준다
     -->
-    <resources mapping="/resources/**" location="/resources/"/>
+  	<resources mapping="/resources/**" location="/resources/"/>
     <resources mapping="/image/**" location="/image/"/>
-    <resources mapping="/product_images/**" location="/product_images/" />
     <resources mapping="/css/**" location="/css/"/>
     <resources mapping="/js/**" location="/js/"/>
     <resources mapping="/upload/**" location="/upload/"/>
-
+    <resources mapping="/review/**" location="/review/"/>
+    <resources mapping="/board/**" location="/board/"/>
+    <resources mapping="/product/**" location="/product/"/>
+    <resources mapping="/easterEgg/**" location="/easterEgg/"/>
+    
     <!--viewResolver 설정-->
     <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <beans:property name="prefix" value="/WEB-INF/views/" />

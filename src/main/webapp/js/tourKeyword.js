@@ -26,11 +26,9 @@ function send(url, keyword, pageNo) {
         let display = data.response.body.numOfRows; // 페이지당 보여줄 개수
         let total = parseInt(pages);
 
-        if (items == null) {
+        if (pages === 0) {
             send3(keyword); // 검색 결과 없을 경우
-        }
-
-        if (items.title != null) {
+        } else if (pages === 1) {
             send2(item, keyword); // 특정 키워드 검색시
         } else {
             showList(items, total, keyword);
@@ -164,10 +162,10 @@ function showList(items, total, keyword) { // 검색결과 1
     $('#openAPI').html(str)
 }
 
-function send2(item, keyword) { // 특정 키워드 검색시
+function send2(item, keyword, pageNo) { // 특정 키워드 검색시
     $.ajax({
         type: 'get',
-        url: "tourList?keyword=" + keyword,
+        url: "tourList?keyword=" + keyword + "&pageNo=" + pageNo,
         dataType: 'json',
         cache: false
     }).done((data) => {
@@ -253,10 +251,10 @@ function showList2(item, keyword) { // 특정 키워드 검색시 리스트
     $('#openAPI').html(str)
 }
 
-function send3(keyword) { // 검색 결과 없을시
+function send3(keyword, pageNo) { // 검색 결과 없을시
     $.ajax({
         type: 'get',
-        url: "tourList?keyword=" + keyword,
+        url: "tourList?keyword=" + keyword + "&pageNo=" + pageNo,
         dataType: 'json',
         cache: false
     }).done((data) => {
@@ -268,8 +266,17 @@ function send3(keyword) { // 검색 결과 없을시
 }
 
 function showList3(keyword) { // 검색 결과 없을시 리스트
-    let str = "<h2>" + keyword + " 검색 결과가 없습니다</h2>"
-    str += "<h3>다른 키워드로 검색해주세요</h3>";
+    let str = "";
+    if (keyword == "장민규" || keyword == "정성모" || keyword == "지윤성" || keyword == "천은지" || keyword == "고은주" ) {
+        str += "<h1> 이스터 에그 발견 </h1>";
+        str += "<hr>"
+        str += "<h3> 성모야 꽃길만 걷자팀 </h3>"
+        str += "<h3>장민규 :  우리팀 모두 수고했고 사랑한다!</h3>"
+        str += "<img src='../easterEgg/jys.jpg' style='width: 30%'>"
+    } else {
+        str += "<h2>" + keyword + " 검색 결과가 없습니다</h2>"
+        str += "<h3>다른 키워드로 검색해주세요</h3>";
+    }
     $('#openAPI').html(str)
 }
 
@@ -411,7 +418,7 @@ function showDt(dtItems, imgItems, contentId) { // 디테일
     str += "</tr>";
     str += "</table>";
 
-    str += "<button class='btn btn-primary' onclick='review()'>리뷰 보러 가기</button>";
+    str += "<button class='btn btn-primary' onclick='review(" +contentId+")'>리뷰 보러 가기</button>";
     str += "&nbsp;&nbsp;&nbsp;&nbsp;";
     str += "<button class='btn btn-info' onclick='rollBack()'>돌아가기</button>";
 
@@ -422,6 +429,6 @@ function rollBack() {
     alert('기능 구현 중');
 }
 
-function review() {
-    alert('기능 구현 중');
+function review(contentId) {
+    location.href='review/list?contentId=' + contentId;
 }

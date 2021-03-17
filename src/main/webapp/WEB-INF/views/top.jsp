@@ -25,7 +25,7 @@
         </ul>
     </div>
     <div class="mx-auto order-0">
-        <a href="index.do"><img src="image/head1.png"></a>
+        <a href="index"><img src="../image/head1.png"></a>
     </div>
     <div
             class="navbar-collapse collapse w-100 order-1 dual-collapse2 text-white">
@@ -44,7 +44,7 @@
 </nav>
 
 <div id="title">
-    <img src="image/title1.png" style="width:100%">
+    <img src="../image/title1.png" style="width:100%">
 </div>
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark" id="font1">

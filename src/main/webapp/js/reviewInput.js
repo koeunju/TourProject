@@ -1,8 +1,7 @@
-$(function () {
+$(() => {
     $('#reviewF').on('submit', () => {
-        if(!$('#star').val()) {
-            alert('별점을 입력해주세요');
-            $('#star').focus();
+        if(!$('#rstar').val()) {
+            alert('별점을 선택해주세요');
             return false;
         }
         if(!$('#content').val()) {
@@ -12,4 +11,5 @@ $(function () {
         }
         return true;
     })
+
 })
