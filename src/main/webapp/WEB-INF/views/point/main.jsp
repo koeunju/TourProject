@@ -5,7 +5,9 @@
 <c:import url="/top" />
 <div class="container">
     <!-- category include --------------------- -->
-   <c:import url="point/category" />
+   <c:import url="/category">
+       <c:param name="category" value="CATE"/>
+   </c:import>
     <!-- ------------------------------------- -->
 
     <script type="text/javascript">
@@ -22,10 +24,14 @@
             })
         })
     </script>
-    <c:set var="myctx" value="${pageContext.request.contextPath}"/>
+    <c:set var="myctx" value="${pageContext.request.contextPath}"/> 
+    <form id="pageF" name="pageF" action="point#bbs">
+    <input type="hidden" name="findKeyword" value="${param.findKeyword}">
+    </form>
+    
     <div class="col-sm-9 text-center">
         <!-- 검색폼------------------------------------- -->
-        <form name="findF" id="findF" action="productFind.do#bbs"
+        <form name="findF" id="findF" action="point#bbs"
               class="form-inline">
             <input type="text" name="findKeyword" id="findKeyword"
                    placeholder="상품명을 입력하세요" class="form-control m-3" required>
@@ -67,6 +73,16 @@
                     </div>
                 </c:forEach>
             </c:if>
+            <tr>
+					<td colspan="3" class="text-center">
+						${pageNavi}
+					</td>
+					<td colspan="2"><span class="text-primary">총상품수: <c:out
+								value="${paging.totalCount}" />개
+					</span> <br> <span class="text-danger">${paging.cpage}</span> 
+					/ <span>${paging.pageCount}</span>
+					</td>
+				</tr>
 
             </div>
         </div>

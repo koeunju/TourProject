@@ -14,5 +14,6 @@ public class ProductVO {
     private String pimage3;
 
     private String Cg_num;
+    private String Cg_name;
 
 }

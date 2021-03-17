@@ -8,6 +8,7 @@
         <typeAlias type="com.t4er.user.model.UserVO" alias="User"/>
         <typeAlias type="com.t4er.point.model.ProductVO" alias="Product"/>
         <typeAlias type="com.t4er.point.model.Product_CategoryVO" alias="PCategory"/>
+        <typeAlias type="com.t4er.point.model.PagingVO" alias="Paging"/> 
     </typeAliases>
     
 

@@ -7,12 +7,18 @@
 	<select id="getProductTotalCount" resultType="int">
         select count(*) cnt from product
     </select>
-
-	<select id="getProdList" resultType="Product" parameterType="hashmap">
+    
+    <!-- 페이징 처리후 상품보여줌 -->
+	<select id="getProdList" resultType="Product" parameterType="Paging"> 
 	  	select * from(
-	select a.*,row_number() over(order by pnum desc) rn from product a  )
-	where rn between #{start} and #{end}
+	select product.*, row_number() over(order by pnum desc) rn from product
+	<include refid="findWhere"/>
+	)
+	<![CDATA[
+	where rn > #{start} and rn < #{end}
+	]]> 
 	</select>
+
 
 	<select id="getCategory" resultType="PCategory">
 		select * from product_category order by 1 asc
@@ -42,19 +48,19 @@
 	</select>
 
 	<sql id="findWhere">
-		<if test="_parameter!=null">
-			<where>
-				pname like '%'||#{findKeyword}||'%'
-			</where>
+		<if test="findKeyword != null">
+		<where>
+			pname like '%'||#{findKeyword}||'%'
+		</where>
 		</if>
 	</sql>
 
-	<select id="getFindList" resultType="Product" parameterType="map">
+	<select id="getFindList" resultType="Product" parameterType="Paging">
 		select * from(
 		select a.*,row_number() over(order by pnum desc) rn from product a
 		<include refid="findWhere"/>
 		)
-		where rn between #{start} and #{end}
+		where rn between #{start,jdbcType=NUMBERIC} and #{end}
 	</select>
 
 	<!-- 여기부터 admin입니다 -->

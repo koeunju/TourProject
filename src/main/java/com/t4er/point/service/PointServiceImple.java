@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.t4er.point.mapper.ProductMapper;
+import com.t4er.point.model.PagingVO;
 import com.t4er.point.model.ProductVO;
 import com.t4er.point.model.Product_CategoryVO;
 
@@ -34,6 +35,23 @@ public class PointServiceImple implements PointService {
 	@Override
     public List<Product_CategoryVO> getCategory(){
         return this.productMapper.getCategory();
-	}
 
+    }
+    
+    @Override
+     public List<ProductVO> getProdList(PagingVO paging){
+    	 return this.productMapper.getProdList(paging);
+     }
+    
+	@Override
+    public int getProductTotalCount() {
+    	return this.productMapper.getProductTotalCount();
+    	}
+    
+	@Override
+    public int getProductTotalCount(PagingVO paging) {
+    	return this.productMapper.getProductTotalCount(paging);
+    
+    }
 }
+

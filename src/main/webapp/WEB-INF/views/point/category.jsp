@@ -8,7 +8,7 @@
     <c:forEach var="up" items="${cList}" varStatus="st">
         <li class="nav-tabs">
             <a class="nav-link active"
-               href="productByCate.do?cgnum=${up.getCg_num()}">
+               href="productByCate?cgnum=${up.getCg_num()}">
                     ${up.getCg_name()}
             </a>
         </li>
@@ -18,6 +18,6 @@
 
 <script type="text/javascript">
     function showItem(cgnum) {
-        location.href = "${pageContext.request.contextPath}/productByCate?cgnum=" + cgnum;
+        location.href = "${pageContext.request.contextPath}/productByCate?cgnum="+cgnum;
     }
 </script>    
