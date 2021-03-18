@@ -40,10 +40,10 @@ public class PointController {
 		
 		int totalCount = this.pointService.getProductTotalCount(paging);
 		paging.setTotalCount(totalCount);
-		paging.setPagingBlock(5);//페이징 블럭에 들어가는 개수말하는걹꺼에요 넵 그럼 일단 8개로 줄게요
+		paging.setPagingBlock(5); //페이지에 들어가는 수
 		paging.init(req.getSession());
 		log.info(paging);
-		//start가 0으로 넘어가네욤 얘네들이 스타트랑 엔드를 어디서 가져오는건가요?
+		
 		
 		// 상품 목록 가져오기 
 		List<ProductVO> bList = this.pointService.getProdList(paging); //요기용
@@ -70,20 +70,33 @@ public class PointController {
 	}
 
 	
+
 	 @GetMapping("/productByCate") 
 	 public String productByCate(Model m, 
 			 HttpServletRequest req, 
 			 @ModelAttribute("cgnum") String cgnum,
 			 @ModelAttribute("paging") PagingVO paging) { 
-    
-		 List<ProductVO> clist=pointService.selectByCategory(cgnum); 
-         m.addAttribute("cList", clist);
 
-	  
-	 return "point/category";
+		 List<ProductVO> clist=pointService.selectByCategory(cgnum); 
+        m.addAttribute("cList", clist);
+
+
+	 return "point/mallByCategory";
 	  
 	 }
 	 
+		@GetMapping("/prodDetail")
+		public String productDetail(Model m, @RequestParam(defaultValue = "0") int pnum) {
+			if(pnum==0) {
+				return "redirect:index";
+			}
+			ProductVO prod = this.pointService.selectByPnum(pnum);
+			m.addAttribute("item", prod);
+			
+			return "point/productDetail";
+		}
+	 
+	
 	
 
 	 

@@ -3,10 +3,11 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.t4er.point.mapper.ProductMapper">
+    <mapper namespace="com.t4er.point.mapper.ProductMapper">
 	<select id="getProductTotalCount" resultType="int">
         select count(*) cnt from product
     </select>
+    
     
     <!-- 페이징 처리후 상품보여줌 -->
 	<select id="getProdList" resultType="Product" parameterType="Paging"> 
@@ -19,16 +20,16 @@
 	]]> 
 	</select>
 
-
 	<select id="getCategory" resultType="PCategory">
 		select * from product_category order by 1 asc
 	</select>
 
-	<select id="selectByCategory" resultType="Product" parameterType="string">
+	
+    <select id="selectByCategory" resultType="Product" parameterType="string">
 	    select * from product where cg_num =#{value}
 	</select>
 
-	<select id="selectByPnum" resultType="Product" parameterType="string">
+	<select id="selectByPnum" resultType="Product" parameterType="int">
 		select
 		<include refid="product_column"/>
 		from product where pnum=#{pnum}

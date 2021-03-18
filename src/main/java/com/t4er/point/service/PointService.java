@@ -23,6 +23,7 @@ public interface PointService {
 	int getProductTotalCount(PagingVO paging);
 	
 	List<ProductVO> getProdList(PagingVO paging);
+	int getProductByCateTotalCount(PagingVO paging);
 	
 
 }

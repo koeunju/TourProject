@@ -53,5 +53,9 @@ public class PointServiceImple implements PointService {
     	return this.productMapper.getProductTotalCount(paging);
     
     }
+	
+	public int getProductByCateTotalCount(PagingVO paging) {
+		return this.productMapper.getProductByCateTotalCount(paging);
+	} 
 }
 

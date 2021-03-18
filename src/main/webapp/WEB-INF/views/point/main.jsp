@@ -56,24 +56,24 @@
                 <c:forEach var="pd" items="${bList}" varStatus="state">
                     <div class="col-md-3">
                         <c:if test="${pd.pimage eq null or empty pd.pimage}">
-                            <a href="prodDetail.do?pnum=${pd.pnum}"> <img
+                            <a href="prodDetail?pnum=${pd.pnum}"> <img
                                     src="product_images/noimage.png" class="rounded img-fluid"
                                     style="height: 100px"/>
                             </a> <br> <br>
                         </c:if>
                         <c:if test="${pd.pimage ne null and not empty pd.pimage }">
-                            <a href="prodDetail.do?pnum=${pd.pnum}"> <img
+                            <a href="prodDetail?pnum=${pd.pnum}"> <img
                                     src="product_images/${pd.pimage}" class="rounded img-fluid"
                                     style="height: 100px"/>
                             </a> <br> <br>
                         </c:if>
-                      <h6><a href="prodDetail.do?pnum=${pd.pnum}">${pd.pname}</a></h6>
+                      <h6><a href="prodDetail?pnum=${pd.pnum}">${pd.pname}</a></h6>
                             ${pd.price}
                         <h1 class="badge badge-info">Point</h1>
                     </div>
                 </c:forEach>
             </c:if>
-            <tr>
+                <tr>
 					<td colspan="3" class="text-center">
 						${pageNavi}
 					</td>
