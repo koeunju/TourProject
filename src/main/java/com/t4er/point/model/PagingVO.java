@@ -10,6 +10,8 @@ import lombok.Data;
 @Data
 public class PagingVO {
 	
+	private String cgnum;
+	
 	private int cpage;//현재 보여줄 페이지 번호
 	private int pageSize; //한 페이지 당 보여줄 목록 개수
 	private int totalCount;//총 상품 수
@@ -56,7 +58,7 @@ public class PagingVO {
 		nextBlock = prevBlock + (pagingBlock+1);
 	}
 	
-	public String getPageNavi(String myctx, String loc, String userAgent) {
+	public String getPageNavi(String myctx, String loc, String userAgent, String cgnum) {
 		
 		if(findKeyword==null) {
 			findKeyword="";
@@ -69,8 +71,14 @@ public class PagingVO {
 				}
 			}
 		}
-		String qStr="?pageSize="+pageSize+"&findKeyword="+findKeyword;
-		//query string을 만들자. 
+		String qStr;
+		if(cgnum == null) {
+			 qStr="?pageSize="+pageSize+"&findKeyword="+findKeyword; //전체 목록 
+		}else {
+		 qStr="?pageSize="+pageSize+"&findKeyword="+findKeyword+"&cgnum="+cgnum;
+		 //카테고리별 목록 
+		}
+		
 		StringBuilder buf =new StringBuilder();
 		buf.append("<ul class='pagination justify-content-center'>");
 		if(prevBlock>0) {

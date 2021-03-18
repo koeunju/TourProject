@@ -43,7 +43,7 @@
             <div class="col-sm-12 text-center">
                 <div class="row"></div>
             </div>
-            
+    <%--         ${cList } --%>
 		<c:if test="${cList eq null or empty cList }">
 			<div class="col-md-3">
 				<h3>상품 준비 중입니다.</h3>
@@ -73,13 +73,13 @@
 				</div>
 			</c:forEach>
 		</c:if>
-		<tr>
+		<tr class="text-center">
 			<td colspan="3" class="text-center">${pageNavi}</td>
-			<td colspan="2"><span class="text-primary">총상품수: <c:out
+<%-- 			<td colspan="2"><span class="text-primary">총상품수: <c:out
 						value="${paging.totalCount}" />개
 			</span> <br> <span class="text-danger">${paging.cpage}</span> / <span>${paging.pageCount}</span>
-			</td>
-		</tr>
+			</td> --%>
+		</tr>		
 	</div>
 </div>
 

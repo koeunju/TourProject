@@ -23,8 +23,8 @@ public class PointServiceImple implements PointService {
 	}
 
 	@Override
-	public List<ProductVO> selectByCategory(String code) {
-		return this.productMapper.selectByCategory(code);
+	public List<ProductVO> selectByCategory(PagingVO pvo) {
+		return this.productMapper.selectByCategory(pvo);
 	}
 
 	@Override

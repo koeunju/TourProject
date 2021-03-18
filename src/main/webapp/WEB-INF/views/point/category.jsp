@@ -18,6 +18,7 @@
 
 <script type="text/javascript">
     function showItem(cgnum) {
-        location.href = "${pageContext.request.contextPath}/productByCate?cgnum="+cgnum;
+        //location.href = "${pageContext.request.contextPath}/productByCate?cgnum="+cgnum;
+        location.href = "${pageContext.request.contextPath}/productByCate?pageSize="+pageSize+"&findKeyword="+findKeyword+"&cgnum="+cgnum;
     }
 </script>    

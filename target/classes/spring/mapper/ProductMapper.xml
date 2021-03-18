@@ -3,63 +3,96 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-    <mapper namespace="com.t4er.point.mapper.ProductMapper">
-	<select id="getProductTotalCount" resultType="int">
-        select count(*) cnt from product
-    </select>
-    
-    
-    <!-- 페이징 처리후 상품보여줌 -->
-	<select id="getProdList" resultType="Product" parameterType="Paging"> 
-	  	select * from(
-	select product.*, row_number() over(order by pnum desc) rn from product
-	<include refid="findWhere"/>
-	)
+<mapper namespace="com.t4er.point.mapper.ProductMapper">
+	<select id="getProductTotalCount" resultType="int" parameterType="Paging">
+		select count(*) cnt from product
+		
+		<if test="findKeyword != null and findKeyword !=''">
+			<include refid="findWhere" />
+			<if test="cgnum != null">
+				and cg_num=#{cgnum}
+			</if>
+		</if>
+		<if test="cgnum != null and findKeyword ==null">
+			<where>
+				cg_num=#{cgnum}
+			</where>
+		</if>
+	</select>
+
+
+	<!-- 페이징 처리후 상품보여줌 -->
+	<select id="getProdList" resultType="Product"
+		parameterType="Paging">
+		select * from(
+		select product.*, row_number() over(order by pnum desc) rn from product 
+		<include refid="findWhere" /> 
+		)
 	<![CDATA[
 	where rn > #{start} and rn < #{end}
-	]]> 
+	]]>
 	</select>
 
 	<select id="getCategory" resultType="PCategory">
-		select * from product_category order by 1 asc
+		select * from
+		product_category order by 1 asc 
 	</select>
 
-	
-    <select id="selectByCategory" resultType="Product" parameterType="string">
-	    select * from product where cg_num =#{value}
+	<select id="selectByCategory" resultType="Product"
+		parameterType="Paging">
+		select * from(
+		select product.*, row_number() over(order by pnum desc) rn from product
+		<if test="findKeyword != null and findKeyword !=''">
+			<include refid="findWhere" />
+			<if test="cgnum != null">
+				and cg_num=#{cgnum}
+			</if>
+		</if>
+		<if test="cgnum != null and (findKeyword ==null or findKeyword=='')">
+			<where>
+				cg_num=#{cgnum}
+			</where>
+		</if>
+		)
+	<![CDATA[
+	where rn > #{start} and rn < #{end}
+	]]>
 	</select>
 
-	<select id="selectByPnum" resultType="Product" parameterType="int">
+	<select id="selectByPnum" resultType="Product"
+		parameterType="int">
 		select
-		<include refid="product_column"/>
+		<include refid="product_column" />
 		from product where pnum=#{pnum}
 	</select>
 
 	<sql id="product_column">
-	    pnum, pname, pcontent, price,
-	    nvl(pimage, 'noimage.png') pimage,
-	    nvl(pimage2, 'noimage.png') pimage2,
-	    nvl(pimage3, 'noimage.png') pimage3,
-	    cg_num
+		pnum, pname, pcontent, price,
+		nvl(pimage, 'noimage.png') pimage,
+		nvl(pimage2, 'noimage.png') pimage2,
+		nvl(pimage3, 'noimage.png') pimage3,
+		cg_num
 	</sql>
 
 	<select id="getFindTotalCount" resultType="int">
 		select count(pnum) from product
-		<include refid="findWhere"/>
+		<include refid="findWhere" />
 	</select>
 
 	<sql id="findWhere">
 		<if test="findKeyword != null">
-		<where>
-			pname like '%'||#{findKeyword}||'%'
-		</where>
+			<where>
+				pname like '%'||#{findKeyword}||'%'
+			</where>
 		</if>
 	</sql>
 
-	<select id="getFindList" resultType="Product" parameterType="Paging">
+	<select id="getFindList" resultType="Product"
+		parameterType="Paging">
 		select * from(
-		select a.*,row_number() over(order by pnum desc) rn from product a
-		<include refid="findWhere"/>
+		select a.*,row_number() over(order by pnum desc) rn from
+		product a
+		<include refid="findWhere" />
 		)
 		where rn between #{start,jdbcType=NUMBERIC} and #{end}
 	</select>
@@ -67,11 +100,14 @@
 	<!-- 여기부터 admin입니다 -->
 	<!-- 상품등록 -->
 	<insert id="insertProduct" parameterType="Product">
-		<selectKey keyProperty="pnum" resultType="int" order="BEFORE">
+		<selectKey keyProperty="pnum" resultType="int"
+			order="BEFORE">
 			select product_seq.nextval from dual
 		</selectKey>
-		insert into product(pnum, pname, pcontent, price, pimage, pimage2, pimage3, cg_num)
-		values(#{pnum}, #{pname}, #{pcontent},#{price}, #{pimage:VARCHAR}, #{pimage2:VARCHAR}, #{pimage3:VARCHAR}, 0)
+		insert into product(pnum, pname, pcontent, price, pimage, pimage2,
+		pimage3, cg_num)
+		values(#{pnum}, #{pname}, #{pcontent},#{price},
+		#{pimage:VARCHAR}, #{pimage2:VARCHAR}, #{pimage3:VARCHAR}, 0)
 	</insert>
 
 </mapper>

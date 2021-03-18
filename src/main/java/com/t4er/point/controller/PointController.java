@@ -33,6 +33,7 @@ public class PointController {
 
 	@GetMapping("/point")
 	public String productList(Model m, HttpServletRequest req, 
+			@ModelAttribute("cgnum") String cgnum,
 			@RequestHeader("User-Agent") String userAgent,
 			@ModelAttribute("paging") PagingVO paging) {
 		
@@ -40,18 +41,20 @@ public class PointController {
 		
 		int totalCount = this.pointService.getProductTotalCount(paging);
 		paging.setTotalCount(totalCount);
-		paging.setPagingBlock(5); //페이지에 들어가는 수
+		paging.setPagingBlock(8); //페이지에 들어가는 수
 		paging.init(req.getSession());
 		log.info(paging);
 		
 		
 		// 상품 목록 가져오기 
 		List<ProductVO> bList = this.pointService.getProdList(paging); //요기용
+		//List<ProductVO> cList=pointService.selectByCategory(paging); 
 		String myctx=req.getContextPath();
 		String loc="point";
-        String pageNavi = paging.getPageNavi(myctx, loc, userAgent);
+        String pageNavi = paging.getPageNavi(myctx, loc, userAgent, cgnum);
 		
 		m.addAttribute("bList", bList);
+		//m.addAttribute("cList", cList);		
 		m.addAttribute("pageNavi", pageNavi);
 
 		return "point/main";
@@ -61,9 +64,9 @@ public class PointController {
 	@GetMapping("/category")
 	public String productCategory(Model m, 
 			@RequestParam(defaultValue = "CATE") String pspe) {
-		List<Product_CategoryVO> clist = pointService.getCategory();
+		List<Product_CategoryVO> cList = pointService.getCategory();
 
-		m.addAttribute("cList", clist);
+		m.addAttribute("cList", cList);
 
 
 		return "point/category";
@@ -72,13 +75,29 @@ public class PointController {
 	
 
 	 @GetMapping("/productByCate") 
-	 public String productByCate(Model m, 
-			 HttpServletRequest req, 
-			 @ModelAttribute("cgnum") String cgnum,
-			 @ModelAttribute("paging") PagingVO paging) { 
+	 public String productByCate(Model m, HttpServletRequest req, 
+		@ModelAttribute("cgnum") String cgnum,
+		@RequestHeader("User-Agent") String userAgent,
+		@ModelAttribute("paging") PagingVO paging) { 
 
-		 List<ProductVO> clist=pointService.selectByCategory(cgnum); 
-        m.addAttribute("cList", clist);
+
+			int totalCount = this.pointService.getProductTotalCount(paging);
+			paging.setTotalCount(totalCount);
+			paging.setPagingBlock(8); //페이지에 들어가는 수
+			paging.init(req.getSession());
+			log.info(paging);
+			
+			
+			// 상품 목록 가져오기 
+			//List<ProductVO> bList = this.pointService.getProdList(paging); 
+			List<ProductVO> cList=pointService.selectByCategory(paging); 
+			String myctx=req.getContextPath();
+			String loc="point";
+	        String pageNavi = paging.getPageNavi(myctx, loc, userAgent, cgnum);
+			
+			//m.addAttribute("bList", bList);
+			m.addAttribute("cList", cList);			
+			m.addAttribute("pageNavi", pageNavi);
 
 
 	 return "point/mallByCategory";

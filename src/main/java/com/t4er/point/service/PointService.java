@@ -12,7 +12,7 @@ public interface PointService {
 	/*Pspec 별로 상품 정보 가져오기*/
 	List<ProductVO> selectByPspec(String pspec);
 	/*카테고리별 상품정보 가져오기*/
-	List<ProductVO> selectByCategory(String cgnum);
+	List<ProductVO> selectByCategory(PagingVO pvo);
 	/**상품번호로 특정 상품 정보 가져오기*/
 	ProductVO selectByPnum(Integer pnum);
 

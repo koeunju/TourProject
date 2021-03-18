@@ -13,7 +13,7 @@ public interface ProductMapper {
 
 	ProductVO selectByPnum(Integer pnum);
 
-	List<ProductVO> selectByCategory(String code);
+	List<ProductVO> selectByCategory(PagingVO pvo);
 
 	List<Product_CategoryVO> getCategory();
 
