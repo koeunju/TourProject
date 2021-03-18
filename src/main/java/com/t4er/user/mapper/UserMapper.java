@@ -9,6 +9,14 @@ public interface UserMapper {
 	UserVO findUser(UserVO findUser);
 
 	int createUser(UserVO user);
+
+	UserVO selectMy(String idx);
+	
+	int updateUser(UserVO user);
+
+	int leaveMember(String idx);
+
+	String checkState(String id);
 	
 
 }

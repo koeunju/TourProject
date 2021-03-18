@@ -18,10 +18,16 @@ import lombok.extern.log4j.Log4j;
 @Service("userService")
 @Log4j
 public class UserServiceImpl implements UserService {
+	
 
 	@Autowired
 	private UserMapper userMapper;
 	
+	//회원상태 조회
+	@Override
+	public String checkState(String id) {
+		return this.userMapper.checkState(id);
+	}
 	   @Override
 	   public int createUser(UserVO user) {
 	      return this.userMapper.createUser(user);

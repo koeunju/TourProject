@@ -9,7 +9,7 @@ function ready(){
 
 </script>
 <!-- 메뉴사이드바 -->
-<jsp:include page="menubar.jsp"/>
+<c:import url="/menubar" />
 <!-- 내정보 -->
 <div class="container">
 	<div class="m-5 p-3 text-center"

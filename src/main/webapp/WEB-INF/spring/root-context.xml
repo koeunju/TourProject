@@ -17,8 +17,8 @@
 	-->
 		<!-- <1> DriverManagerDataSource -->
 		<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-			<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
-			<property name="url" value="jdbc:oracle:thin:@192.168.219.105:1521:XE"/>
+			<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+			<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
 			<property name="username" value="t4er"/>
 			<property name="password" value="t4er"/>			
 		</bean>

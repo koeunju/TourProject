@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:import url="/top_sub" />
+<c:import url="/top_sub"/>
+<c:import url="/menubar"/>
+
 
 <script type="text/javascript">
 function ready(){
@@ -11,7 +13,7 @@ function ready(){
 
 </script>
 <!-- 메뉴사이드바 -->
-<jsp:include page="menubar.jsp" />
+
 <!-- 내정보 -->
 <div class="container">
 	<div class="m-5 p-3 text-center"
@@ -19,7 +21,7 @@ function ready(){
 		<h1 class="text-bold" id="font1">MyPage</h1>
 		<br>
 		<!-- 내상태  -->
-		<c:forEach var="user" items="${user }">
+		
 			<h5 class="text-right font-weight-bold" id="font1">내 상태</h5>
 			<c:if test="${user.stat==1}">
 				<h6 class="text-right font-weight-bold text-success">활동회원</h6>
@@ -37,7 +39,7 @@ function ready(){
 			<table class="table table-hover" id="mypageT">
 				<tr>
 					<td rowspan="7" style="width: 30%; padding: 10px;"><img
-						src="./image/ready.png"
+						src="../image/ready.png"
 						style="width: 100%; margin: 20px; border: 1px solid gray"><br>
 						<br> 사진</td>
 				</tr>
@@ -65,11 +67,11 @@ function ready(){
 			</table>
 			<div class="container text-right">
 				<button class="btn btn-success" id="rewrite"
-					onclick="location.href='mypageHEdit.do?idx=${user.idx}'">수정하기</button>
+					onclick="location.href='/mypage/Edit?idx=${user.idx}'">수정하기</button>
 				<button class="btn btn-danger" id="userexit"
 					onclick="leave(${user.idx})">탈퇴하기</button>
 			</div>
-		</c:forEach>
+
 		<!-- 버튼정렬div -->
 	</div>
 	<!-- 내정보 div -->
@@ -83,9 +85,9 @@ function ready(){
 function leave(num){
 	   alert(num);
 	   var n = $('#idx').val(num);   
-	   $('#pf').attr('action','myInfoDelForm.do')
+	   $('#pf').attr('action','/mypage/del')
 	   $('#pf').submit();
 }
 
 </script>
-<c:import url="/foot_sub" />
+<c:import url="/foot_sub"/>

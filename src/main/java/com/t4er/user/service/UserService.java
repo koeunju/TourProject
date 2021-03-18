@@ -15,5 +15,8 @@ public interface UserService {
 
 	boolean idCheck(String id);
 
+	String checkState(String id);
+
+
 
 }

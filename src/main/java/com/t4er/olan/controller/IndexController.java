@@ -28,4 +28,17 @@ public class IndexController {
     public void foot(){
 
     }
+    @RequestMapping("/top_sub")
+    public void top_sub() {
+
+    }
+
+    @RequestMapping("/foot_sub")
+    public void foot_sub(){
+
+    }
+    @RequestMapping("/menubar")
+    public void menubar(){
+
+    }
 }

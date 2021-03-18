@@ -2,6 +2,7 @@
 <!-- 로그인 모달 페이지 소스 포함------------------------- -->
  <%@ include file="/WEB-INF/views/user/loginModal.jsp" %> 
 <!--------------------------------------------------  -->
+</div>
 <div class="jumbotron text-center" style="margin-bottom:0">
    <img src="image/logo.png" style="width:20%">
 </div>

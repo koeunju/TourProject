@@ -39,6 +39,10 @@ public class LoginController {
 		log.info("user==="+user);
 		
 		UserVO loginUser=this.userService.loginCheck(user.getId(), user.getPwd());
+		String st = this.userService.checkState(user.getId());
+		if(st.trim().equals("4")) {
+			return util.addMsgLoc(m, "탈퇴회원입니다. 고객센터에 문의 바랍니다.", "/index");
+		}
 		if(loginUser!=null) {
 			//회원임을 인증 받았다면 ==> 세션에 로그인한 회원정보를 저장하자.
 			ses.setAttribute("loginUser", loginUser);
