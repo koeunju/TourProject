@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="/top.jsp" />
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<c:import url="/top" />
 <div class="container">
     <h1 class="text-bold" id="font1">MyPage</h1>
     <br>
@@ -31,5 +31,4 @@
         </tr>
     </table>
 </div>
-<jsp:include page="/foot.jsp" />
-
+<c:import url="/foot" />

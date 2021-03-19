@@ -14,7 +14,30 @@
 	<logger name="com.t4er.olan">
 		<level value="info" />
 	</logger>
-	
+	<logger name="com.t4er.review">
+		<level value="debug" />
+	</logger>
+	<logger name="com.t4er.tour">
+		<level value="debug" />
+	</logger>
+	<logger name="com.t4er.board">
+		<level value="debug" />
+	</logger>
+	<logger name="com.t4er.mypage">
+		<level value="debug" />
+	</logger>
+	<logger name="com.t4er.user">
+		<level value="debug" />
+	</logger>
+	<logger name="com.t4er.admin">
+		<level value="debug" />
+	</logger>
+	<logger name="com.t4er.point">
+		<level value="debug" />
+	</logger>
+	<logger name="com.t4er.common">
+		<level value="debug" />
+	</logger>
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
 		<level value="info" />

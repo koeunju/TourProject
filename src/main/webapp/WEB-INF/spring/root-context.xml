@@ -59,4 +59,7 @@
 
 		<mybatis-spring:scan base-package="com.t4er.olan.mapper"/>
     	<mybatis-spring:scan base-package="com.t4er.review.mapper"/>
+    	<mybatis-spring:scan base-package="com.t4er.point.mapper"/>
+   	 	<mybatis-spring:scan base-package="com.t4er.user.mapper"/>
+    	<mybatis-spring:scan base-package="com.t4er.board.mapper"/>
 </beans>

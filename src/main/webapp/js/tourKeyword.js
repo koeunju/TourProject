@@ -267,7 +267,7 @@ function send3(keyword, pageNo) { // 검색 결과 없을시
 
 function showList3(keyword) { // 검색 결과 없을시 리스트
     let str = "";
-    if (keyword == "장민규" || keyword == "정성모" || keyword == "지윤성" || keyword == "천은지" || keyword == "고은주" ) {
+    if (keyword == "장민규" || keyword == "정성모" || keyword == "지윤성" || keyword == "천은지" || keyword == "고은주") {
         str += "<h1> 이스터 에그 발견 </h1>";
         str += "<hr>"
         str += "<h3> 성모야 꽃길만 걷자팀 </h3>"
@@ -418,7 +418,7 @@ function showDt(dtItems, imgItems, contentId) { // 디테일
     str += "</tr>";
     str += "</table>";
 
-    str += "<button class='btn btn-primary' onclick='review(" +contentId+")'>리뷰 보러 가기</button>";
+    str += "<button class='btn btn-primary' onclick='review(" + contentId + ")'>리뷰 보러 가기</button>";
     str += "&nbsp;&nbsp;&nbsp;&nbsp;";
     str += "<button class='btn btn-info' onclick='rollBack()'>돌아가기</button>";
 
@@ -426,9 +426,9 @@ function showDt(dtItems, imgItems, contentId) { // 디테일
 }
 
 function rollBack() {
-    alert('기능 구현 중');
+    alert(기능구현중);
 }
 
 function review(contentId) {
-    location.href='review/list?contentId=' + contentId;
+    location.href = 'review/list?contentId=' + contentId;
 }

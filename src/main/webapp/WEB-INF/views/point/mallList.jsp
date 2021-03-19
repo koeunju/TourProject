@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -34,7 +34,6 @@
             <div class="row"></div>
         </div>
 
-
         <%--제품목록 표시 영역 --%>
         <c:if test="${pList eq null or empty pList }">
             <div class="col-md-3">
@@ -64,7 +63,7 @@
                         <c:if test="${i<pageCount+1 }">
                             <li class="page-item <c:if test="${cpage eq i}">active</c:if>">
                                 <a class="page-link"
-                                   href="boardList.do?cpage=${i}&pageSize=${pageSize}#bbs">
+                                   href="boardList?cpage=${i}&pageSize=${pageSize}#bbs">
                                         ${i} </a>
                             </li>
                         </c:if>
@@ -73,6 +72,5 @@
                 </ul>
             </td>
         </tr>
-
     </div>
 </div>

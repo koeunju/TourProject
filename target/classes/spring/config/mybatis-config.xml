@@ -5,11 +5,13 @@
 <configuration>
     <!-- 타입 별칭 설정============================  -->
     <typeAliases>
-       <!-- <typeAlias type="board.model.BoardVO" alias="Board"/>
-        <typeAlias type="board.model.CategoryVO" alias="BCategory"/>
-        <typeAlias type="user.model.UserVO" alias="user"/>
-        <typeAlias type="point.model.ProductVO" alias="product"/>
-        <typeAlias type="point.model.Product_CategoryVO" alias="PCategory" />-->
+        <typeAlias type="com.t4er.board.model.BoardVO" alias="Board"/>
+        <typeAlias type="com.t4er.board.model.BoardCategoryVO" alias="BCategory"/>
+        <typeAlias type="com.t4er.board.model.BoardPagingVO" alias="BPaging"/>
+        <typeAlias type="com.t4er.user.model.UserVO" alias="User"/>
+        <typeAlias type="com.t4er.point.model.ProductVO" alias="Product"/>
+        <typeAlias type="com.t4er.point.model.ProductCategoryVO" alias="PCategory" />
+        <typeAlias type="com.t4er.point.model.ProductPagingVO" alias="PPaging" />
         <typeAlias type="com.t4er.review.model.ReviewVO" alias="Review" />
     </typeAliases>
 
@@ -18,8 +20,8 @@
         <mapper resource="spring/mapper/SampleMapper.xml"/>
 <!--        <mapper resource="spring/mapper/TourMapper.xml"/>-->
         <mapper resource="spring/mapper/ReviewMapper.xml"/>
-<!--        <mapper resource="spring/mapper/UserMapper.xml"/>-->
-<!--        <mapper resource="spring/mapper/BoardMapper.xml"/>-->
-<!--        <mapper resource="spring/mapper/ProductMapper.xml"/>-->
+        <mapper resource="spring/mapper/UserMapper.xml"/>
+        <mapper resource="spring/mapper/BoardMapper.xml"/>
+        <mapper resource="spring/mapper/ProductMapper.xml"/>
     </mappers>
 </configuration>

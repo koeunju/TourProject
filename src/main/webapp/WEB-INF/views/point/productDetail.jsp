@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<jsp:include page="/top.jsp"/>
+<c:import url="/top" />
 
 <script src="js/jquery.magnifier.js"></script>
 
@@ -21,7 +21,6 @@
         frm.method = 'get';
         frm.submit();
     }
-
 </script>
 
 <div>
@@ -43,7 +42,7 @@
                     <tbody>
                     <tr>
                         <td align="center" width="50%">
-                            <img src="product_images/${item.pimage}"
+                            <img src="../product/${item.pimage}"
                                  class="img-fluid magnify"  data-magnifyby="2" style="width: 50%;">
                             <!-- </a> -->
                         </td>
@@ -66,11 +65,11 @@
                     </tr>
                     <tr style="border:0">
                         <td align="center">
-                            <img src="product_images/${item.pimage2}"
+                            <img src="../product/${item.pimage2}"
                                  class="img-fluid img-thumbnail"  style="width: 50%;">
                         </td>
                         <td align="center">
-                            <img src="product_images/${item.pimage3}"
+                            <img src="../product/${item.pimage3}"
                                  class="img-fluid img-thumbnail"  style="width: 50%;">
                         </td>
                     </tr>
@@ -87,4 +86,4 @@
     </div><!-- row end -->
 </div>
 
-<jsp:include page="/foot.jsp"/>
+<c:import url="/foot" />
