@@ -6,8 +6,10 @@ import java.net.URLEncoder;
 import javax.servlet.http.HttpSession;
 
 import lombok.Data;
+import lombok.extern.log4j.Log4j;
 
 @Data
+@Log4j
 public class PagingVO {
 	
 	private String cgnum;
@@ -31,6 +33,7 @@ public class PagingVO {
 	
 	/**페이징 처리를 위해 연산을 수행하는 메소드*/
 	public void init(HttpSession ses) {
+		
 		if(pageSize<0) {
 			pageSize = 8; 
 		}
@@ -56,6 +59,7 @@ public class PagingVO {
 		
 		prevBlock = (cpage-1)/pagingBlock * pagingBlock;
 		nextBlock = prevBlock + (pagingBlock+1);
+		
 	}
 	
 	public String getPageNavi(String myctx, String loc, String userAgent, String cgnum) {
@@ -71,11 +75,11 @@ public class PagingVO {
 				}
 			}
 		}
-		String qStr;
+		String qStr = "";
 		if(cgnum == null) {
 			 qStr="?pageSize="+pageSize+"&findKeyword="+findKeyword; //전체 목록 
-		}else {
-		 qStr="?pageSize="+pageSize+"&findKeyword="+findKeyword+"&cgnum="+cgnum;
+		}else if (cgnum != null) {
+			qStr="?cgnum=" +cgnum+ "&pageSize="+pageSize+"&findKeyword="+findKeyword;
 		 //카테고리별 목록 
 		}
 		
@@ -83,11 +87,11 @@ public class PagingVO {
 		buf.append("<ul class='pagination justify-content-center'>");
 		if(prevBlock>0) {
 			//이전 n개
-	buf.append("<li class='page-item'>")
-       .append("<a class='page-link' href='"+myctx+"/"+loc+qStr+"&cpage="+prevBlock+"'>");
-	buf.append("Prev")
-		.append("</a></li>");
-		}//if----------------------
+			buf.append("<li class='page-item'>")
+		       .append("<a class='page-link' href='"+myctx+"/"+loc+qStr+"&cpage="+prevBlock+"'>");
+			buf.append("Prev")
+				.append("</a></li>");		
+			}//if--
 		
 		for(int i=prevBlock+1;i<=nextBlock-1 && i<=pageCount ;i++) {
 			String css="";
@@ -112,6 +116,9 @@ public class PagingVO {
 		}//if----------------------
 		buf.append("</ul>");
 		//System.out.println(buf.toString());
+		
+		log.info("qstr = " + qStr);
+		log.info("cgnum = " + cgnum);
 		return buf.toString();
 	}
 

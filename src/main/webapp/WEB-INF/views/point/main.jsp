@@ -73,17 +73,14 @@
                     </div>
                 </c:forEach>
             </c:if>
-                <tr>
-					<td colspan="3" class="text-center">
+                <div class="container">
 						${pageNavi}
-					</td>
-					<td colspan="2"><span class="text-primary">총상품수: <c:out
+					<%-- <td colspan="2"><span class="text-primary">총상품수: <c:out
 								value="${paging.totalCount}" />개
 					</span> <br> <span class="text-danger">${paging.cpage}</span> 
 					/ <span>${paging.pageCount}</span>
-					</td>
-				</tr>
-
+					</td> --%>
+                </div>				
             </div>
         </div>
     </div>

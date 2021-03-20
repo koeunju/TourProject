@@ -7,7 +7,7 @@ import com.t4er.point.model.PagingVO;
 import com.t4er.point.model.ProductVO;
 import com.t4er.point.model.Product_CategoryVO;
 
-public interface PointService {
+public interface ProductService {
 	
 	/*Pspec 별로 상품 정보 가져오기*/
 	List<ProductVO> selectByPspec(String pspec);

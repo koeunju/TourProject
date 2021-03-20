@@ -11,8 +11,8 @@ import com.t4er.point.model.PagingVO;
 import com.t4er.point.model.ProductVO;
 import com.t4er.point.model.Product_CategoryVO;
 
-@Service("pointService")
-public class PointServiceImple implements PointService {
+@Service("productService")
+public class ProductServiceImple implements ProductService {
 	
 	@Inject
 	private ProductMapper productMapper;

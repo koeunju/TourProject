@@ -60,7 +60,7 @@
 						</a> <br> <br>
 					</c:if>
 					<c:if test="${pd.pimage ne null and not empty pd.pimage }">
-						<a href="prodDetail.do?pnum=${pd.pnum}"> <img
+						<a href="prodDetail?pnum=${pd.pnum}"> <img
 							src="product_images/${pd.pimage}" class="rounded img-fluid"
 							style="height: 100px" />
 						</a><br> <br>
@@ -73,13 +73,14 @@
 				</div>
 			</c:forEach>
 		</c:if>
-		<tr class="text-center">
-			<td colspan="3" class="text-center">${pageNavi}</td>
-<%-- 			<td colspan="2"><span class="text-primary">총상품수: <c:out
-						value="${paging.totalCount}" />개
-			</span> <br> <span class="text-danger">${paging.cpage}</span> / <span>${paging.pageCount}</span>
-			</td> --%>
-		</tr>		
+                <div class="container">
+						${pageNavi}
+					<%-- <td colspan="2"><span class="text-primary">총상품수: <c:out
+								value="${paging.totalCount}" />개
+					</span> <br> <span class="text-danger">${paging.cpage}</span> 
+					/ <span>${paging.pageCount}</span>
+					</td> --%>
+                </div>		
 	</div>
 </div>
 

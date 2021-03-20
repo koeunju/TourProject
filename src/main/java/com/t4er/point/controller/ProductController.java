@@ -17,19 +17,19 @@ import com.t4er.common.CommonUtil;
 import com.t4er.point.model.PagingVO;
 import com.t4er.point.model.ProductVO;
 import com.t4er.point.model.Product_CategoryVO;
-import com.t4er.point.service.PointService;
+import com.t4er.point.service.ProductService;
 
 import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
-public class PointController {
+public class ProductController {
 
 	@Autowired
 	private CommonUtil util;
 
-	@Resource(name = "pointService")
-	private PointService pointService;
+	@Resource(name = "productService")
+	private ProductService productService;
 
 	@GetMapping("/point")
 	public String productList(Model m, HttpServletRequest req, 
@@ -39,22 +39,20 @@ public class PointController {
 		
 		// 총 상품 수 가져오기 
 		
-		int totalCount = this.pointService.getProductTotalCount(paging);
+		int totalCount = this.productService.getProductTotalCount(paging);
 		paging.setTotalCount(totalCount);
-		paging.setPagingBlock(8); //페이지에 들어가는 수
+		paging.setPagingBlock(5); 
 		paging.init(req.getSession());
 		log.info(paging);
 		
 		
 		// 상품 목록 가져오기 
-		List<ProductVO> bList = this.pointService.getProdList(paging); //요기용
-		//List<ProductVO> cList=pointService.selectByCategory(paging); 
+		List<ProductVO> bList = this.productService.getProdList(paging); 
 		String myctx=req.getContextPath();
 		String loc="point";
         String pageNavi = paging.getPageNavi(myctx, loc, userAgent, cgnum);
 		
-		m.addAttribute("bList", bList);
-		//m.addAttribute("cList", cList);		
+		m.addAttribute("bList", bList);		
 		m.addAttribute("pageNavi", pageNavi);
 
 		return "point/main";
@@ -64,10 +62,10 @@ public class PointController {
 	@GetMapping("/category")
 	public String productCategory(Model m, 
 			@RequestParam(defaultValue = "CATE") String pspe) {
-		List<Product_CategoryVO> cList = pointService.getCategory();
+		List<Product_CategoryVO> cList = productService.getCategory();
 
 		m.addAttribute("cList", cList);
-
+		log.info("clist = " + cList);
 
 		return "point/category";
 	}
@@ -76,29 +74,28 @@ public class PointController {
 
 	 @GetMapping("/productByCate") 
 	 public String productByCate(Model m, HttpServletRequest req, 
-		@ModelAttribute("cgnum") String cgnum,
+		@RequestParam("cgnum") String cgnum,
 		@RequestHeader("User-Agent") String userAgent,
 		@ModelAttribute("paging") PagingVO paging) { 
 
 
-			int totalCount = this.pointService.getProductTotalCount(paging);
+			int totalCount = this.productService.getProductTotalCount(paging);
 			paging.setTotalCount(totalCount);
-			paging.setPagingBlock(8); //페이지에 들어가는 수
+			paging.setPagingBlock(5);
 			paging.init(req.getSession());
-			log.info(paging);
+			log.info("ddd"+paging);
 			
 			
-			// 상품 목록 가져오기 
-			//List<ProductVO> bList = this.pointService.getProdList(paging); 
-			List<ProductVO> cList=pointService.selectByCategory(paging); 
+			// 상품 목록 가져오기  
+			List<ProductVO> cList=productService.selectByCategory(paging); 
 			String myctx=req.getContextPath();
-			String loc="point";
+			String loc="productByCate";
 	        String pageNavi = paging.getPageNavi(myctx, loc, userAgent, cgnum);
 			
-			//m.addAttribute("bList", bList);
+	        	
 			m.addAttribute("cList", cList);			
 			m.addAttribute("pageNavi", pageNavi);
-
+			System.out.println(paging.getStart());
 
 	 return "point/mallByCategory";
 	  
@@ -109,7 +106,7 @@ public class PointController {
 			if(pnum==0) {
 				return "redirect:index";
 			}
-			ProductVO prod = this.pointService.selectByPnum(pnum);
+			ProductVO prod = this.productService.selectByPnum(pnum);
 			m.addAttribute("item", prod);
 			
 			return "point/productDetail";

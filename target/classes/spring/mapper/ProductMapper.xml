@@ -6,17 +6,17 @@
 <mapper namespace="com.t4er.point.mapper.ProductMapper">
 	<select id="getProductTotalCount" resultType="int" parameterType="Paging">
 		select count(*) cnt from product
-		
+	
+		<if test="cgnum != null and findKeyword ==null">
+			<where>
+				cg_num=#{cgnum}
+			</where>
+		</if>
 		<if test="findKeyword != null and findKeyword !=''">
 			<include refid="findWhere" />
 			<if test="cgnum != null">
 				and cg_num=#{cgnum}
 			</if>
-		</if>
-		<if test="cgnum != null and findKeyword ==null">
-			<where>
-				cg_num=#{cgnum}
-			</where>
 		</if>
 	</select>
 
@@ -42,16 +42,16 @@
 		parameterType="Paging">
 		select * from(
 		select product.*, row_number() over(order by pnum desc) rn from product
+		<if test="cgnum != null and (findKeyword ==null or findKeyword=='')">
+			<where>
+				cg_num=#{cgnum}
+			</where>
+		</if>
 		<if test="findKeyword != null and findKeyword !=''">
 			<include refid="findWhere" />
 			<if test="cgnum != null">
 				and cg_num=#{cgnum}
 			</if>
-		</if>
-		<if test="cgnum != null and (findKeyword ==null or findKeyword=='')">
-			<where>
-				cg_num=#{cgnum}
-			</where>
 		</if>
 		)
 	<![CDATA[
