@@ -33,7 +33,7 @@ public class MyPageController {
         UserVO user = this.mypageService.selectMy(idx);
         m.addAttribute("user", user);
 
-        return "mypage/mypageHome";
+        return "user/mypage/mypageHome";
     }
 
     @GetMapping("/edit")
@@ -46,7 +46,7 @@ public class MyPageController {
         UserVO user = this.mypageService.selectMy(idx);
         m.addAttribute("user", user);
 
-        return "mypage/mypageHEdit";
+        return "user/mypage/mypageHEdit";
     }
 
     @PostMapping("/edit")
@@ -72,6 +72,11 @@ public class MyPageController {
         String str = (n > 0) ? "탈퇴 처리가 완료되었습니다." : "탈퇴 실패";
         String loc = (n > 0) ? "/user/logout" : "javascript:history.back()";
         return util.addMsgLoc(m, str, loc);
+
+    }
+
+    @RequestMapping("/mypageMenubar")
+    public void mypageMenubar() {
 
     }
 

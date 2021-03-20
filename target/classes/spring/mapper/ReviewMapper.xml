@@ -9,6 +9,6 @@
 			select review_seq.nextval from dual
 		</selectKey>
 		insert into review (rnum, rstar, rrecommend, rfile1, rfile2, rfile3, rcontent, rdate, tnum, idx)
-		values (#{rnum}, #{rstar}, 0, #{rfile1:VARCHAR}, #{rfile2:VARCHAR}, #{rfile3:VARCHAR}, #{rcontent}, systimestamp, #{tnum}, 0)
+		values (#{rnum}, #{rstar}, 0, #{rfile1:VARCHAR}, #{rfile2:VARCHAR}, #{rfile3:VARCHAR}, #{rcontent}, systimestamp, #{tnum}, #{idx})
 	</insert>
 </mapper>

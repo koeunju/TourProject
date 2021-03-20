@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,22 +20,15 @@
             class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
             <c:if test="${loginUser eq null or empty loginUser}">
-
                 <tr>
                     <td colspan="5"></td>
                 </tr>
             </c:if>
-
-
             <c:if test="${loginUser ne null and not empty loginUser}">
                 <c:if test="${loginUser.stat == 9}">
-
                     <a class="nav-link" href="${pageContext.request.contextPath}/admin">관리자 페이지</a>
-
                 </c:if>
-
             </c:if>
-
         </ul>
     </div>
     <div class="mx-auto order-0">
@@ -49,9 +42,9 @@
             <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/user/join">회원가입</a>
                 </c:if>
                 <c:if test="${loginUser ne null}">
-            <li class="nav-link"><a class="nav-link" href='#'>${loginUser.id}님</a></li>
-            <li class="nav-link"><a class="nav-link" href="${pageContext.request.contextPath}/user/logout">로그아웃</a></li>
-                <li class="nav-link active"><a id="test" class="nav-link" href="${pageContext.request.contextPath}/user/myInfo?idx=${loginUser.idx}">마이페이지</a>
+            <li class="nav-link active"><a class="nav-link" href='#'>${loginUser.id}님</a></li>
+            <li class="nav-link active"><a class="nav-link" href="${pageContext.request.contextPath}/user/logout">로그아웃</a></li>
+                <li class="nav-link active"><a class="nav-link" href="${pageContext.request.contextPath}/user/myInfo?idx=${loginUser.idx}">마이페이지</a>
             </c:if>
         </ul>
     </div>
@@ -75,8 +68,8 @@
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">게시판</a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="#">이달의 여행지</a>
-                    <a class="dropdown-item" href="boardList">자유게시판</a>
-                    <a class="dropdown-item" href="boardList2">고객센터</a>
+                    <a class="dropdown-item" href="/board/list">자유게시판</a>
+                    <a class="dropdown-item" href="/board/list2">고객센터</a>
                 </div>
             </li>
 

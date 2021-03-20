@@ -2,6 +2,8 @@ package com.t4er.review.controller;
 
 import com.t4er.review.model.ReviewVO;
 import com.t4er.review.service.ReviewService;
+import com.t4er.user.model.UserVO;
+import com.t4er.user.service.UserService;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
@@ -24,24 +27,23 @@ public class ReviewController {
     private ReviewService reviewService;
 
     @RequestMapping("/list")
-    public String reviewList(Model m, @RequestParam(defaultValue = "0") int contentId,
-                             @RequestParam int idx) {
+    public String reviewList(Model m, @RequestParam(defaultValue = "0") int contentId) {
 
-        if (contentId == 0) {
-            return "index";
-        }
         m.addAttribute("contentId", contentId);
-        m.addAttribute("idx", idx);
 
         return "review/reviewList";
     }
 
     @GetMapping("/write")
-    public String reviewWrite(Model m, @RequestParam(defaultValue = "0") int contentId,
-                              @RequestParam int idx) {
-        if (contentId == 0) {
-            return "redirect:list";
-        }
+    public String reviewWrite(Model m, HttpServletRequest request, @RequestParam(defaultValue = "0") int contentId) {
+
+        HttpSession ses = request.getSession();
+        UserVO user = (UserVO) ses.getAttribute("loginUser");
+
+        String idx = user.getIdx();
+
+        log.info("idx = " + idx);
+
         m.addAttribute("contentId", contentId);
         m.addAttribute("idx", idx);
         return "review/reviewWrite";
@@ -53,14 +55,9 @@ public class ReviewController {
                                @RequestParam("imgfile2") MultipartFile imgfile2,
                                @RequestParam("imgfile3") MultipartFile imgfile3,
                                @RequestParam(defaultValue = "0") int contentId,
-                               @RequestParam int idx,
                                @ModelAttribute("review") ReviewVO review) {
 
         log.info("review = " + review);
-
-        /*if (contentId == 0) {
-            return "redirect:list";
-        }*/
 
         ServletContext app = req.getServletContext();
         String reviewDir = app.getRealPath("/review/upload");
@@ -113,7 +110,7 @@ public class ReviewController {
         int n = reviewService.insertReview(review);
 
         String str = (n > 0) ? "등록 성공" : "등록 실패";
-        String loc = (n > 0) ? "/review/list?contentId=" + contentId: "redirect:index"; // contentId 유지 되게 설정
+        String loc = (n > 0) ? "/review/list?contentId=" + contentId: "redirect:index";
 
         m.addAttribute("msg", str);
         m.addAttribute("loc", loc);

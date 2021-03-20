@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:import url="/top_sub" />
 
@@ -9,7 +9,7 @@
 
 </script>
 <!-- 메뉴사이드바 -->
-<c:import url="menubar"/>
+<c:import url="/user/mypageMenubar"/>
 <!-- 내정보 -->
 <div class="container">
 	<div class="m-5 p-3 text-center"
