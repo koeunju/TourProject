@@ -2,6 +2,8 @@ package com.t4er.mypage.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.t4er.board.model.BoardVO;
+import com.t4er.point.model.PointVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,8 @@ import com.t4er.mypage.service.MypageService;
 import com.t4er.user.model.UserVO;
 
 import lombok.extern.log4j.Log4j;
+
+import java.util.List;
 
 @Controller
 @Log4j
@@ -78,6 +82,33 @@ public class MyPageController {
     @RequestMapping("/mypageMenubar")
     public void mypageMenubar() {
 
+    }
+
+    /* 회원 포인트 조회 */
+    @GetMapping("/mypoint")
+    public String myPoint(Model m, @RequestParam String idx) {
+
+        if (idx == null)
+            return util.addMsgLoc(m, "잘못된 접근입니다.", "/myInfo");
+        List<PointVO> pointList = this.mypageService.mypoint(idx);
+
+        m.addAttribute("mypoint", pointList);
+
+        return "user/mypage/mypoint";
+    }
+
+    /* 내가 쓴 글 조회 */
+    @GetMapping("/write")
+    public String mywrite(Model m, @RequestParam String idx) {
+
+        log.info("mywrite?idx===" + idx);
+        if (idx == null)
+            return util.addMsgLoc(m, "잘못된 접근입니다.", "/myInfo");
+        List<BoardVO> board = this.mypageService.selMyBoard(idx);
+
+        m.addAttribute("board", board);
+
+        return "/user/mypage/mypageWrite";
     }
 
 }

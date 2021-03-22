@@ -30,4 +30,7 @@ public interface BoardMapper {
     int rewriteBoard(BoardVO board);
 
     int getTotalCountPaging(BoardPagingVO paging);
+    
+    // 내가 쓴 글 조회
+    List<BoardVO> selMyBoard(String idx);
 }

@@ -42,7 +42,7 @@ public class ReviewController {
 
         List<ReviewVO> rList = reviewService.selectReview(paging);
         String myctx = req.getContextPath();
-        String loc = "review";
+        String loc = "review/list";
         String pageNavi = paging.getPageNavi(myctx, loc, contentId);
 
         m.addAttribute("contentId", contentId);

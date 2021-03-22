@@ -14,7 +14,7 @@
 <div class="container">
 	<div class="m-5 p-3 text-center"
 		 style="border: 1px solid gray; border-radius: 15px" id="font2">
-		<h1 class="text-bold" id="font1">MyWrite</h1>
+		<h3 class="text-bold" id="font1">나의 작성 글</h3>
 		<br>
 
 		<!-- 내가 쓴글 -->
@@ -27,10 +27,21 @@
 			</tr>
 			<c:forEach var="board" items="${board }">
 				<tr>
-					<td><a>${board.cg_num }</a></td>
+					<td>
+						<c:if test="${board.cg_num==0 }">
+							<a href="/board/boardView.do?bnum=<c:out value="${board.bnum}"/>">
+								여행지 추천</a>
+						</c:if>
+						<c:if test="${board.cg_num==1 }">
+							<a>자유게시판</a>
+						</c:if>
+						<c:if test="${board.cg_num==2}">
+							<a>고객센터</a>
+						</c:if>
+					</td>
 					<td><a>${board.btitle }</a></td>
-					<td><a>a</a></td>
-					<td><a>a</a></td>
+					<td><a>${board.binquiry }</a></td>
+					<td><a>${board.bdate }</a></td>
 				</tr>
 			</c:forEach>
 		</table>

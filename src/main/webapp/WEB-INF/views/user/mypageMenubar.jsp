@@ -13,7 +13,7 @@
             <li class="nav-item"><a class="nav-link" href="#"
                                     onclick="ready()">찜한여행지</a></li>
             <li class="nav-item"><a class="nav-link"
-                                    href="${pageContext.request.contextPath}user/write">내가 쓴 글</a></li>
+                                    href="${pageContext.request.contextPath}/user/write?idx=${loginUser.idx}">내가 쓴 글</a></li>
 
         </ul>
     </div>

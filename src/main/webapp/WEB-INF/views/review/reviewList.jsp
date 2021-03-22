@@ -24,7 +24,7 @@
             </div>
         </c:forEach>
     </c:if>
-
+	${pageNavi}
 </div>
 <c:import url="/foot"/>
 
