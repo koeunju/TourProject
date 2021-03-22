@@ -1,5 +1,6 @@
 package com.t4er.review.controller;
 
+import com.t4er.review.model.ReviewPagingVO;
 import com.t4er.review.model.ReviewVO;
 import com.t4er.review.service.ReviewService;
 import com.t4er.user.model.UserVO;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -26,18 +28,34 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
-    @RequestMapping("/list")
-    public String reviewList(Model m, @RequestParam(defaultValue = "0") int contentId) {
+    @GetMapping("/list")
+    public String reviewList(Model m, HttpServletRequest req,
+                             @RequestParam("contentId") Integer contentId,
+                             @ModelAttribute("paging")ReviewPagingVO paging) {
+
+        log.info(paging);
+        log.info("controller contentId = " + contentId);
+        int totalCount = this.reviewService.getReviewTotalCount(paging);
+        paging.setTotalCount(totalCount);
+        paging.setPagingBlock(5);
+        paging.init(req.getSession());
+
+        List<ReviewVO> rList = reviewService.selectReview(paging);
+        String myctx = req.getContextPath();
+        String loc = "review";
+        String pageNavi = paging.getPageNavi(myctx, loc, contentId);
 
         m.addAttribute("contentId", contentId);
+        m.addAttribute("rList", rList);
+        m.addAttribute("pageNavi", pageNavi);
 
         return "review/reviewList";
     }
 
     @GetMapping("/write")
-    public String reviewWrite(Model m, HttpServletRequest request, @RequestParam(defaultValue = "0") int contentId) {
+    public String reviewWrite(Model m, HttpServletRequest req, @RequestParam(defaultValue = "0") String contentId) {
 
-        HttpSession ses = request.getSession();
+        HttpSession ses = req.getSession();
         UserVO user = (UserVO) ses.getAttribute("loginUser");
 
         String idx = user.getIdx();
@@ -54,7 +72,7 @@ public class ReviewController {
                                @RequestParam("imgfile1") MultipartFile imgfile1,
                                @RequestParam("imgfile2") MultipartFile imgfile2,
                                @RequestParam("imgfile3") MultipartFile imgfile3,
-                               @RequestParam(defaultValue = "0") int contentId,
+                               @RequestParam(defaultValue = "0") String contentId,
                                @ModelAttribute("review") ReviewVO review) {
 
         log.info("review = " + review);

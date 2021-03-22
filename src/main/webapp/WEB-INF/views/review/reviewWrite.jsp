@@ -6,7 +6,7 @@
 <script src="../js/reviewInput.js"></script>
 
 <form name="reviewF" id="reviewF" action="write" method="post" enctype="multipart/form-data">
-    <input type="text" name="tnum" value="${contentId}">
+    <input type="text" name="contentId" value="${contentId}">
     <input type="text" name="idx" value="${idx}">
     <input type="text" name="rstar" id="rstar">
     <table class="table table-bordered">

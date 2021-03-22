@@ -13,12 +13,13 @@
         <typeAlias type="com.t4er.point.model.ProductCategoryVO" alias="PCategory" />
         <typeAlias type="com.t4er.point.model.ProductPagingVO" alias="PPaging" />
         <typeAlias type="com.t4er.review.model.ReviewVO" alias="Review" />
+         <typeAlias type="com.t4er.tour.model.TourVO" alias="Tour"/>
     </typeAliases>
 
     <!-- 매퍼 정의================================ -->
     <mappers>
         <mapper resource="spring/mapper/SampleMapper.xml"/>
-<!--        <mapper resource="spring/mapper/TourMapper.xml"/>-->
+        <mapper resource="spring/mapper/TourMapper.xml"/>
         <mapper resource="spring/mapper/ReviewMapper.xml"/>
         <mapper resource="spring/mapper/UserMapper.xml"/>
         <mapper resource="spring/mapper/BoardMapper.xml"/>

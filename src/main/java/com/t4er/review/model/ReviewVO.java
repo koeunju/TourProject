@@ -15,7 +15,7 @@ public class ReviewVO {
     private String rfile3;
     private String rcontent;
     private Date rdate;
-    private Integer tnum;
+    private Integer contentId;
     private Integer idx;
 
 }
