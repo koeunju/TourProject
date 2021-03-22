@@ -4,7 +4,7 @@
 
 <c:import url="/top"/>
 
-<script src="./js/tourKeyword.js"></script>
+<script src="../js/tourKeyword.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=11a513c1218b7224c39835d20851c411"></script>
 
 <div id="warp">

@@ -50,7 +50,11 @@
     <interceptors>
         <interceptor>
             <!-- <mapping path="/user/**"/> -->
+             <mapping path="/user/myInfo"/>
+            <mapping path="/review/write"/>
+            <mapping path="/board/insert"/>
             <mapping path="/admin/**"/>
+            <mapping path="/tour/save"/>
             <beans:bean class="com.t4er.common.interceptor.LoginCheckInterceptor"/>
         </interceptor>
 <!--        <interceptor>
