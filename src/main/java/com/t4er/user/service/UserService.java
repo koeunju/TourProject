@@ -17,4 +17,6 @@ public interface UserService {
 
     String checkState(String id);
 
+	int setPoint(@Valid UserVO user);
+
 }

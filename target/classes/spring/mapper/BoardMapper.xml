@@ -188,8 +188,9 @@
 
     <!-- mypage -->
     <!-- 내정보에서 글 검색 -->
-    <select id="selectMyWrite" parameterType="int"
+    <select id="selMyBoard" parameterType="String"
             resultType="Board">
-		select * from board where bnum=#{bnum}
+		select * from board where idx=#{idx}
 	</select>
+
 </mapper>

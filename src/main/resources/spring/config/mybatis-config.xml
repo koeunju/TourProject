@@ -10,6 +10,7 @@
         <typeAlias type="com.t4er.board.model.BoardPagingVO" alias="BPaging"/>
         <typeAlias type="com.t4er.user.model.UserVO" alias="User"/>
         <typeAlias type="com.t4er.point.model.ProductVO" alias="Product"/>
+        <typeAlias type="com.t4er.point.model.PointVO" alias="Point"/>
         <typeAlias type="com.t4er.point.model.ProductCategoryVO" alias="PCategory" />
         <typeAlias type="com.t4er.point.model.ProductPagingVO" alias="PPaging" />
         <typeAlias type="com.t4er.review.model.ReviewVO" alias="Review" />

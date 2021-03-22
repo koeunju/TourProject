@@ -6,11 +6,9 @@
     function ready() {
         alert('준비중에 있습니다.');
     }
-
     function openWin(idx) {
         var win = window.open("pwdCheck?idx=" + idx, "pwdCheck", "width=400, height=400, left=100, top=100");
     }
-
     $(function () {
         $('#rewrite').on('click', function (e) {
             e.preventDefault();
@@ -19,7 +17,6 @@
             var $pwd2 = $('#remypwd');
             var $tel = $('#tel');
             var $email = $('#email');
-
             if (!$name.val()) {
                 alert('이름을 입력하세요');
                 $name.focus();
@@ -45,7 +42,6 @@
                 $email.focus();
                 return;
             }
-
             $('#meF').submit();
         })
     })
@@ -78,6 +74,7 @@
         <!-- 내정보 -->
         <form name="meF" id="meF" action="edit" method="POST">
 
+            <input type="hidden" id="point" name="point" value="${user.point }">
             <input type="hidden" id="idx" name="idx" value="${user.idx }">
             <table class="table table-hover" id="mypageT">
                 <tr>

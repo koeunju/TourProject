@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,33 +14,21 @@
     <link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
 
-<body>
-<%
-    // 인코딩
-    request.setCharacterEncoding("euc-kr");
-%>
-
-
-<nav class="navbar navbar-expand-md navbar-dark bg-dark text-white" id="font1">
-    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark text-white"
+     id="font1">
+    <div
+            class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
             <c:if test="${loginUser eq null or empty loginUser}">
-
                 <tr>
                     <td colspan="5"></td>
                 </tr>
             </c:if>
-
-
             <c:if test="${loginUser ne null and not empty loginUser}">
                 <c:if test="${loginUser.stat == 9}">
-
                     <a class="nav-link" href="${pageContext.request.contextPath}/admin">관리자 페이지</a>
-
                 </c:if>
-
             </c:if>
-
         </ul>
     </div>
     <div class="mx-auto order-0">
@@ -50,13 +38,13 @@
             class="navbar-collapse collapse w-100 order-1 dual-collapse2 text-white">
         <ul class="navbar-nav ml-auto">
             <c:if test="${loginUser eq null}">
-                <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/login">로그인</a></li>
-            <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/join">회원가입</a>
-            </c:if>
-            <c:if test="${loginUser ne null}">
-                  <li class="nav-link active"><a class="nav-link" href='#'>${loginUser.id}님</a></li>
-                <li class="nav-link active"><a class="nav-link" href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
-   			 <li class="nav-link active"><a class="nav-link" href="${pageContext.request.contextPath}/user/myInfo?idx=${loginUser.idx}">마이페이지</a>
+            <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/user/login">로그인</a></li>
+            <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/user/join">회원가입</a>
+                </c:if>
+                <c:if test="${loginUser ne null}">
+            <li class="nav-link active"><a class="nav-link" href='#'>${loginUser.id}님</a></li>
+            <li class="nav-link active"><a class="nav-link" href="${pageContext.request.contextPath}/user/logout">로그아웃</a></li>
+                <li class="nav-link active"><a class="nav-link" href="${pageContext.request.contextPath}/user/myInfo?idx=${loginUser.idx}">마이페이지</a>
             </c:if>
         </ul>
     </div>
@@ -80,8 +68,8 @@
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">게시판</a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="#">이달의 여행지</a>
-                    <a class="dropdown-item" href="boardList">자유게시판</a>
-                    <a class="dropdown-item" href="#">고객센터</a>
+                    <a class="dropdown-item" href="/board/list">자유게시판</a>
+                    <a class="dropdown-item" href="/board/list2">고객센터</a>
                 </div>
             </li>
 
@@ -89,7 +77,7 @@
                 <a class="nav-link" href="${pageContext.request.contextPath}/point">포인트샵</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/hof">명예의 전당</a>
+                <a class="nav-link" href="#">명예의 전당</a>
             </li>
         </ul>
     </div>

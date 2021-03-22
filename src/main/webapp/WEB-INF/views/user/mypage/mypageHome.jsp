@@ -60,7 +60,10 @@
 			</tr>
 			<tr>
 				<th colspan="2">내포인트</th>
-				<td colspan="2">${user.point }POINT</td>
+				<td colspan="2">${user.point }POINT<br>
+				<a href="/user/mypoint?idx=${user.idx }"><label>더보기</label></a>
+				
+				</td>
 			</tr>
 
 		</table>
@@ -82,7 +85,7 @@
 <!-- -------------------------------- -->
 <script type="text/javascript">
 	function leave(num){
-		alert(num);
+		//alert(num);
 		var n = $('#idx').val(num);
 		$('#pf').attr('action','/user/del')
 		$('#pf').submit();

@@ -13,7 +13,8 @@ import javax.validation.Valid;
 @Log4j
 public class UserServiceImpl implements UserService {
 
-    @Autowired
+
+	@Autowired
     private UserMapper userMapper;
 
     //회원상태 조회
@@ -70,4 +71,12 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
+    
+    /**초기 회원가입시 포인트 부여*/
+    @Override
+	public int setPoint(UserVO user) {
+    	UserVO u = this.userMapper.findUser(user);
+		return this.userMapper.setPoint(u.getIdx());
+	}
+
 }

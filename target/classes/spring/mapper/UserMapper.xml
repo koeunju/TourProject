@@ -7,7 +7,7 @@
 
     <insert id="createUser" parameterType="User">
 		insert into member(idx, id, pwd, email, name, tel, indate, point, stat)
-		values(member_seq.nextval, #{id}, #{pwd}, #{email}, #{name}, #{tel}, sysdate, 1000,1)
+		values(member_seq.nextval, #{id}, #{pwd}, #{email}, #{name}, #{tel}, sysdate, 0,1)
 	</insert>
 
     <select id="idCheck" parameterType="string" resultType="int">
@@ -68,4 +68,14 @@
 		update member set stat=4
 		where idx=#{idx}
 	</update>
+	
+	<!-- 내 포인트 조회 -->
+	<select id = "mypoint" parameterType="String" resultType="Point">
+		select * from point where idx=${idx,jdbcType=NUMBERIC}
+	</select>
+	<!-- 회원가입시 포인트 부여 -->
+	<insert id = "setPoint" parameterType="String">
+		insert into point values(member_seq.nextval,'100',sysdate,1000,1000,#{idx})
+	
+	</insert>
 </mapper>
