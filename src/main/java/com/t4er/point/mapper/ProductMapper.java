@@ -21,9 +21,6 @@ public interface ProductMapper {
 
 	int getProductTotalCount(PagingVO paging);
 
-	int getProductTotalCount();
-
-	int getProductByCateTotalCount(PagingVO paging);
 
 
 }

@@ -19,11 +19,10 @@ public interface ProductService {
     List<Product_CategoryVO> getCategory();
     
  
-    int getProductTotalCount();
 	int getProductTotalCount(PagingVO paging);
 	
 	List<ProductVO> getProdList(PagingVO paging);
-	int getProductByCateTotalCount(PagingVO paging);
+
 	
 
 }

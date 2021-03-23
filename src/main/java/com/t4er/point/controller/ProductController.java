@@ -83,7 +83,7 @@ public class ProductController {
 			paging.setTotalCount(totalCount);
 			paging.setPagingBlock(5);
 			paging.init(req.getSession());
-			log.info("ddd"+paging);
+			log.info("paging"+paging);
 			
 			
 			// 상품 목록 가져오기  

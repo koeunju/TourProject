@@ -1,5 +1,6 @@
 package com.t4er.user.service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.t4er.user.model.NotUserException;
@@ -11,9 +12,14 @@ public interface UserService {
 
 	UserVO findUser(UserVO findUser) throws NotUserException;
 
-	int createUser(@Valid UserVO user);
+	int createUser(@Valid UserVO user); //유저 회원가입
 
 	boolean idCheck(String id);
+	boolean emailCheck(String email);
+
+	void mailSendWithUserKey(String email, String id, HttpServletRequest req);
+
+	String checkState(String id);
 
 
 }

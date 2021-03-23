@@ -39,15 +39,53 @@ function checkId(uid){
 	
 }//checkId()------------------
 
-function check(){
+function checkEmail(uem){
+	let len = uem.length;
+	$('#msgEmail').text('')
+	.removeClass('text-danger')
+	.removeClass('text-primary');
+	if(len<4||len>30){
+		$('#msgEmail').text('올바르지 않은 이메일 양식입니다.')
+					.addClass('text-danger');
+		$('#email').select();
+		return;
+	}
+	$.ajax({
+		type:'GET',
+		url:'emailcheck?email='+uem,
+		dataType:'json',   				
+		cache:false,			
+	}).done(function(res){
+		let n =parseInt(res.isEma);
+		let cls=''
+		if(n>0){
+			cls='text-primary';
+			$('#emailstate').val(1);
+		}else{
+			cls='text-danger'
+			$('#emailstate').val("");
+		}
+		$('#msgEmail').text(res.emailResult).addClass(cls)
+	}).fail(function(err){
+		alert('error: '+err.status);
+	})
 	
+}////checkEmail()------------------
+
+
+function check(){
 	if(!joinF.idstate.value){
 		alert('입력한 아이디는 사용 불가능합니다.');
 		f.id.select();
 		return;
 	}
+	if(!joinF.emailstate.value){
+		alert('입력한 이메일은 사용 불가능합니다.');
+		f.email.select();
+		return;
+	}
 	
-	f.submit();
+	joinF.submit();
 }
 </script>
 
@@ -65,8 +103,8 @@ function check(){
 				<h5 class="form-signin-heading">양식에 맞춰 입력해 주세요</h5>
 				<label for="inputName" class="sr-only">*이름</label> <input
 					type="text" name="name" id="name" class="form-control"
-					placeholder="NAME" required autofocus><BR> <label
-					for="inputId" class="sr-only">*아이디</label> 
+					placeholder="NAME" required autofocus><BR> 
+					<label for="inputId" class="sr-only">*아이디</label> 
 					<input type="hidden" name="idstate" id="idstate">
 					<input type="text" name="id" id="id"  placeholder="User ID" class="form-control" onchange="checkId(this.value)">
 				<div id="msgId"></div>			
@@ -82,13 +120,18 @@ function check(){
 					placeholder="RE Password" required autofocus><br> <label
 					for="inputTel" class="sr-only">*연락처</label> <input type="text"
 					name="tel" id="tel" maxlength="11" class="form-control"
-					placeholder="Tel" required autofocus><BR> <label
-					for="inputEmil" class="sr-only">*연락처</label> <input type="text"
-					name="email" id="email" class="form-control" placeholder="email"
-					required autofocus><BR>
-
+					placeholder="Tel" required autofocus><BR> 
+					<label for="inputEmil" class="sr-only">*이메일</label> 
+					<input type="hidden" name="emailstate" id="emailstate">
+                    <input type="text" name="email" id="email" placeholder="Email" class="form-control" onchange="checkEmail(this.value)">
+				<div id="msgEmail"></div>			
+				 <!--이메일 사용 가능 여부를 보여줄 예정  -->
+				 <span class="text-danger">
+				 	<form:errors path="email"/>
+				 </span>
+	
 				<div>
-				<button type="button" id="btnOk" class="btn btn-success" onclick="check()">회원가입</button>
+				<button type="button" class="btn btn-success" onclick="check()">회원가입</button>
 				<button type="reset" class="btn btn-warning">다시쓰기</button>
 				</div>
 			</form>

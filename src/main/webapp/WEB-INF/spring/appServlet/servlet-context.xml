@@ -42,6 +42,26 @@
         <beans:property name="maxUploadSize" value="-1"/>
         <!-- -1값을 주면 업로드 용량 무제한  -->
     </beans:bean>
+    
+    <!-- 회원가입 메일 인증(메일 보내기) -->
+	<beans:bean id="mailSender"	class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<beans:property name="host" value="smtp.gmail.com" />
+		<beans:property name="port" value="587" /><!-- 465 or 25 -->
+		<beans:property name="username" value="bluedmoel3@gmail.com" />
+		<beans:property name="password" value="asl06081211@" />
+		<beans:property name="defaultEncoding" value="utf-8" />
+
+        <!-- email 요청시는 SMTP -->
+		<beans:property name="javaMailProperties">
+			<beans:props>
+				<beans:prop key="mail.transport.protocol">smtp</beans:prop>
+				<beans:prop key="mail.smtp.auth">true</beans:prop>
+				<beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+				<beans:prop key="mail.debug">true</beans:prop>
+			</beans:props>
+		</beans:property>
+	</beans:bean>
+   
 
     <!-- Interceptor 설정 =====================  -->
     <!--<interceptors>
@@ -61,6 +81,7 @@
         <beans:property name="defaultEncoding" value="UTF-8"/>
         <beans:property name="basename" value="classpath:spring/message/messagesAnnotation"/>
     </beans:bean> -->
+	
 	
 	
 	

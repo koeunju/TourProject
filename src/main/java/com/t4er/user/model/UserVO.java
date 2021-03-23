@@ -22,6 +22,5 @@ public class UserVO {
 	  private String stat;
 	  private java.sql.Date indate;
 	  private int point;
-	  
 
 }

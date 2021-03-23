@@ -1,13 +1,17 @@
 package com.t4er.user.service;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Random;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMessage.RecipientType;
+import javax.servlet.http.HttpServletRequest;
+
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.t4er.user.mapper.UserMapper;
 import com.t4er.user.model.NotUserException;
@@ -18,9 +22,17 @@ import lombok.extern.log4j.Log4j;
 @Service("userService")
 @Log4j
 public class UserServiceImpl implements UserService {
+	
+	
+	@Autowired
+	private SqlSessionTemplate sqlSession;
 
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	private JavaMailSender mailSender;
+
 	
 	   @Override
 	   public int createUser(UserVO user) {
@@ -39,6 +51,24 @@ public class UserServiceImpl implements UserService {
 	         return false;
 	      }
 	   }
+	   
+	   public boolean emailCheck(String email) {
+		   Integer idx=userMapper.emailCheck(email);
+		      //이메일로 회원번호 받아오기
+		   if(idx==null) {
+		       //해당 이메일은 사용 가능
+		        return true;
+		   }else {
+		       //해당 이메일은 사용 중
+	          return false;
+		      }
+	   }
+	   
+		//회원상태 조회
+		@Override
+		public String checkState(String id) {
+			return this.userMapper.checkState(id);
+		}
 
 	
 	 /**아이디로 회원정보 가져오기*/
@@ -70,5 +100,26 @@ public class UserServiceImpl implements UserService {
 	      }
 	      return null;
 	   }
+	
+
+	
+
+	public void mailSendWithUserKey(String email, String id, HttpServletRequest req) {
+		
+		MimeMessage mail = mailSender.createMimeMessage();
+		String htmlStr = "<h2>안녕하세요 올랑올랑입니다</h2><br><br>" 
+				+ "<h3>" + id + "님</h3>" + "<p>인증하기 버튼을 누르시면 로그인 하실 수 있습니다 : " 
+				+ "<a href='http://localhost:8080" + req.getContextPath() + "/user/key_alter?id="+ id +">인증하기</a></p>";
+		try {
+		
+			mail.setSubject("[본인인증] 올랑올랑 가입 인증메일입니다", "utf-8");
+			mail.setText(htmlStr, "utf-8", "html");
+			mail.addRecipient(RecipientType.TO, new InternetAddress(email));
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+		mailSender.send(mail);		
+	}
+ 	
 
 }

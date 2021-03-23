@@ -14,7 +14,7 @@
 	<logger name="com.t4er.olan">
 		<level value="info" />
 	</logger>
-	<logger name="com.t4er.point">
+	<logger name="com.t4er.user">
 		<level value="debug" />
 	</logger>
 	

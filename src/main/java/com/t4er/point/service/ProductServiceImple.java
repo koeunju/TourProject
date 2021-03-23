@@ -43,10 +43,6 @@ public class ProductServiceImple implements ProductService {
     	 return this.productMapper.getProdList(paging);
      }
     
-	@Override
-    public int getProductTotalCount() {
-    	return this.productMapper.getProductTotalCount();
-    	}
     
 	@Override
     public int getProductTotalCount(PagingVO paging) {
@@ -54,8 +50,5 @@ public class ProductServiceImple implements ProductService {
     
     }
 	
-	public int getProductByCateTotalCount(PagingVO paging) {
-		return this.productMapper.getProductByCateTotalCount(paging);
-	} 
 }
 

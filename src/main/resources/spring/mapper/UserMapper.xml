@@ -7,11 +7,15 @@
 
    	<insert id="createUser" parameterType="User">
 	insert into member(idx, id, pwd, email, name, tel, indate, point, stat)
-	values(member_seq.nextval, #{id}, #{pwd}, #{email}, #{name}, #{tel}, sysdate, 1000,1)
+	values(member_seq.nextval, #{id}, #{pwd}, #{email}, #{name}, #{tel}, sysdate, 0, 0)
 	</insert>
 	
    <select id="idCheck" parameterType="string" resultType="int">
    		select idx from member where id = #{id}
+   </select>
+   
+    <select id="emailCheck" parameterType="string" resultType="int">
+   		select idx from member where email = #{email}
    </select>
 
 	<select id="loginCheck" resultType="User" parameterType="hashmap">
@@ -20,7 +24,7 @@
 
 	<!-- 회원 상태 조회 -->
 	<select id="checkState" resultType="String" parameterType="String">
-      select stat froms member where id=#{id}
+      select stat from member where id=#{id}
    </select>
    
       <!-- 아이디로 회원정보 가져오기 -->
