@@ -101,9 +101,9 @@ function check(){
 		<div class="card-body">
 			<form name="joinF" id="joinF" action="join" method="POST">
 				<h5 class="form-signin-heading">양식에 맞춰 입력해 주세요</h5>
-				<label for="inputName" class="sr-only">*이름</label> <input
-					type="text" name="name" id="name" class="form-control"
-					placeholder="NAME" required autofocus><BR> 
+				<label for="inputName" class="sr-only">*닉네임</label> <input
+					type="text" name="nick" id="nick" class="form-control"
+					placeholder="NickName" required autofocus><BR> 
 					<label for="inputId" class="sr-only">*아이디</label> 
 					<input type="hidden" name="idstate" id="idstate">
 					<input type="text" name="id" id="id"  placeholder="User ID" class="form-control" onchange="checkId(this.value)">

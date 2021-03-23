@@ -1,7 +1,5 @@
 package com.t4er.user.service;
 
-import java.util.Random;
-
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -108,8 +106,9 @@ public class UserServiceImpl implements UserService {
 		
 		MimeMessage mail = mailSender.createMimeMessage();
 		String htmlStr = "<h2>안녕하세요 올랑올랑입니다</h2><br><br>" 
-				+ "<h3>" + id + "님</h3>" + "<p>인증하기 버튼을 누르시면 로그인 하실 수 있습니다 : " 
-				+ "<a href='http://localhost:8080" + req.getContextPath() + "/user/key_alter?id="+ id +">인증하기</a></p>";
+				+ "<h3>" + id + "님</h3>" + "<p>인증하기 버튼을 누르시면 로그인 하실 수 있습니다 : "
+				//+ "<button onclick='http://localhost:9090"+req.getContextPath()+"/user/stat_alter?id="+id+"'>Test</button>";
+				+ "<a href='http://localhost:9090" + req.getContextPath() + "/user/stat_alter?id="+ id +"'>인증하기</a></p>";
 		try {
 		
 			mail.setSubject("[본인인증] 올랑올랑 가입 인증메일입니다", "utf-8");
@@ -120,6 +119,21 @@ public class UserServiceImpl implements UserService {
 		}
 		mailSender.send(mail);		
 	}
+	
+	
+	@Override
+	public int statAlter(String id) {
+		return this.userMapper.statAlter(id);
+		
+		/*
+		 * int resultCnt = 0;
+		 * 
+		 * sqlSession.getMapper(UserMapper.class); resultCnt = statAlter(id);
+		 * 
+		 * return resultCnt;
+		 */
+	}
+
  	
 
 }

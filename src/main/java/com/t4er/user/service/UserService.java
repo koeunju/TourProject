@@ -16,10 +16,12 @@ public interface UserService {
 
 	boolean idCheck(String id);
 	boolean emailCheck(String email);
+	int statAlter(String id); // 유저 stat 1로 바꿔주는 메서드
 
 	void mailSendWithUserKey(String email, String id, HttpServletRequest req);
 
 	String checkState(String id);
+
 
 
 }

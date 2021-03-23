@@ -6,8 +6,8 @@
 <mapper namespace="com.t4er.user.mapper.UserMapper">
 
    	<insert id="createUser" parameterType="User">
-	insert into member(idx, id, pwd, email, name, tel, indate, point, stat)
-	values(member_seq.nextval, #{id}, #{pwd}, #{email}, #{name}, #{tel}, sysdate, 0, 0)
+	insert into member(idx, id, pwd, email, nick, tel, image, stat, indate ,point)
+	values(member_seq.nextval, #{id}, #{pwd}, #{email}, #{nick}, #{tel}, null , 0 ,sysdate, 0)
 	</insert>
 	
    <select id="idCheck" parameterType="string" resultType="int">
@@ -21,6 +21,11 @@
 	<select id="loginCheck" resultType="User" parameterType="hashmap">
 	select * from member where id=#{id} and pwd=#{pwd}
 	</select>
+	
+	<update id="statAlter" parameterType="String">
+	    update member set stat=1
+		where id=#{id}
+	</update> 
 
 	<!-- 회원 상태 조회 -->
 	<select id="checkState" resultType="String" parameterType="String">
@@ -49,13 +54,6 @@
 		delete from member where idx=#{idx}
 	</delete>
 
-	<!-- 유저 정보 수정 --> <!-- 회원상태와 기타 추가 -->
-	<update id="updateUser" parameterType="User" >
-		update member set  pwd=#{pwd},
-		email=#{email} , name=#{name}, tel=#{tel}, stat=#{stat}, point=#{point}
-		where idx=#{idx}
-	</update>
-
 	<!-- 유저 정보 가져오기 -->
 	<select id="getUser" resultType="User" parameterType="string">
 		select * from member where idx=#{idx}
@@ -72,12 +70,6 @@
 		select * from member where idx=#{idx}
 	</select>
 
-	<!-- 유저정보 업데이트 -->
-	<update id="updateMyInfo" parameterType="User">
-		update member set name =
-		#{name}, pwd = #{pwd}, email = #{email}, tel = #{tel}, stat=#{stat}
-		where idx = #{idx}
-	</update>
 
 	<!-- 유저 탈퇴 처리 -->
 	<update id="leaveMember" parameterType="String">

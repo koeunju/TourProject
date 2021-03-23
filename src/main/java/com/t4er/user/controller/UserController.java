@@ -3,7 +3,6 @@ package com.t4er.user.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.t4er.common.CommonUtil;
+import com.t4er.user.model.UserSha256;
 import com.t4er.user.model.UserVO;
 import com.t4er.user.service.UserService;
 
@@ -72,6 +72,17 @@ public class UserController {
 		return util.addMsgLoc(m, str, loc);
 	}
 
+	
+	    // 이메일 인증 완료 
+	    @GetMapping(value="/user/stat_alter")
+		public String statAlter(Model m, @RequestParam("id") String id) {
+
+	    this.userService.statAlter(id);
+
+		return "user/joinSuccess";
+		
+		}
+	
 	@GetMapping(value="/idcheck",produces = "application/json")
 	public @ResponseBody Map<String, String> idCheck(@RequestParam("id") String id){
 		boolean isUse=userService.idCheck(id);
@@ -95,4 +106,6 @@ public class UserController {
 		map.put("isEma", String.valueOf(n));
 		return map;
 	}
+	
+	
 }

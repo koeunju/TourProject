@@ -17,8 +17,9 @@ public class UserVO {
 	  @Length(min=4, max=15)
 	  private String pwd;
 	  private String email;
-	  private String name;
+	  private String nick;
 	  private String tel;
+	  private String image;
 	  private String stat;
 	  private java.sql.Date indate;
 	  private int point;

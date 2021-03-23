@@ -14,6 +14,8 @@ public interface UserMapper {
 	int createUser(UserVO user);
 	
 	String checkState(String id);
+	
+	int statAlter(String id);
 
 
 }
