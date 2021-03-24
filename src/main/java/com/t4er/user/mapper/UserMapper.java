@@ -2,6 +2,8 @@ package com.t4er.user.mapper;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.t4er.user.model.UserVO;
 
 public interface UserMapper {
@@ -18,6 +20,8 @@ public interface UserMapper {
 	String checkState(String id);
 	
 	int statAlter(String id);
+	
+	String searchId(@Param("nick")String nick, @Param("email")String email);
 
 
 }

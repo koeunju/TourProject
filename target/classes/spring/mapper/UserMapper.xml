@@ -34,6 +34,13 @@
 	    update member set stat=1
 		where id=#{id}
 	</update> 
+	
+	<!-- 아이디 찾기 -->
+	<select id="searchId" resultType="String">
+		select id from member
+        where nick = #{nick} and email = #{email}
+	</select>
+
 
 	<!-- 회원 상태 조회 -->
 	<select id="checkState" resultType="String" parameterType="String">

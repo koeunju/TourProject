@@ -6,7 +6,6 @@
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-	
 </script>
 
 <script>
@@ -62,8 +61,11 @@ if (cks != null) {
 						<label for="saveId"> <input type="checkbox" name="saveId"
 							id="saveId" <%=(flag) ? "checked" : ""%>>아이디 저장
 						</label>
-
 					</div>
+					<div>
+						<a href="${pageContext.request.contextPath}/userSearch">&nbsp; 아이디</a>
+						/<a href="${pageContext.request.contextPath}/pwdSearch">비밀번호 찾기</a>
+					</div>		
 					<button class="btn btn-lg btn-primary btn-block">로그인</button>
 				</form>
 

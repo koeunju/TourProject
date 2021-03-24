@@ -79,7 +79,7 @@ public class ProductController {
 		@ModelAttribute("paging") PagingVO paging) { 
 
 
-			int totalCount = this.productService.getProductTotalCount(paging);
+			int totalCount = this.productService.getProdByCateTotalCount(paging);
 			paging.setTotalCount(totalCount);
 			paging.setPagingBlock(5);
 			paging.init(req.getSession());

@@ -6,6 +6,13 @@
 <mapper namespace="com.t4er.point.mapper.ProductMapper">
 	<select id="getProductTotalCount" resultType="int" parameterType="Paging">
 		select count(*) cnt from product
+		<if test="findKeyword != null and findKeyword !=''">
+			<include refid="findWhere" />
+		</if>
+	</select>
+	
+    <select id="getProdByCateTotalCount" resultType="int" parameterType="Paging">
+		select count(*) cnt from product
 		<if test="cgnum != null and (findKeyword ==null or findKeyword=='')">
 			<where>
 				cg_num=#{cgnum}
@@ -18,6 +25,7 @@
 			</if>
 		</if>
 	</select>
+	
 
 
 	<!-- 페이징 처리후 상품보여줌 -->

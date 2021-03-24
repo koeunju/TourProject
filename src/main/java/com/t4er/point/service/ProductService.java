@@ -21,6 +21,8 @@ public interface ProductService {
  
 	int getProductTotalCount(PagingVO paging);
 	
+	int getProdByCateTotalCount(PagingVO paging);
+	
 	List<ProductVO> getProdList(PagingVO paging);
 
 	

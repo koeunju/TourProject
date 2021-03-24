@@ -50,5 +50,10 @@ public class ProductServiceImple implements ProductService {
     
     }
 	
+	@Override
+	public int getProdByCateTotalCount(PagingVO paging) {
+		return this.productMapper.getProdByCateTotalCount(paging);
+	}
+	
 }
 

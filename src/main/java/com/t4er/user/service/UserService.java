@@ -3,6 +3,8 @@ package com.t4er.user.service;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.t4er.user.model.NotUserException;
 import com.t4er.user.model.UserVO;
 
@@ -24,6 +26,8 @@ public interface UserService {
 	void mailSendWithUserKey(String email, String id, HttpServletRequest req);
 
 	String checkState(String id);
+
+	String searchId(@Param("nick")String nick, @Param("email")String email);
 
 
 

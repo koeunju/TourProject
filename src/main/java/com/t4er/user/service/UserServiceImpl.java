@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private JavaMailSender mailSender;
+	
 
 	
 	   @Override
@@ -138,6 +139,22 @@ public class UserServiceImpl implements UserService {
 		return this.userMapper.statAlter(id);
 		
 	}
+	
+	//아이디 찾기
+
+	public String searchId(String nick, String email) {
+		
+		String result = "";
+
+		try {
+			result = userMapper.searchId(nick, email);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
 
  	
 

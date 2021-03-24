@@ -11,7 +11,6 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.t4er.common.CommonUtil;
-import com.t4er.user.model.NotUserException;
 import com.t4er.user.model.UserVO;
 import com.t4er.user.service.UserService;
 
@@ -133,5 +131,28 @@ public class UserController {
 		return map;
 	}
 	
+	//아이디 찾기
+	@GetMapping("/userSearch")
+	public String userSearch() {
+		
+		return "/user/userSearch";
+	}
 	
+	
+	@PostMapping("/userSearch")
+	@ResponseBody
+	public String userSearchEnd(@RequestParam("inputNick") String nick,
+			                 @RequestParam("inputEmail") String email) {
+		
+		String result = userService.searchId(nick, email);
+
+		return "result";
+	}
+	
+	//비밀번호 찾기 
+	@GetMapping("/pwdSearch")
+	public String pwdSearch() {
+
+		return "/user/pwdSearch";
+	}
 }
