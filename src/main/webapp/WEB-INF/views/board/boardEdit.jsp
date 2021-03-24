@@ -1,7 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="myctx" value="${pageContext.request.contextPath}"/>
-<jsp:include page="/top.jsp"/>
+
+<c:import url="/top_sub" />
 
 
 <div class="container" style="margin-top:30px">
@@ -9,23 +10,20 @@
 
         <div class="col-sm-12 text-center">
             <h1 class="text-center">Board Write</h1>
-            <!-- 파일 업로드시. 메소드는 post, 인코딩타입은 multipart/form-data로 주어야함 -->
-            <!-- boardWriteEnd.do로 간다고 해놓고 properties선언에서는 insert로 선언을 하니까 경로를 못찾음 -->
-            <form name="boardF" id="boardF" action="boardEditEnd.do"
-                  method="post" enctype="multipart/form-data">
-                <table class="table table-bordered">
 
+            <form name="boardF" id="boardF" action="insert"
+                  method="post" enctype="multipart/form-data">
+                <input type="hidden" name="mode" value="edit">
+
+                <table class="table table-bordered">
                     <tr>
                         <th style="width:20%">게시물 유형</th>
                         <td style="width:80%">
                             <div class="col-md-12">
-                                <!-- <form name="CategoryF" id="CategoryF" action="boardCategory.do#bbs"
-                                    class="form-inline"> -->
-                                <select name="CategoryF" id="CategoryF" class="form-control">
-                                    <option value="">::게시물 유형::</option>
-                                    <option value="0">이달의 여행지</option>
+                                <select name="cg_num" id="cg_num" class="form-control">
+                                    <option value="99">::게시물 유형::</option>
                                     <option value="1">자유게시판</option>
-                                    <option value="2">고객센터</option>
+                                    <option value="0">이달의 여행지</option>
                                 </select>
                                 <!-- </form> -->
                             </div>
@@ -42,39 +40,28 @@
                         <th style="width:20%">제목</th>
                         <td style="width:80%">
                             <input type="text" name="btitle"
-                                   id="btitle" placeholder="" class="form-control" value="${board.btitle }">
+                                   id="btitle" placeholder="" class="form-control" value="<c:out value='${board.btitle}'/>">
                         </td>
                     </tr>
-                    <!--  <tr>
-                        <th style="width:20%">글쓴이</th>
-                        <td style="width:80%">
-                           <input type="text" name="name"
-                            id="name" placeholder="Name" class="form-control">
-                        </td>
-                     </tr> -->
+                    <%--    <tr>
+                           <th style="width:20%">글쓴이</th>
+                           <td style="width:80%">
+                              <input type="text" name="name"
+                               value="<c:out value="${board.idx}"/>"
+                               id="name" placeholder="Name" class="form-control">
+                           </td>
+                       </tr> --%>
                     <tr>
                         <th style="width:20%">첨부파일</th>
                         <td style="width:80%">
-                            <img src="board/Upload/${board.bupload1}"
-                                 class="img-thumbnail" style="width:32%"
-                                 alt="이미지1">
-
-                            <img src="board/Upload/${board.bupload2}"
-                                 class="img-thumbnail" style="width:32%"
-                                 alt="이미지2">
-
-                            <img src="board/Upload/${board.bupload3}"
-                                 class="img-thumbnail" style="width:32%"
-                                 alt="이미지3">
-
+                            <c:out value="${board.originFilename}"/>
+                            [
+                            <c:out value="${board.filesize}"/>
+                            bytes]<br>
+                            <input type="text" name="old_filename"
+                                   value="<c:out value='${board.filename}'/>">
                             <input type="file"
-                                   name="bupload1" id="bupload1"
-                                   placeholder="Attach File" class="form-control">
-                            <input type="file"
-                                   name="bupload2" id="bupload2"
-                                   placeholder="Attach File" class="form-control">
-                            <input type="file"
-                                   name="bupload3" id="bupload3"
+                                   name="mfilename" id="filename"
                                    placeholder="Attach File" class="form-control">
                         </td>
                     </tr>
@@ -82,18 +69,10 @@
                     <tr>
                         <th style="width:20%">글내용</th>
                         <td style="width:80%">
-               <textarea rows="10" cols="50" name="bcontent"
-                         id="bcontent" placeholder="" class="form-control">${board.bcontent}</textarea>
+            	   <textarea rows="10" cols="50" name="bcontent"
+                             id="bcontent" placeholder="" class="form-control"><c:out value="${board.bcontent}"/></textarea>
                         </td>
                     </tr>
-                    <!--  <tr>
-                        <th style="width:20%">비밀번호</th>
-                        <td style="width:80%">
-                           <input type="password"
-                            name="pwd" id="pwd" placeholder="Password" class="form-control">
-                        </td>
-                     </tr> -->
-
                     <tr>
                         <td colspan="2" class="text-center">
                             <button class="btn btn-primary" id="btnWrite">수 정</button>
@@ -124,25 +103,16 @@
                 $bcontent.focus();
                 return;
             }
-
+            var $cg = $('#cg_num')
+            if ($cg.val() == 99) {
+                alert('선택할수 없는 카테고리입니다. 다시 선택해주세요')
+                $('#cg_num').focus();
+                return;
+            }
 
             $('#boardF').submit();
         })
     })
-
-    /* 카테고리 선택 여부 함수 */
-    $(function () {
-        $('#CategoryF').on('submit', function () {
-            if (!$('#CategoryF').val()) {
-                alert('카테고리를 선택하세요');
-                $('#CategoryF').focus();
-                return false;
-            }
-            //유효성 체크...
-
-            return true;
-        })
-    })
 </script>
 
-<jsp:include page="/foot.jsp"/>
+<c:import url="/foot_sub" />

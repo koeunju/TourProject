@@ -5,13 +5,25 @@
 
 <mapper namespace="com.t4er.user.mapper.UserMapper">
 
-    <insert id="createUser" parameterType="User">
-		insert into member(idx, id, pwd, email, name, tel, indate, point, stat)
-		values(member_seq.nextval, #{id}, #{pwd}, #{email}, #{name}, #{tel}, sysdate, 0,1)
+	<insert id="createUser" parameterType="User">
+	insert into member(idx, id, pwd, email, nick, tel, image, stat, indate ,point)
+	values(member_seq.nextval, #{id}, #{pwd}, #{email}, #{nick}, #{tel}, null , 0 ,sysdate, 0)
 	</insert>
 
     <select id="idCheck" parameterType="string" resultType="int">
    		select idx from member where id = #{id}
+   </select>
+
+	<select id="emailCheck" parameterType="string" resultType="int">
+   		select idx from member where email = #{email}
+   </select>
+
+	<select id="nickCheck" parameterType="string" resultType="int">
+   		select idx from member where nick = #{nick}
+   </select>
+
+	<select id="telCheck" parameterType="string" resultType="int">
+   		select idx from member where tel = #{tel}
    </select>
 
     <select id="loginCheck" resultType="User" parameterType="hashmap">
@@ -28,54 +40,87 @@
    		select * from member where id=#{id}
    </select>
 
-    <!-- admin -->
-    <!--유저 총 카운트 -->
-    <select id="totalCount" resultType="int">
-		select count(*) cnt from member
+	<!-- admin -->
+
+	<!-- 전체 회원수 가져오기 -->
+	<select id="getUserCount" resultType="int"  parameterType="APaging">
+		select count(idx) from member
+		<include refid="findWhere"/>
 	</select>
+	<sql id="findWhere">
+		<if test="findType != null and findKeyword !=''">
+			<where>
+				<if test="findType ==1">
+					nick like '%'||#{findKeyword}||'%'
+				</if>
+				<if test="findType ==2">
+					id like '%'||#{findKeyword}||'%'
+				</if>
+				<if test="findType ==3">
+					tel like '%'||#{findKeyword}||'%'
+				</if>
+			</where>
+		</if>
+	</sql>
 
-    <!-- 유저 리스트 -->
-    <select id="getUserList" parameterType="hashmap" resultType="User">
-		select * from( select a.*,row_number() over(order by idx desc) rn from member a )
-		where rn between #{start} and #{end}
+	<!-- 회원 목록 가져오기 -->
+	<select id="listUser" resultType="User" parameterType="APaging">
+		select * from (
+		select m.*, row_number() over(order by idx desc) rn
+		from member m
+		<include refid="findWhere"/>
+		)
+		<![CDATA[
+   		where rn > #{start} and rn < #{end}
+   		]]>
+
 	</select>
+	<!-- 유저 삭제 -->
+	<delete id="deleteUser" parameterType="int">
+ 		delete from member where idx=#{idx}
+ 	</delete>
+	<!--  -->
+	<select id="getUser" parameterType="int" resultType="User">
+   		select * from member where idx = #{idx,jdbcType=NUMERIC}
+   </select>
 
-    <!-- 유저 정보 삭제 -->
-    <delete id="deleteUser" parameterType="string">
-		delete from member where idx=#{idx}
-	</delete>
-
-    <!-- 유저 정보 수정 --> <!-- 회원상태와 기타 추가 -->
-    <update id="updateUser" parameterType="User">
-		update member set  pwd=#{pwd},
-		email=#{email} , name=#{name}, tel=#{tel}, stat=#{stat,jdbcType=NUMERIC}, point=#{point,jdbcType=NUMERIC}
-		where idx=#{idx}
+	<!-- 유저 정보 수정 --> <!-- 회원상태와 기타 추가 -->
+	<update id="updateUser" parameterType="User">
+		update member set
+		<if test="adminCheck != 9">
+		pwd=#{pwd,jdbcType=VARCHAR},
+		</if>
+		email=#{email,jdbcType=VARCHAR} , nick=#{nick,jdbcType=VARCHAR}, tel=#{tel,jdbcType=VARCHAR}, stat=#{stat,jdbcType=NUMERIC}/*, image = #{image:VARCHAR}*/
+		<if test="adminCheck == 9">
+		,point=#{point,jdbcType=NUMERIC}
+		</if>
+		where idx=#{idx,jdbcType=NUMERIC}
 	</update>
 
     <!-- my mypage-->
     <!-- 마이페이지에서 내정보 불러올때 -->
-    <select id="selectMy" resultType="User" parameterType="String">
+    <select id="selectMy" resultType="User" parameterType="int">
 		select * from member where idx=#{idx,jdbcType=NUMERIC}
 	</select>
 
     <!-- 내정보 수정에서 비밀번호 재확인 -->
-    <select id="checkPwd" resultType="User" parameterType="String">
+    <select id="checkPwd" resultType="User" parameterType="int">
 		select * from member where idx=#{idx}
 	</select>
 
     <!-- 유저 탈퇴 처리 -->
-    <update id="leaveMember" parameterType="String">
+    <update id="leaveMember" parameterType="int">
 		update member set stat=4
 		where idx=#{idx}
 	</update>
 
     <!-- 내 포인트 조회 -->
-    <select id="mypoint" parameterType="String" resultType="Point">
-		select * from point where idx=${idx,jdbcType=NUMBERIC}
+    <select id="mypoint" parameterType="int" resultType="Point">
+		select * from point where idx=${idx,jdbcType=NUMERIC}
 	</select>
 
     <!-- 회원가입시 포인트 부여 -->
-    <insert id="setPoint" parameterType="String">
+    <insert id="setPoint" parameterType="int">
 		insert into point values(member_seq.nextval,'100',sysdate,1000,1000,#{idx})
 	</insert>
 </mapper>

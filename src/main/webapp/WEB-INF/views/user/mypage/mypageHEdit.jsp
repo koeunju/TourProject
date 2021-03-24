@@ -14,15 +14,15 @@
     $(function () {
         $('#rewrite').on('click', function (e) {
             e.preventDefault();
-            var $name = $('#name');
+            var $nick = $('#nick');
             var $pwd = $('#pwd');
             var $pwd2 = $('#remypwd');
             var $tel = $('#tel');
             var $email = $('#email');
 
-            if (!$name.val()) {
-                alert('이름을 입력하세요');
-                $name.focus();
+            if (!$nick.val()) {
+                alert('닉네임을 입력하세요');
+                $nick.focus();
                 return;
             }
             if (!$pwd.val()) {
@@ -87,9 +87,9 @@
                         <br> 사진</td>
                 </tr>
                 <tr>
-                    <th>이름</th>
-                    <td><input type="text" value="${user.name }" name="name"
-                               id="name" class="form-control"></td>
+                    <th>닉네임</th>
+                    <td><input type="text" value="${user.nick }" name="nick"
+                               id="nick" class="form-control"></td>
                     <th>가입일</th>
                     <td>${user.indate }</td>
                 </tr>

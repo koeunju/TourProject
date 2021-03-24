@@ -1,11 +1,14 @@
 package com.t4er.board.service;
 
-import com.t4er.board.model.BoardPagingVO;
-import com.t4er.board.model.BoardVO;
-
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Repository;
+
+import com.t4er.board.model.BoardPagingVO;
+import com.t4er.board.model.BoardVO;
+
+@Repository
 public interface BoardService {
 
     int insertBoard(BoardVO board);
@@ -26,7 +29,7 @@ public interface BoardService {
     int updateBoard(BoardVO board); // 글수정
 
     // 답변형(계층형) 게시판에서 답변글 달기
-    int rewriteBoard(BoardVO board); // [답변형]
-    BoardVO selectRefLevSunbun(int bnum); // [답변형]
+    int reInsertBoard(BoardVO board); // [답변형]
+    BoardVO selectRefLevSunbun(Integer bnum);// [답변형]
     int updateSunbun(BoardVO parent); // [답변형]
 }

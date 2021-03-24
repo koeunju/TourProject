@@ -1,8 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<jsp:include page="/top.jsp"/>
+<c:import url="/top_sub" />
 
 <div id="wrap" align="center">
 
@@ -10,8 +10,7 @@
 
     <!-- 검색폼 -->
     <div class="col-md-12">
-        <form name="findF" id="findF" action="boardFind.do#bbs"
-              class="form-inline">
+        <form name="findF" id="findF" action="list" class="form-inline">
             <select name="findType" id="findType" class="form-control m-3">
                 <option value="0">::검색 유형::</option>
                 <option value="1">제 목</option>
@@ -35,65 +34,60 @@
         </tr>
 
         <!-- 데이터넣기 -->
-        <c:forEach var="board" items="${boardList}">
-            <tr class="record">
-                <td>${board.bnum }</td>
-                <td style="text-align: left; padding-left: 10px"><a
-                        href="boardView.do?bnum=<c:out value="${board.bnum}"/>">
-                        ${board.btitle }</a></td>
-                <td>${board.idx }</td>
-                <td>${board.bdate }</td>
-                <td>${board.binquiry }</td>
-                <td></td>
+        <c:if test="${boardList eq null or empty boardList}">
+            <tr>
+                <td colspan="5">데이터가 없습니다.</td>
             </tr>
-        </c:forEach>
+        </c:if>
+        <c:if test="${boardList ne null and not empty boardList}">
+            <c:forEach var="board" items="${boardList}">
+
+                <!-- 데이터넣기 -->
+                <tr>
+                    <td><c:out value="${board.bnum}" /></td>
+                    <td style="text-align: left; padding-left: 10px"><a
+                            href="view?bnum=<c:out value="${board.bnum}"/>"> <c:if
+                            test="${board.newImg < 1 }">
+                        <span class="badge badge-success">New</span>
+                    </c:if> <!-- 답변 레벨에 따른 들여쓰기 --> <c:forEach var="k" begin="0"
+                                                               end="${board.lev}">
+                        &nbsp;&nbsp;&nbsp;
+                    </c:forEach> <c:if test="${board.lev>0}">
+                        <img src="../image/re.png">
+                    </c:if> <!-- 글머리(제목 앞에 카테고리 넣어보기) -->
+                        <c:if test="${board.cg_num==0 }">
+                            <label>[여행지 추천]</label>
+                        </c:if> <c:if test="${board.cg_num==1 }">
+                            <label>[자유게시판]</label>
+                        </c:if> <c:if test="${board.cg_num==2 }">
+                            <label>[고객센터]</label>
+                        </c:if>
+                        <c:out value="${board.btitle}" />
+
+                    </a> <c:if test="${board.filesize > 0 }">
+                        <img src="../image/file.png" width="26px">
+                    </c:if></td>
+                    <td><c:out value="${board.idx}" /></td>
+                    <td><fmt:formatDate value="${board.bdate}"
+                                        pattern="yyyy-MM-dd" /></td>
+                    <td><c:out value="${board.binquiry}" /></td>
+                </tr>
+            </c:forEach>
+        </c:if>
 
         <!-- 페이징 시작 -->
         <tr>
-            <td colspan="3" class="text-center">
-                <ul class="pagination justify-content-center">
-                    <c:if test="${prevBlock>0}">
-                        <li class="page-item">
-                            <a class="page-link" href="boardList.do?cpage=${prevBlock}#bbs">
-                                Prev ${pagingBlock}개</a>
-                        </li>
-                    </c:if>
-                    <!-- 페이지블럭 처리---------------------------- -->
-
-                    <c:forEach var="i" begin="${prevBlock+1}" end="${nextBlock-1}" step="1">
-                        <%-- [ ${i} ] --%>
-                        <c:if test="${i<pageCount+1 }">
-                            <li class="page-item <c:if test="${cpage eq i}">active</c:if>">
-                                <a class="page-link"
-                                   href="boardList.do?cpage=${i}&pageSize=${pageSize}#bbs">
-                                        ${i}
-                                </a>
-                            </li>
-                        </c:if>
-                    </c:forEach>
-                    <!--  ------------------------------------------->
-                    <c:if test="${nextBlock <pageCount+1}">
-                        <li class="page-item">
-                            <a class="page-link" href="boardList.do?cpage=${nextBlock}#bbs">
-                                Next ${pagingBlock}개</a>
-                        </li>
-                    </c:if>
-
-                </ul>
-            </td>
-
-            <!-- 총게시물 -->
-            <td colspan="2">
-                <span class="text-primary">총게시글수: <c:out value="${totalCount}"/>개</span>
-                <br>
-
-            </td>
+            <td colspan="3" class="text-center">${pageNavi}</td>
+            <%-- <td colspan="2"><span class="text-primary">총게시글수: <c:out
+                        value="${paging.totalCount}" />개
+            </span> <br> <span class="text-danger">${paging.cpage}</span> / <span>${paging.pageCount}</span>
+            </td> --%>
         </tr>
 
         <!-- 함수 -->
         <script type="text/javascript">
-            $(function () {
-                $('#findF').on('submit', function () {
+            $(function() {
+                $('#findF').on('submit', function() {
                     var $type = $('#findType');
                     var $keyword = $('#findKeyword');
                     if ($type.val() == 0) {
@@ -117,10 +111,8 @@
 
 <tr>
     <td align="center" colspan="5">
-        <button class="btn btn-primary"
-                onclick="location.href='boardInsert.do'">글쓰기
-        </button>
+        <button class="btn btn-primary" onclick="location.href='insert'">글쓰기</button>
     </td>
 </tr>
 
-<jsp:include page="/foot.jsp"/>
+<c:import url="/foot_sub" />

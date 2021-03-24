@@ -43,8 +43,8 @@
 					<br> 사진</td>
 			</tr>
 			<tr>
-				<th>이름</th>
-				<td>${user.name }</td>
+				<th>닉네임</th>
+				<td>${user.nick }</td>
 				<th>가입일</th>
 				<td>${user.indate }</td>
 			</tr>

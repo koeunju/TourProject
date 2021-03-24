@@ -6,8 +6,10 @@ import java.net.URLEncoder;
 import javax.servlet.http.HttpSession;
 
 import lombok.Data;
+import lombok.extern.log4j.Log4j;
 
 @Data
+@Log4j
 public class ProductPagingVO {
 
     private String cgnum;
@@ -29,9 +31,6 @@ public class ProductPagingVO {
     // 검색 관련 프로퍼티
     private String findKeyword; // 검색어
 
-    /**
-     * 페이징 처리를 위해 연산을 수행하는 메소드
-     */
     public void init(HttpSession ses) {
         if (pageSize < 0) {
             pageSize = 8;
@@ -73,11 +72,12 @@ public class ProductPagingVO {
                 }
             }
         }
-        String qStr;
-        if (cgnum == null) {
-            qStr = "?pageSize=" + pageSize + "&findKeyword=" + findKeyword; // 전체 목록
-        } else {
-            qStr = "?pageSize=" + pageSize + "&findKeyword=" + findKeyword + "&cgnum=" + cgnum;
+
+        String qStr = "";
+        if(cgnum == null) {
+            qStr="?pageSize="+pageSize+"&findKeyword="+findKeyword; //전체 목록
+        }else if (cgnum != null) {
+            qStr="?cgnum=" +cgnum+ "&pageSize="+pageSize+"&findKeyword="+findKeyword;
             // 카테고리별 목록
         }
 
@@ -113,7 +113,8 @@ public class ProductPagingVO {
                     .append("</a></li>");
         }
         buf.append("</ul>");
+
+        log.info("cgnum=" + cgnum);
         return buf.toString();
     }
-
 }

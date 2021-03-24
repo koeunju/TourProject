@@ -44,7 +44,8 @@ public class BoardController {
     }
 
     @PostMapping("/insert")
-    public String boardInsert(Model m, HttpServletRequest req, @RequestParam("mfilename") MultipartFile mfilename,
+    public String boardInsert(Model m, HttpServletRequest req,
+                              @RequestParam("mfilename") MultipartFile mfilename,
                               @ModelAttribute("board") BoardVO board) {
         log.info("mode===" + board.getMode());
         log.info("board==" + board);
@@ -88,15 +89,16 @@ public class BoardController {
         String mode = board.getMode();
         int n = 0;
         String str = "";
-        n = boardService.insertBoard(board);
-        /*
-         * if (mode.equals("insert")) {
-         *
-         * n = boardService.insertBoard(board); str = "글쓰기"; } else if
-         * (mode.equals("edit")) { n = boardService.updateBoard(board); str = "글수정"; }
-         * else if (mode.equals("rewrite")) { n = boardService.rewriteBoard(board); str
-         * = "답변글 쓰기"; }
-         */
+
+        if (mode.equals("insert")) {
+            n = boardService.insertBoard(board);
+        } else if (mode.equals("edit")) {
+            n = boardService.updateBoard(board);
+        } else if (mode.equals("reInsert")) {
+            n = boardService.reInsertBoard(board);
+        }
+        log.info("mode = " + mode);
+        log.info("n = " + n);
 
         str += (n > 0) ? "성공" : "실패";
         String loc = (n > 0) ? "list" : "javascript:history.back()";
@@ -139,7 +141,7 @@ public class BoardController {
     public String boardView(Model m, @RequestParam(defaultValue = "0") int bnum) {
         log.info("bnum==" + bnum);
         if (bnum == 0) {
-            return "redirect:list";
+            return "redirect:/list";
         }
         this.boardService.updateReadnum(bnum);
 
@@ -153,14 +155,14 @@ public class BoardController {
     // 첨부파일 다운로드
     @PostMapping(value = "/fileDown", produces = "application/octet-stream")
     @ResponseBody
-    public ResponseEntity download(HttpServletRequest req,
-                                   @RequestHeader("User-Agent") String userAgent, @RequestParam("fname") String fname,
-                                   @RequestParam("origin_fname") String origin_fname) {
+    public ResponseEntity<org.springframework.core.io.Resource> download(HttpServletRequest req,
+                                                                         @RequestHeader("User-Agent") String userAgent, @RequestParam("fname") String fname,
+                                                                         @RequestParam("origin_fname") String origin_fname) {
         log.info("userAgent=" + userAgent);
         log.info("fname=" + fname);
         //업로드된 디렉토리의 절대경로 얻기
         ServletContext app = req.getServletContext();
-        String upDir = app.getRealPath("/board/upload");
+        String upDir = app.getRealPath("/Upload");
         String filePath = upDir + File.separator + fname;
         log.info("filePath===" + filePath);
 
@@ -189,29 +191,26 @@ public class BoardController {
         headers.add("Content-Disposition", "attachment; filename=" + downloadName);
 
         return new ResponseEntity<>(resource, headers, HttpStatus.OK);
-    }//----------------------------------------
+    }
 
     //글 삭제
     @PostMapping("/delete")
-    public String boardDelete(Model m, @RequestParam(defaultValue = "0") int bnum,
-                              @RequestParam(defaultValue = "") String pwd) {
-        log.info("bnum==" + bnum + ", pwd==" + pwd);
-        if (bnum == 0 || pwd.isEmpty()) {
-            return "redirect:list";
+    public String boardDelete(Model m, @RequestParam(defaultValue = "0") int bnum) {
+        if (bnum == 0) {
+            return "redirect:/list";
         }
         //db 삭제
         int n = this.boardService.deleteBoard(bnum);
         String str = (n > 0) ? "글 삭제 성공" : "삭제 실패";
 
-        return util.addMsgLoc(m, str, "list");
+        return util.addMsgLoc(m, str, "/list");
     }//----------------------------------------
 
     // 글 수정
     @PostMapping("/edit")
-    public String boardEdit(Model m, @RequestParam(defaultValue = "0") int bnum,
-                            @RequestParam(defaultValue = "") String pwd) {
+    public String boardEdit(Model m, @RequestParam(defaultValue = "0") int bnum) {
         if (bnum == 0) {
-            return "redirect:list";
+            return "redirect:/list";
         }
 
         BoardVO board = this.boardService.selectBoardBybnum(bnum);
@@ -222,11 +221,14 @@ public class BoardController {
     }//----------------------------------------
 
     //답변글 달기
-    @RequestMapping("/rewrite")
-    public String rewirteForm(Model m, @RequestParam(defaultValue = "0") int bnum,
-                              @RequestParam(defaultValue = "") String subject) {
+    @RequestMapping("/reInsert")
+    public String rewirteForm(Model m,
+                              @RequestParam(defaultValue = "0") int bnum,
+                              @RequestParam(defaultValue = "") String btitle,
+                              @RequestParam String cg_num) {
         m.addAttribute("bnum", bnum);
-        m.addAttribute("subject", subject);
-        return "board/boardRewrite";
+        m.addAttribute("btitle", btitle);
+        m.addAttribute("cg_num", cg_num);
+        return "board/boardReInsert";
     }//----------------------------------------
 }

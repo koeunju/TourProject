@@ -21,6 +21,6 @@ $(function () {
             return;
         }
 
-        $('#boardF').submit();
+        $('#prodF').submit();
     })
 })

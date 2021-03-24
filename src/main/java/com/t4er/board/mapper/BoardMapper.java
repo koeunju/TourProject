@@ -27,10 +27,10 @@ public interface BoardMapper {
 
     int updateSunbun(BoardVO parent);
 
-    int rewriteBoard(BoardVO board);
+    int reInsertBoard(BoardVO board);
 
     int getTotalCountPaging(BoardPagingVO paging);
-    
+
     // 내가 쓴 글 조회
-    List<BoardVO> selMyBoard(String idx);
+    List<BoardVO> selMyBoard(Integer idx);
 }

@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class UserVO {
 
-    private String idx;
+    private Integer idx;
     @NotBlank
     @Length(min=4, max=15)
     private String id;
@@ -16,10 +16,13 @@ public class UserVO {
     @Length(min=4, max=25)
     private String pwd;
     private String email;
-    private String name;
+    private String nick;
     private String tel;
-    private String stat;
+    private String image;
+    private Integer stat;
     private java.sql.Date indate;
     private int point;
+
+    private Integer adminCheck;
 
 }

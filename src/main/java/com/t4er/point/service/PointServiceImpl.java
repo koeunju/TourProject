@@ -42,17 +42,9 @@ public class PointServiceImpl implements PointService {
     }
 
     @Override
-    public int getProductTotalCount() {
-        return this.productMapper.getProductTotalCount();
-    }
-
-    @Override
     public int getProductTotalCount(ProductPagingVO paging) {
         return this.productMapper.getProductTotalCount(paging);
     }
 
-    public int getProductByCateTotalCount(ProductPagingVO paging) {
-        return this.productMapper.getProductByCateTotalCount(paging);
-    }
 }
 

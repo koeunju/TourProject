@@ -17,12 +17,12 @@ DROP TABLE POINT
 
 /* 포인트(어드민) */
 CREATE TABLE POINT (
-	PIDX VARCHAR2(8) NOT NULL, /* 구분번호 */
+	PIDX VARCHAR2(8) NOT NULL, /* 구분번호 PK */
 	PCONTENT VARCHAR2(300), /* 적립내용 */
 	PDATE DATE, /* 적립일 */
 	PSAVEPOINT NUMBER(8), /* 적립포인트 */
 	PTOTALPOINT NUMBER(8) NOT NULL, /* 총포인트 */
-	IDX NUMBER(8) NOT NULL /* 회원번호 */
+	IDX NUMBER(8) NOT NULL /* 회원번호 FK */
 );
 
 COMMENT ON TABLE POINT IS '포인트(어드민)';

@@ -21,7 +21,7 @@ public class MypageServiceImpl implements MypageService {
 	private BoardMapper boardMapper;
 	
 	@Override
-	public UserVO selectMy(String idx) {
+	public UserVO selectMy(Integer idx) {
 		return this.userMapper.selectMy(idx);
 	}
 	
@@ -31,18 +31,18 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public int leaveMember(String idx) {
+	public int leaveMember(Integer idx) {
 		return this.userMapper.leaveMember(idx);
 	}
 
 	// 내 포인트 조회
 	@Override
-	public List<PointVO> mypoint(String idx) {
+	public List<PointVO> mypoint(Integer idx) {
 		return this.userMapper.mypoint(idx);
 	}
 	// 내가 쓴 글 조회
 	@Override
-	public List<BoardVO> selMyBoard(String idx) {
+	public List<BoardVO> selMyBoard(Integer idx) {
 		return this.boardMapper.selMyBoard(idx);
 	}
 	

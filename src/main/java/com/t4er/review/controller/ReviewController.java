@@ -58,7 +58,7 @@ public class ReviewController {
         HttpSession ses = req.getSession();
         UserVO user = (UserVO) ses.getAttribute("loginUser");
 
-        String idx = user.getIdx();
+        int idx = user.getIdx();
 
         log.info("idx = " + idx);
 

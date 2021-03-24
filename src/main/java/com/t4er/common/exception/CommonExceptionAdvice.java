@@ -11,6 +11,6 @@ public class CommonExceptionAdvice {
     @ExceptionHandler(NumberFormatException.class)
     public String commonHandler(Exception ex) {
         log.error("error : " + ex.getMessage());
-        return "login/errorAlert";
+        return "user/errorAlert";
     }
 }

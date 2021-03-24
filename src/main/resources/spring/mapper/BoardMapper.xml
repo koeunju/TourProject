@@ -23,15 +23,15 @@
 
     <!-- 글작성(고객센터) -->
     <insert id="insertBoard2" parameterType="Board">
-        <selectKey keyProperty="idx" order="BEFORE" resultType="int">
+        <selectKey keyProperty="bnum" order="BEFORE" resultType="int">
             select board_seq.nextval from dual
         </selectKey>
-        insert into spring_board(bnum, btitle, bcontent, bdate,
-        filename, originFilename, filesize, berecommend, idx, cg_num,
+        insert into board(bnum, btitle, bcontent, bdate,
+        filename, originFilename, filesize, brecommend, idx, cg_num,
         refer, lev, sunbun)
         values(#{bnum}, #{btitle}, #{bcontent:VARCHAR}, systimestamp,
-        #{filename:VARCHAR}, #{originFilename:VARCHAR}, #{filesize:NUMERIC}, 0, #{idx}, 0,
-        #{idx}, #{lev}, #{sunbun})
+        #{filename:VARCHAR}, #{originFilename:VARCHAR}, #{filesize:NUMERIC}, 0, 99, #{cg_num},
+        #{bnum}, #{lev}, #{sunbun})
     </insert>
 
     <!-- 글목록(자유게시판) -->
@@ -42,7 +42,7 @@
         sysdate - to_date(to_char(wdate, 'yyyy-mm-dd')) newImg,
         row_number()
         over(order by refer desc, sunbun asc) rn
-        from spring_board
+        from board
         <include refid="findWhere" />
         )
         <![CDATA[
@@ -60,7 +60,7 @@
         sysdate - to_date(to_char(wdate, 'yyyy-mm-dd')) newImg,
         row_number()
         over(order by refer desc, sunbun asc) rn
-        from spring_board
+        from board
         <include refid="findWhere" />
         )
         <![CDATA[
@@ -85,8 +85,7 @@
     </select>
 
     <!-- 글검색 -->
-    <select id="getFindTotalCount" resultType="int"
-            parameterType="map">
+    <select id="getFindTotalCount" resultType="int" parameterType="map">
         select count(bnum) from board
         <include refid="findWhere" />
     </select>
@@ -107,8 +106,7 @@
         </if>
     </sql>
 
-    <select id="getTotalCountPaging" resultType="int"
-            parameterType="BPaging">
+    <select id="getTotalCountPaging" resultType="int" parameterType="BPaging">
         select count(bnum) from board
         <include refid="findWhere"/>
     </select>
@@ -123,56 +121,55 @@
     </select>
 
     <!-- 글 상세 -->
-    <select id="getBoard" resultType="Board" parameterType="String">
+    <select id="selectBoardBybnum" resultType="Board" parameterType="int">
 		select * from board where bnum=#{bnum}
 	</select>
 
     <!-- 글 조회수 -->
-    <update id="updateReadnum" parameterType="String">
+    <update id="updateReadnum" parameterType="int">
 		update board set binquiry = binquiry+1 where bnum=#{bnum}
 	</update>
 
     <!-- 글 추천 -->
 
     <!-- 글 삭제 -->
-    <delete id="deleteBoard" parameterType="string">
+    <delete id="deleteBoard" parameterType="int">
 		delete from board where bnum=#{bnum}
 	</delete>
 
     <!-- 글수정 -->
-    <update id="editBoard" parameterType="Board">
+    <update id="updateBoard" parameterType="Board">
         update board set btitle = #{btitle:VARCHAR},
         bcontent = #{bcontent:VARCHAR},
         <if test="filename != null and filename != ''">
             , filename =#{filename}, originFilename =#{originFilename}
             , filesize =#{filesize}
         </if>
-        where idx=#{idx}
+        where bnum=#{bnum}
     </update>
 
     <!-- 답변 글 원글의 refer, lev, sunbun가져오기 -->
-    <select id="selectReferLevSunbun" parameterType="int"
-            resultType="Board">
-		select refer, lev, sunbun from spring_board where bnum =#{bnum}
+    <select id="selectReferLevSunbun" parameterType="int" resultType="Board">
+		select refer, lev, sunbun from board where bnum =#{bnum}
 	</select>
 
     <!-- 답변글들의 순번을 하나씩 증가 -->
     <update id="updateSunbun" parameterType="Board">
-		update spring_board set sunbun = sunbun+1
+		update board set sunbun = sunbun+1
 		where refer = #{refer} and sunbun > #{sunbun}
 	</update>
 
     <!-- 답변글 추가 -->
-    <insert id="rewriteBoard" parameterType="Board">
+    <insert id="reInsertBoard" parameterType="Board">
         <selectKey keyProperty="bnum" order="BEFORE" resultType="int">
             select board_seq.nextval from dual
         </selectKey>
-        insert into spring_board(bnum, btitle, bcontent, bdate,
-        filename, originFilename, filesize, berecommend, idx, cg_num,
+        insert into board(bnum, btitle, bcontent, bdate,
+        filename, originFilename, filesize, brecommend, idx, cg_num,
         refer, lev, sunbun)
         values(#{bnum}, #{btitle}, #{bcontent:VARCHAR}, systimestamp,
-        #{filename:VARCHAR}, #{originFilename:VARCHAR}, #{filesize:NUMERIC}, 0, #{idx}, 0,
-        #{idx}, #{lev}, #{sunbun})
+        #{filename:VARCHAR}, #{originFilename:VARCHAR}, #{filesize:NUMERIC}, 0, 99, #{cg_num},
+        #{refer}, #{lev}, #{sunbun})
     </insert>
 
     <!-- 글 카테고리 -->
@@ -188,8 +185,8 @@
 
     <!-- mypage -->
     <!-- 내정보에서 글 검색 -->
-    <select id="selMyBoard" parameterType="String"
-            resultType="Board">
+    <select id="selMyBoard" parameterType="int"
+            resultType="string">
 		select * from board where idx=#{idx}
 	</select>
 </mapper>

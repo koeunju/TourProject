@@ -1,29 +1,48 @@
 package com.t4er.user.mapper;
 
-import java.util.List;
-
+import com.t4er.admin.model.AdminPagingVO;
 import com.t4er.point.model.PointVO;
 import com.t4er.user.model.UserVO;
+
+import java.util.List;
 
 public interface UserMapper {
 
     Integer idCheck(String id);
+    Integer emailCheck(String email);
+    Integer nickCheck(String nick);
+    Integer telCheck(String tel);
 
     UserVO findUser(UserVO findUser);
 
     int createUser(UserVO user);
 
-    UserVO selectMy(String idx);
+    String checkState(String id);
+
+    int statAlter(String id);
+
+    // Adminm MyPage
+    UserVO selectMy(Integer idx);
 
     int updateUser(UserVO user);
 
-    int leaveMember(String idx);
+    int leaveMember(Integer idx);
 
-    String checkState(String id);
-    
     // 내포인트조회
-    List<PointVO> mypoint(String idx);
+    List<PointVO> mypoint(Integer idx);
 
     // 초기 회원가입시 포인트 부여
-    int setPoint(String idx);
+    int setPoint(Integer idx);
+
+    //admin
+
+    //int updateUserAdmin(UserVO user);
+
+    int getUserCount(AdminPagingVO pvo);
+
+    List<UserVO> listUser(AdminPagingVO pvo);
+
+    UserVO getUser(Integer idx);
+
+    int deleteUser(Integer idx);
 }

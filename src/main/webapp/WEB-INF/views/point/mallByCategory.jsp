@@ -55,13 +55,13 @@
                     <div class="col-md-3">
                         <c:if test="${pd.pimage eq null or empty pd.pimage}">
                             <a href="prodDetail?pnum=${pd.pnum}"> <img
-                                    src="product_images/noimage.png" class="rounded img-fluid"
+                                    src="../product/noimage.png" class="rounded img-fluid"
                                     style="height: 100px" />
                             </a> <br> <br>
                         </c:if>
                         <c:if test="${pd.pimage ne null and not empty pd.pimage }">
                             <a href="prodDetail.do?pnum=${pd.pnum}"> <img
-                                    src="product_images/${pd.pimage}" class="rounded img-fluid"
+                                    src="../product/${pd.pimage}" class="rounded img-fluid"
                                     style="height: 100px" />
                             </a><br> <br>
                         </c:if>

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +26,7 @@
             <%-- ${cookie.키.value} --%>
             <!-- Modal Body -->
             <div class="modal-body">
-                <form action="/loginEnd.do" method="POST">
+                <form action="/loginEnd" method="POST">
                     <div class="form-group">
                         <label for="userid">아이디:</label>
                         <input type="text" required
@@ -41,11 +42,11 @@
                     </div>
                     <div class="form-group form-check">
                         <label class="form-check-label">
-                            ${cookie.uid} ==> 쿠키객체
                             <input type="checkbox"
                             <c:if test="${cookie.uid ne null}">
                                    checked
-                            </c:if> name="saveId" class="form-check-input"> 아이디저장
+                            </c:if>
+                                   name="saveId" class="form-check-input"> 아이디저장
                         </label>
                     </div>
                     <div class="form-group text-right">

@@ -19,10 +19,6 @@
         </if>
     </select>
 
-    <select id="getcgnum" resultType="string" parameterType="Product">
-        select * from product where cg_num
-    </select>
-
     <!-- 페이징 처리후 상품보여줌 -->
     <select id="getProdList" resultType="Product" parameterType="PPaging">
         select * from(
@@ -97,14 +93,13 @@
 
     <!-- 여기부터 admin입니다 -->
     <!-- 상품등록 -->
-    <insert id="insertProduct" parameterType="Product">
-        <selectKey keyProperty="pnum" resultType="int" order="BEFORE">
+    <insert id="insertProd" parameterType="Product">
+        <selectKey keyProperty="pnum" resultType="String" order="BEFORE">
             select product_seq.nextval from dual
         </selectKey>
-        insert into product(pnum, pname, pcontent, price, pimage, pimage2,
-        pimage3, cg_num)
-        values(#{pnum}, #{pname}, #{pcontent},#{price},
-        #{pimage:VARCHAR}, #{pimage2:VARCHAR}, #{pimage3:VARCHAR}, 0)
+        insert into product(pnum, pname, pcontent, price, pimage, pimage2, pimage3, cg_num)
+        values(#{pnum}, #{pname}, #{pcontent},#{price}, #{pimage:VARCHAR}, #{pimage2:VARCHAR}, #{pimage3:VARCHAR}, 99)
     </insert>
+
 
 </mapper>

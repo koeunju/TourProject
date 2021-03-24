@@ -26,7 +26,7 @@
             </c:if>
             <c:if test="${loginUser ne null and not empty loginUser}">
                 <c:if test="${loginUser.stat == 9}">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/admin">관리자 페이지</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/admin/index">관리자 페이지</a>
                 </c:if>
             </c:if>
         </ul>

@@ -8,10 +8,7 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -39,9 +36,14 @@ public class LoginController {
 
         UserVO loginUser = this.userService.loginCheck(user.getId(), user.getPwd());
         String st = this.userService.checkState(user.getId());
-        if(st.trim().equals("4")) {
+
+        if (st.trim().equals("4")) {
             return util.addMsgLoc(m, "탈퇴회원입니다. 고객센터에 문의 바랍니다.", "/index");
         }
+        if(st.trim().equals("0")) {
+            return util.addMsgLoc(m, "이메일 인증이 안된 회원입니다. 이메일 인증을 해주세요.", "index");
+        }
+
         if (loginUser != null) {
             // 회원임을 인증 받았다면 ==> 세션에 로그인한 회원정보를 저장하자.
             ses.setAttribute("loginUser", loginUser);
@@ -55,5 +57,10 @@ public class LoginController {
         ses.invalidate();
         return "redirect:/index";
 
+    }
+
+    @ExceptionHandler(NotUserException.class)
+    public String exceptionHandler(Exception ex) {
+        return "user/errorAlert";
     }
 }

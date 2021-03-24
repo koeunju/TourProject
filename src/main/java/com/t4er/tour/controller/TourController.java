@@ -148,7 +148,7 @@ public class TourController {
         HttpSession ses = req.getSession();
         UserVO user = (UserVO) ses.getAttribute("loginUser");
 
-        String idx = user.getIdx();
+        int idx = user.getIdx();
 
         log.info("tourSave contentId = " + contentId);
         log.info("tourSave idx = " + idx);
