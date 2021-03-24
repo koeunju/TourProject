@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,7 +46,7 @@ public class LoginController {
 		}
 		
 		if(st.trim().equals("0")) {
-			return util.addMsgLoc(m, "이메일 인증이 안된 회원입니다. 이메일을 인증해주세요.", "index");
+			return util.addMsgLoc(m, "이메일 인증이 안된 회원입니다. 이메일 인증을 해주세요.", "index");
 		}
 		
 				
@@ -62,5 +63,9 @@ public class LoginController {
 		ses.invalidate();
 		return "redirect:index";
 		
+	}
+	@ExceptionHandler(NotUserException.class)
+	public String exceptionHandler(Exception ex) {
+		return  "user/errorAlert";
 	}
 }

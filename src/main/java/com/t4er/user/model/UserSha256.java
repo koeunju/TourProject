@@ -2,10 +2,10 @@ package com.t4er.user.model;
 import java.security.MessageDigest;
 
 public class UserSha256 {
-	public static String encrypt(String planText) {
+	public static String encrypt(String pwd) {
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA-256");
-			md.update(planText.getBytes());
+			md.update(pwd.getBytes());
 			byte byteData[] = md.digest();
 			StringBuffer sb = new StringBuffer();
 			for (int i = 0; i < byteData.length; i++) {

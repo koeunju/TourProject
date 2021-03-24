@@ -11,6 +11,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.t4er.common.CommonUtil;
-import com.t4er.user.model.UserSha256;
+import com.t4er.user.model.NotUserException;
 import com.t4er.user.model.UserVO;
 import com.t4er.user.service.UserService;
 
@@ -38,6 +39,7 @@ public class UserController {
 	private JavaMailSenderImpl mailSender;
 	
 	
+	
 	@GetMapping("/join")
 	public String joinForm() {
 
@@ -55,7 +57,7 @@ public class UserController {
 
 		}
 
-		//비밀번호 암호화(sha256)
+		//비밀번호 암호화(sha256) => 암호화는 되는데 비밀번호가 틀리다면서 로그인이 안됨.
 		//System.out.println("첫번째:" + user.getPwd());
 		//String encryPassword = UserSha256.encrypt(user.getPwd());
 		//user.setPwd(encryPassword);
@@ -87,7 +89,7 @@ public class UserController {
 	public @ResponseBody Map<String, String> idCheck(@RequestParam("id") String id){
 		boolean isUse=userService.idCheck(id);
 
-		String msg=(isUse)? id+"는 사용 가능합니다.":id+"는 이미 사용중입니다";
+		String msg=(isUse)? "사용 가능한 아이디입니다.":"이미 존재하는 아이디입니다.";
 		int n=(isUse)? 1: -1;
 		Map<String, String> map=new HashMap<>();
 		map.put("idResult", msg);
@@ -104,6 +106,30 @@ public class UserController {
 		Map<String, String> map=new HashMap<>();
 		map.put("emailResult", msg);
 		map.put("isEma", String.valueOf(n));
+		return map;
+	}
+	
+	@GetMapping(value="/nickcheck",produces = "application/json")
+	public @ResponseBody Map<String,String> nickCheck(@RequestParam("nick") String nick){
+		boolean isNic=userService.nickCheck(nick);
+	
+		String msg=(isNic)? "사용 가능한 닉네임입니다.":"이미 존재하는 닉네임입니다.";
+		int n=(isNic)? 1: -1;
+		Map<String, String> map=new HashMap<>();
+		map.put("nickResult", msg);
+		map.put("isNic", String.valueOf(n));
+		return map;
+	}
+	
+	@GetMapping(value="/telcheck",produces = "application/json")
+	public @ResponseBody Map<String,String> telCheck(@RequestParam("tel") String tel){
+		boolean isTel=userService.telCheck(tel);
+	
+		String msg=(isTel)? "사용 가능한 전화번호입니다.":"이미 존재하는 전화번호입니다.";
+		int n=(isTel)? 1: -1;
+		Map<String, String> map=new HashMap<>();
+		map.put("telResult", msg);
+		map.put("isTel", String.valueOf(n));
 		return map;
 	}
 	

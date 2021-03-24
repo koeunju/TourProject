@@ -42,22 +42,35 @@ public class UserServiceImpl implements UserService {
 	      Integer idx=userMapper.idCheck(id);
 	      //아이디로 회원번호 받아오기
 	      if(idx==null) {
-	         //해당 아이디는 사용 가능
 	         return true;
 	      }else {
-	         //해당 아이디는 사용 중
 	         return false;
 	      }
 	   }
 	   
 	   public boolean emailCheck(String email) {
 		   Integer idx=userMapper.emailCheck(email);
-		      //이메일로 회원번호 받아오기
 		   if(idx==null) {
-		       //해당 이메일은 사용 가능
 		        return true;
 		   }else {
-		       //해당 이메일은 사용 중
+	          return false;
+		      }
+	   }
+	   
+	   public boolean nickCheck(String nick) {
+		   Integer idx=userMapper.nickCheck(nick);
+		   if(idx==null) {
+		        return true;
+		   }else {
+	          return false;
+		      }
+	   }
+	   
+	   public boolean telCheck(String tel) {
+		   Integer idx=userMapper.telCheck(tel);
+		   if(idx==null) {
+		        return true;
+		   }else {
 	          return false;
 		      }
 	   }
@@ -74,7 +87,7 @@ public class UserServiceImpl implements UserService {
 	   public UserVO findUser(UserVO findUser) throws NotUserException {
 	      UserVO user = this.userMapper.findUser(findUser);
 	      if(user==null) {
-	         throw new NotUserException("아이디가 존재하지 않아요.");
+	         throw new NotUserException("존재하지 않는 아이디입니다."); 
 	      }
 	      return user;
 	   }
@@ -94,7 +107,7 @@ public class UserServiceImpl implements UserService {
 	         }
 	         
 	         //비밀번호 불일치라면 ==> 예외를 발생시키자.
-	         throw new NotUserException("비밀번호가 일치하지 않아요!");
+	         throw new NotUserException("비밀번호가 일치하지 않습니다.");
 	      }
 	      return null;
 	   }
@@ -107,7 +120,6 @@ public class UserServiceImpl implements UserService {
 		MimeMessage mail = mailSender.createMimeMessage();
 		String htmlStr = "<h2>안녕하세요 올랑올랑입니다</h2><br><br>" 
 				+ "<h3>" + id + "님</h3>" + "<p>인증하기 버튼을 누르시면 로그인 하실 수 있습니다 : "
-				//+ "<button onclick='http://localhost:9090"+req.getContextPath()+"/user/stat_alter?id="+id+"'>Test</button>";
 				+ "<a href='http://localhost:9090" + req.getContextPath() + "/user/stat_alter?id="+ id +"'>인증하기</a></p>";
 		try {
 		
@@ -125,13 +137,6 @@ public class UserServiceImpl implements UserService {
 	public int statAlter(String id) {
 		return this.userMapper.statAlter(id);
 		
-		/*
-		 * int resultCnt = 0;
-		 * 
-		 * sqlSession.getMapper(UserMapper.class); resultCnt = statAlter(id);
-		 * 
-		 * return resultCnt;
-		 */
 	}
 
  	

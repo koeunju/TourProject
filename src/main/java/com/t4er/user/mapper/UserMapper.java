@@ -8,6 +8,8 @@ public interface UserMapper {
 	
 	Integer idCheck(String id);
 	Integer emailCheck(String email);
+	Integer nickCheck(String nick);
+	Integer telCheck(String tel);
 
 	UserVO findUser(UserVO findUser);
 

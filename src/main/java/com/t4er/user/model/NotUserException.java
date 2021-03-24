@@ -7,7 +7,10 @@ public class NotUserException extends Exception {
 		super("NotUserException");
 	}
 	public NotUserException(String msg) {
-		super(msg);
+		super(msg);  
 	}
+	
+
 
 }
+

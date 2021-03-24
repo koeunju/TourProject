@@ -21,7 +21,7 @@ public class CommonExceptionAdvice {
 	@ExceptionHandler(NumberFormatException.class)
 	public String commonHandler(Exception ex) {
 		log.error("숫자로 입력해야 해요 : "+ex.getMessage());
-		return "login/errorAlert";
+		return "user/errorAlert";
 	}
 
 }

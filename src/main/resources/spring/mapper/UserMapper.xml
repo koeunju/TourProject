@@ -17,6 +17,14 @@
     <select id="emailCheck" parameterType="string" resultType="int">
    		select idx from member where email = #{email}
    </select>
+   
+   <select id="nickCheck" parameterType="string" resultType="int">
+   		select idx from member where nick = #{nick}
+   </select>
+ 
+    <select id="telCheck" parameterType="string" resultType="int">
+   		select idx from member where tel = #{tel}
+   </select>
 
 	<select id="loginCheck" resultType="User" parameterType="hashmap">
 	select * from member where id=#{id} and pwd=#{pwd}
