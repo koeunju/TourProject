@@ -30,6 +30,4 @@ public interface UserService {
 	String searchId(@Param("nick")String nick, @Param("email")String email);
 
 
-
-
 }

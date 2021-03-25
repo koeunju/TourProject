@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.t4er.common.CommonUtil;
+import com.t4er.user.model.UserSha256;
 import com.t4er.user.model.UserVO;
 import com.t4er.user.service.UserService;
 
@@ -45,7 +47,7 @@ public class UserController {
 	}
 
 	@PostMapping("/join")
-	public String joinEnd(Model m, @Valid  @ModelAttribute("user") UserVO user, BindingResult result, HttpServletRequest req) {
+	public String joinEnd(Model m, HttpSession ses, @Valid  @ModelAttribute("user") UserVO user, BindingResult result, HttpServletRequest req) {
 		log.info("user=="+user);
 		//유효성 체크한 결과==> BidingResult객체에 담긴다.
 		//이 객체에 에러를 가지고 있다면
@@ -55,21 +57,40 @@ public class UserController {
 
 		}
 
-		//비밀번호 암호화(sha256) => 암호화는 되는데 비밀번호가 틀리다면서 로그인이 안됨.
-		//System.out.println("첫번째:" + user.getPwd());
-		//String encryPassword = UserSha256.encrypt(user.getPwd());
-		//user.setPwd(encryPassword);
-		//System.out.println("두번째:" + user.getPwd());
+		//비밀번호 암호화(sha256) 
+		System.out.println("첫번째:" + user.getPwd());
+		String encryPassword = UserSha256.encrypt(user.getPwd());
+		user.setPwd(encryPassword);
+		System.out.println("두번째:" + user.getPwd());
 		
 
-		//인증메일 보내기
-		this.userService.mailSendWithUserKey(user.getEmail(), user.getId(), req);
+
 		
 		//에러가 없다면 아래 로직 수행
 		int n = this.userService.createUser(user);
+		/*
+		 * if(n>0) { //인증메일 보내기 this.userService.mailSendWithUserKey(user.getEmail(),
+		 * user.getId(), req); }
+		 */
+		if(n>0) {
+			ses.setAttribute("authUser", user);
+		}
+		
 		String str=(n>0)?"회원가입이 완료되었습니다. 이메일 인증을 해주세요.":"회원가입 실패";
-		String loc=(n>0)?"index":"javascript:history.back()";
+		String loc=(n>0)?"chkMail":"javascript:history.back()";
 		return util.addMsgLoc(m, str, loc);
+	}
+	
+	@GetMapping("/chkMail")
+	public String chkMail(HttpServletRequest req) {
+		HttpSession ses = req.getSession();
+		UserVO user = (UserVO) ses.getAttribute("authUser");
+		
+		String email = user.getEmail();
+		String id = user.getId();
+		
+		this.userService.mailSendWithUserKey(email,id, req);
+		return"user/joinEnd";
 	}
 
 	
@@ -146,13 +167,15 @@ public class UserController {
 		
 		String result = userService.searchId(nick, email);
 
-		return "result";
+		return result;
 	}
 	
 	//비밀번호 찾기 
 	@GetMapping("/pwdSearch")
 	public String pwdSearch() {
-
+		
 		return "/user/pwdSearch";
 	}
+
+	
 }

@@ -40,6 +40,11 @@
 		select id from member
         where nick = #{nick} and email = #{email}
 	</select>
+	
+	<!-- 회원 임시 비밀번호 발급-->
+	<update id="tempPwd" parameterType="Map">
+		update member set pwd = #{key} where id = #{id} and email = #{email}
+	</update>
 
 
 	<!-- 회원 상태 조회 -->

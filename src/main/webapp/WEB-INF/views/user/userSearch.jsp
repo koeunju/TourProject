@@ -2,17 +2,15 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <c:import url="/top" />
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-</script>
-
+<%@ include file="/WEB-INF/views/user/userIdSearchModal.jsp" %> 
 <script>
-    $(document).ready(function() {
+$(document).ready(function() {
 	// 1. 모달창 히든 불러오기
 	$('#searchBtn').click(function() {
-		$('#background_modal').show();
+		$('#background_modal').modal('show');
 	});
 	// 2. 모달창 닫기 버튼
 	$('.close').on('click', function() {
@@ -35,8 +33,8 @@ var idSearch_click = function(){
 		url:"${pageContext.request.contextPath}/userSearch?inputNick="
 				+$('#inputNick').val()+"&inputEmail="+$('#inputEmail').val(),
 		success:function(data){
-			if(data == null){
-				$('#id_value').text("회원 정보를 확인해주세요.");	
+			if(data == 0){
+				$('#id_value').text("일치하는 아이디가 없습니다.");	
 			} else {
 				$('#id_value').text(data);
 				// 아이디값 별도로 저장
@@ -46,8 +44,6 @@ var idSearch_click = function(){
 	});
 }
 </script>
-
-<%@ include file="/WEB-INF/views/user/userIdSearchModal.jsp" %>
 
 	<div class="in" style=" display: inline-block; margin:0 auto;">
 		<div class="card align-middle"

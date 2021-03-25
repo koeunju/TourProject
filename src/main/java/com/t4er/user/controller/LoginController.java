@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.t4er.common.CommonUtil;
 import com.t4er.user.model.NotUserException;
+import com.t4er.user.model.UserSha256;
 import com.t4er.user.model.UserVO;
 import com.t4er.user.service.UserService;
 
@@ -38,6 +39,11 @@ public class LoginController {
 	public String loginEnd(Model m, HttpSession ses, @ModelAttribute("user") UserVO user) 
 			throws NotUserException {
 		log.info("user==="+user);
+		
+		System.out.println("첫번째:" + user.getPwd());
+		String encryPassword = UserSha256.encrypt(user.getPwd());
+		user.setPwd(encryPassword);
+		System.out.println("두번째:" + user.getPwd());
 		
 		UserVO loginUser=this.userService.loginCheck(user.getId(), user.getPwd());
 		String st = this.userService.checkState(user.getId());
