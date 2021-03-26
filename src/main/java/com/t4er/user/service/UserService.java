@@ -11,6 +11,8 @@ import com.t4er.user.model.UserVO;
 public interface UserService {
 
 	UserVO loginCheck(String id, String pwd) throws NotUserException;
+	
+	UserVO userCheck(String id, String email) throws NotUserException;
 
 	UserVO findUser(UserVO findUser) throws NotUserException;
 
@@ -28,6 +30,10 @@ public interface UserService {
 	String checkState(String id);
 
 	String searchId(@Param("nick")String nick, @Param("email")String email);
+
+	void mailSendPwd(String id, String email, HttpServletRequest req);
+	
+	int searchPwd(String id, String email, String key);
 
 
 }

@@ -22,6 +22,8 @@ public interface UserMapper {
 	int statAlter(String id);
 	
 	String searchId(@Param("nick")String nick, @Param("email")String email);
+	
+	int searchPwd(String id, String email, String key);
 
 
 }

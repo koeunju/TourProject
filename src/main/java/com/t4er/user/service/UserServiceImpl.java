@@ -7,6 +7,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -113,10 +114,27 @@ public class UserServiceImpl implements UserService {
 	   }
 	
 
-	
+	@Override
+	public UserVO userCheck(String id, String email) throws NotUserException {
+		 UserVO user = new UserVO();
+	      user.setId(id);//      
+	      user.setEmail(email);
+	      
+	      UserVO dbUser=this.findUser(user);//db에서 user에 대한 정보를 들고온다.
+	      log.info("dbUser=="+dbUser);
+	      if(dbUser!=null) {
+	         if(dbUser.getEmail().equals(user.getEmail())) {
+	            //회원이 맞다면 (비번일치)
+	            return dbUser;
+	         }
+	           
+	         throw new NotUserException("존재하지 않는 이메일 입니다.");
+	      }
+		return null;
+	}
 
 	public void mailSendWithUserKey(String email, String id, HttpServletRequest req) {
-		
+				
 		MimeMessage mail = mailSender.createMimeMessage();
 		String htmlStr = "<h2>안녕하세요 올랑올랑입니다</h2><br><br>" 
 				+ "<h3>" + id + "님</h3>" + "<p>인증하기 버튼을 누르시면 로그인 하실 수 있습니다 : "
@@ -129,7 +147,8 @@ public class UserServiceImpl implements UserService {
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
-		mailSender.send(mail);		
+		mailSender.send(mail);	
+		
 	}
 	
 	
@@ -184,6 +203,38 @@ public class UserServiceImpl implements UserService {
 		this.lowerCheck = lowerCheck;
 		this.size = size;
 		return init();
+	}
+
+	public void mailSendPwd(String id, String email, HttpServletRequest req) {
+	
+		
+		String key = getKey(false, 6);
+	
+		MimeMessage mail = mailSender.createMimeMessage();
+		String htmlStr = "<h2>안녕하세요 '"+ id +"' 님</h2><br><br>" 
+				+ "<p>임시 발급 비밀번호는 <h2 style='color : blue'>'" + key +"'</h2>이며 로그인 후 마이페이지에서 비밀번호를 변경하실 수 있습니다.</p><br>"
+				+ "<h3><a href='http://localhost:9090/olan/index'>홈페이지 접속</a></h3><br><br>";
+		try {
+			mail.setSubject("임시 비밀번호가 발급되었습니다", "utf-8");
+			mail.setText(htmlStr, "utf-8", "html");
+			mail.addRecipient(RecipientType.TO, new InternetAddress(email));
+			mailSender.send(mail);
+		} catch (MessagingException e) { 
+			e.printStackTrace();
+		}
+		
+		key = UserSha256.encrypt(key);
+			
+		this.userMapper.searchPwd(id,email,key);
+
+
+	}
+
+
+	@Override
+	public int searchPwd(String id, String email, String key) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 

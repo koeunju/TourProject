@@ -42,8 +42,8 @@
 	</select>
 	
 	<!-- 회원 임시 비밀번호 발급-->
-	<update id="tempPwd" parameterType="Map">
-		update member set pwd = #{key} where id = #{id} and email = #{email}
+	<update id="searchPwd" parameterType="hashmap">
+		update member set pwd = #{param3} where id = #{param1} and email = #{param2}
 	</update>
 
 

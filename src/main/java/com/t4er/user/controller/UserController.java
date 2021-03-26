@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -12,6 +13,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.t4er.common.CommonUtil;
+import com.t4er.user.model.NotUserException;
 import com.t4er.user.model.UserSha256;
 import com.t4er.user.model.UserVO;
 import com.t4er.user.service.UserService;
@@ -68,10 +71,7 @@ public class UserController {
 		
 		//에러가 없다면 아래 로직 수행
 		int n = this.userService.createUser(user);
-		/*
-		 * if(n>0) { //인증메일 보내기 this.userService.mailSendWithUserKey(user.getEmail(),
-		 * user.getId(), req); }
-		 */
+
 		if(n>0) {
 			ses.setAttribute("authUser", user);
 		}
@@ -81,6 +81,7 @@ public class UserController {
 		return util.addMsgLoc(m, str, loc);
 	}
 	
+	//회원가입 페이지 넘어가면서 이메일 발송처리 
 	@GetMapping("/chkMail")
 	public String chkMail(HttpServletRequest req) {
 		HttpSession ses = req.getSession();
@@ -176,6 +177,24 @@ public class UserController {
 		
 		return "/user/pwdSearch";
 	}
-
+	
+	@GetMapping("/pwdSearchEnd")
+	public String pwdSearchEnd(@RequestParam("id") String id,
+			                   @RequestParam("email") String email, HttpServletRequest req, Model m) throws NotUserException {
+		 
+		UserVO user = this.userService.userCheck(id, email);
+		
+		if (user != null) {
+			userService.mailSendPwd(id, email, req);
+		}
+		
+		return "user/pwdSearchEnd";
+	}
+		
+		@ExceptionHandler(NotUserException.class)
+		public String exceptionHandler(Exception ex) {
+			return  "user/errorAlert";
+		}
+	
 	
 }
