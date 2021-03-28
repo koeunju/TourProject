@@ -3,6 +3,7 @@ package com.t4er.user.controller;
 import com.t4er.common.CommonUtil;
 import com.t4er.user.exception.NotUserException;
 import com.t4er.user.model.UserVO;
+import com.t4er.user.security.UserSha256;
 import com.t4er.user.service.UserService;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +35,20 @@ public class LoginController {
             throws NotUserException {
         log.info("user===" + user);
 
+        String encryPassword = UserSha256.encrypt(user.getPwd());
+        user.setPwd(encryPassword);
+
         UserVO loginUser = this.userService.loginCheck(user.getId(), user.getPwd());
         String st = this.userService.checkState(user.getId());
 
         if (st.trim().equals("4")) {
             return util.addMsgLoc(m, "탈퇴회원입니다. 고객센터에 문의 바랍니다.", "/index");
         }
+        if (st.trim().equals("5")) {
+            return util.addMsgLoc(m, "차단회원입니다. 고객센터에 문의 바랍니다.", "/index");
+        }
         if(st.trim().equals("0")) {
-            return util.addMsgLoc(m, "이메일 인증이 안된 회원입니다. 이메일 인증을 해주세요.", "index");
+            return util.addMsgLoc(m, "이메일 인증이 안된 회원입니다. 이메일 인증을 해주세요.", "/index");
         }
 
         if (loginUser != null) {

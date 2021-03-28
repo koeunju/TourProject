@@ -21,7 +21,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         if (user != null) return  true;
 
         request.setAttribute("msg", "로그인 해야 이용 가능합니다");
-        request.setAttribute("loc", request.getContextPath()+"/index");
+        request.setAttribute("loc", "javascript:history.back()");
         String view = "/WEB-INF/views/message.jsp";
         RequestDispatcher disp = request.getRequestDispatcher(view);
         disp.forward(request, response);

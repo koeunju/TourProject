@@ -6,13 +6,20 @@
 <mapper namespace="com.t4er.point.mapper.ProductMapper">
     <select id="getProductTotalCount" resultType="int" parameterType="PPaging">
         select count(*) cnt from product
+        <if test="findKeyword != null and findKeyword !=''">
+            <include refid="findWhere" />
+        </if>
+    </select>
+
+    <select id="getProdByCateTotalCount" resultType="int" parameterType="PPaging">
+        select count(*) cnt from product
         <if test="cgnum != null and (findKeyword ==null or findKeyword=='')">
             <where>
                 cg_num=#{cgnum}
             </where>
         </if>
         <if test="findKeyword != null and findKeyword !=''">
-            <include refid="findWhere"/>
+            <include refid="findWhere" />
             <if test="cgnum != null">
                 and cg_num=#{cgnum}
             </if>
@@ -56,9 +63,7 @@
     </select>
 
     <select id="selectByPnum" resultType="Product" parameterType="int">
-        select
-        <include refid="product_column"/>
-        from product where pnum=#{pnum}
+        select * from product where pnum=#{pnum}
     </select>
 
     <sql id="product_column">
@@ -69,10 +74,10 @@
 		cg_num
 	</sql>
 
-    <select id="getFindTotalCount" resultType="int">
+<!--    <select id="getFindTotalCount" resultType="int">
         select count(pnum) from product
         <include refid="findWhere"/>
-    </select>
+    </select>-->
 
     <sql id="findWhere">
         <if test="findKeyword != null">
@@ -82,6 +87,7 @@
         </if>
     </sql>
 
+<!--
     <select id="getFindList" resultType="Product" parameterType="PPaging">
         select * from(
         select a.*,row_number() over(order by pnum desc) rn from
@@ -90,6 +96,7 @@
         )
         where rn between #{start,jdbcType=NUMBERIC} and #{end}
     </select>
+-->
 
     <!-- 여기부터 admin입니다 -->
     <!-- 상품등록 -->
@@ -101,5 +108,8 @@
         values(#{pnum}, #{pname}, #{pcontent},#{price}, #{pimage:VARCHAR}, #{pimage2:VARCHAR}, #{pimage3:VARCHAR}, 99)
     </insert>
 
+    <select id="getProd" parameterType="int" resultType="Product">
+   		select * from product where pnum = #{pnum,jdbcType=NUMERIC}
+   </select>
 
 </mapper>

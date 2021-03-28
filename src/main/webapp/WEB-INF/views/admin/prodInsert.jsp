@@ -7,9 +7,9 @@
 
     <!-- 여기까지가 top -->
 
-    <c:set var="myctx"  value="${pageContext.request.contextPath}"/>
-    <!--컨텍스트명을 myctx변수에 할당  -->
+
     <script src="../js/productInsert.js"></script>
+
 
     <div class="container" style="margin-top:30px">
         <div class="row">
@@ -30,8 +30,18 @@
                                     <h3>:::Product Register:::</h3>
                                 </th>
                             </tr>
+                            <select name="cg_num" id="cg_num" class="form-control">
+                                <option value="99">::카테고리 유형::</option>
+                                <option value="3">스포츠</option>
+                                <option value="2">패션</option>
+                                <option value="1">식품</option>
+
+                            </select>
                             </thead>
                             <tbody>
+
+
+
 
                             <tr>
                                 <td width="20%"><b>상품명</b></td>
@@ -87,5 +97,46 @@
         <!--  -->
     </div>
 </div>
+
+<script type="text/javascript">
+    $(function() {
+        $('#btnWrite').on('click', function(e) {
+            e.preventDefault();
+            var $pname = $('#pname');
+            var $price = $('#price');
+            var $pcontent = $('#pcontent');
+
+            if (!$pname.val()) {
+                alert('상품이름을 입력하세요');
+                $pname.focus();
+                return;
+            }
+            if (!$price.val()) {
+                alert('가격을 입력하세요');
+                $price.focus();
+                return;
+            }
+            if (!$pcontent.val()) {
+                alert('내용을 입력하세요');
+                $pcontent.focus();
+                return;
+            }
+            var $cg = $('#cg_num')
+            if ($cg.val() == 99) {
+                alert('선택할수 없는 카테고리입니다. 다시 선택해주세요')
+                $('#cg_num').focus();
+                return false;
+            }
+
+            $('#prodF').submit();
+        })
+        /*  $('#btnList').on('click', function(e){
+             history.back();
+         }) */
+    })
+
+
+</script>
+
 
 <c:import url="/foot" />

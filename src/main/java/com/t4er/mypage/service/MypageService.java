@@ -14,10 +14,12 @@ public interface MypageService {
 
     int leaveMember(Integer idx);
 
-    // 내 포인트 조회
     List<PointVO> mypoint(Integer idx);
 
-    // 내가 쓴 글 조회
     List<BoardVO> selMyBoard(Integer idx);
+
+    boolean pwdCheck(Integer idx,String pwd);
+
+    String myTotalPoint(Integer idx);
 
 }

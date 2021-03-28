@@ -7,5 +7,5 @@
 <script>
    <%-- alert('<%=exception.getMessage()%>'); --%>
    alert('${pageContext.exception.message}');
-   location.href="${pageContext.request.contextPath}/login";
+   location.href="${pageContext.request.contextPath}/user/login";
 </script>

@@ -6,7 +6,6 @@
 	function ready(){
 		alert('준비중에 있습니다.');
 	}
-
 </script>
 <!-- 메뉴사이드바 -->
 <c:import url="/user/mypageMenubar"/>
@@ -16,7 +15,6 @@
 		 style="border: 1px solid gray; border-radius: 15px" id="font2">
 		<h3 class="text-bold" id="font1">나의 작성 글</h3>
 		<br>
-
 		<!-- 내가 쓴글 -->
 		<table class="table table-hover text-center" id="mypageT">
 			<tr class="table-dark  text-dark">
@@ -48,5 +46,4 @@
 	</div>
 	<!-- 내정보 div -->
 </div>
-
 <c:import url="/foot_sub" />

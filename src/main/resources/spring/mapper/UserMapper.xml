@@ -30,7 +30,23 @@
 		select * from member where id=#{id} and pwd=#{pwd}
 	</select>
 
-    <!-- 회원 상태 조회 -->
+	<update id="statAlter" parameterType="String">
+	    update member set stat=1
+		where id=#{id}
+	</update>
+
+	<!-- 아이디 찾기 -->
+	<select id="searchId" resultType="String">
+		select id from member
+        where nick = #{nick} and email = #{email}
+	</select>
+
+	<!-- 회원 임시 비밀번호 발급-->
+	<update id="searchPwd" parameterType="hashmap">
+		update member set pwd = #{param3} where id = #{param1} and email = #{param2}
+	</update>
+
+	<!-- 회원 상태 조회 -->
     <select id="checkState" resultType="String" parameterType="String">
     	select stat from member where id=#{id}
    </select>
@@ -41,12 +57,12 @@
    </select>
 
 	<!-- admin -->
-
 	<!-- 전체 회원수 가져오기 -->
 	<select id="getUserCount" resultType="int"  parameterType="APaging">
 		select count(idx) from member
 		<include refid="findWhere"/>
 	</select>
+
 	<sql id="findWhere">
 		<if test="findType != null and findKeyword !=''">
 			<where>
@@ -79,7 +95,7 @@
 	<delete id="deleteUser" parameterType="int">
  		delete from member where idx=#{idx}
  	</delete>
-	<!--  -->
+	<!-- ? -->
 	<select id="getUser" parameterType="int" resultType="User">
    		select * from member where idx = #{idx,jdbcType=NUMERIC}
    </select>
@@ -90,7 +106,7 @@
 		<if test="adminCheck != 9">
 		pwd=#{pwd,jdbcType=VARCHAR},
 		</if>
-		email=#{email,jdbcType=VARCHAR} , nick=#{nick,jdbcType=VARCHAR}, tel=#{tel,jdbcType=VARCHAR}, stat=#{stat,jdbcType=NUMERIC}/*, image = #{image:VARCHAR}*/
+		email=#{email,jdbcType=VARCHAR} , nick=#{nick,jdbcType=VARCHAR}, tel=#{tel,jdbcType=VARCHAR}, stat=#{stat,jdbcType=NUMERIC}, image = #{image:VARCHAR}
 		<if test="adminCheck == 9">
 		,point=#{point,jdbcType=NUMERIC}
 		</if>
@@ -105,7 +121,7 @@
 
     <!-- 내정보 수정에서 비밀번호 재확인 -->
     <select id="checkPwd" resultType="User" parameterType="int">
-		select * from member where idx=#{idx}
+		select * from member where idx=#{idx,jdbcType=NUMERIC}
 	</select>
 
     <!-- 유저 탈퇴 처리 -->
@@ -114,13 +130,8 @@
 		where idx=#{idx}
 	</update>
 
-    <!-- 내 포인트 조회 -->
-    <select id="mypoint" parameterType="int" resultType="Point">
-		select * from point where idx=${idx,jdbcType=NUMERIC}
+	<!--아이디로 회원번호 조회  -->
+	<select id="findIdx" resultType="String" parameterType="int">
+		select idx from member where id=#{id}
 	</select>
-
-    <!-- 회원가입시 포인트 부여 -->
-    <insert id="setPoint" parameterType="int">
-		insert into point values(member_seq.nextval,'100',sysdate,1000,1000,#{idx})
-	</insert>
 </mapper>

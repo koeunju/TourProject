@@ -6,7 +6,7 @@
 
 <div class="container">
     <!-- category include --------------------- -->
-    <c:import url="/category" />
+    <c:import url="/point/category" />
     <!-- ------------------------------------- -->
 
     <script type="text/javascript">

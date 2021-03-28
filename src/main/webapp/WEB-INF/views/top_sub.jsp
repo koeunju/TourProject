@@ -79,7 +79,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/point">포인트샵</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/point/list">포인트샵</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">명예의 전당</a>

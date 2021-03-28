@@ -8,8 +8,6 @@
 	function ready(){
 		alert('준비중에 있습니다.');
 	}
-
-
 </script>
 <!-- 메뉴사이드바 -->
 
@@ -20,7 +18,6 @@
 		<h1 class="text-bold" id="font1">MyPage</h1>
 		<br>
 		<!-- 내상태  -->
-
 		<h5 class="text-right font-weight-bold" id="font1">내 상태</h5>
 		<c:if test="${user.stat==1}">
 			<h6 class="text-right font-weight-bold text-success">활동회원</h6>
@@ -38,12 +35,12 @@
 		<table class="table table-hover" id="mypageT">
 			<tr>
 				<td rowspan="7" style="width: 30%; padding: 10px;"><img
-						src="../image/ready.png"
+						src="../image/noimage.png"
 						style="width: 100%; margin: 20px; border: 1px solid gray"><br>
 					<br> 사진</td>
 			</tr>
 			<tr>
-				<th>닉네임</th>
+				<th>이름</th>
 				<td>${user.nick }</td>
 				<th>가입일</th>
 				<td>${user.indate }</td>
@@ -61,18 +58,22 @@
 			<tr>
 				<th colspan="2">내포인트</th>
 				<td colspan="2">
-					${user.point }POINT<br>
+					${mytotalpoint }POINT<br>
 					<a href="/user/mypoint?idx=${user.idx }"><label>더보기</label></a>
 				</td>
 			</tr>
 		</table>
 		<div class="container text-right">
-			<button class="btn btn-success" id="rewrite"
-					onclick="location.href='/user/edit?idx=${user.idx}'">수정하기</button>
-			<button class="btn btn-danger" id="userexit"
-					onclick="leave(${user.idx})">탈퇴하기</button>
+			<c:if test="${user.stat ne 9}">
+				<button class="btn btn-success" id="rewrite"
+						onclick="location.href='/user/edit?idx=${user.idx}'">수정하기</button>
+				<button class="btn btn-danger" id="userexit"
+						onclick="leave(${user.idx})">탈퇴하기</button>
+			</c:if>
+			<c:if test="${user.stat eq 9 }">
+				<label class= "text-success" style="font-style:bold" id="font1">관리자는 삭제 및 탈퇴 처리가 불가능 합니다.</label>
+			</c:if>
 		</div>
-
 		<!-- 버튼정렬div -->
 	</div>
 	<!-- 내정보 div -->
@@ -88,6 +89,5 @@
 		$('#pf').attr('action','/user/del')
 		$('#pf').submit();
 	}
-
 </script>
 <c:import url="/foot_sub"/>

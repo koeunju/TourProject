@@ -20,7 +20,10 @@ public interface ProductMapper {
 
     int getProductTotalCount(ProductPagingVO paging);
 
+    int getProdByCateTotalCount(ProductPagingVO paging);
+
     // 여기부터 관리자
     int insertProd(ProductVO product);
-
+    ProductVO getProd(Integer pnum);
+    int updateProd(ProductVO prod);
 }

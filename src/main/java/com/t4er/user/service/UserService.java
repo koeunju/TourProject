@@ -2,6 +2,7 @@ package com.t4er.user.service;
 
 import com.t4er.user.exception.NotUserException;
 import com.t4er.user.model.UserVO;
+import org.apache.ibatis.annotations.Param;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -9,6 +10,8 @@ import javax.validation.Valid;
 public interface UserService {
 
     UserVO loginCheck(String id, String pwd) throws NotUserException;
+
+    UserVO userCheck(String id, String email) throws NotUserException;
 
     UserVO findUser(UserVO findUser) throws NotUserException;
 
@@ -25,6 +28,10 @@ public interface UserService {
 
     String checkState(String id);
 
-    int setPoint(@Valid UserVO user);
+    String searchId(@Param("nick")String nick, @Param("email")String email);
 
+    void mailSendPwd(String id, String email, HttpServletRequest req);
+
+    //첫 로그인시 포인트 부여
+    int firstPoint(String id);
 }

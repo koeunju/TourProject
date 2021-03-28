@@ -13,4 +13,8 @@ public class PointVO {
     private int psavePoint;
     private int ptotalPoint;
     private String idx;
+
+    public int getTotalPoint() {
+        return ptotalPoint + psavePoint;
+    }
 }

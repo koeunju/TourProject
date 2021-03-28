@@ -3,11 +3,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:import url="/top" />
 
-<script src="js/jquery.magnifier.js"></script>
-
 <script type="text/javascript">
     function openPop(fname) {
-        var url = "product_images/" + fname;
+        var url = "../product/upload/" + fname;
         var obj = new Image();
         obj.src = url;
         var w = obj.width + 50;
@@ -22,7 +20,6 @@
         frm.submit();
     }
 </script>
-
 <div>
     <div align="center" class="row">
         <c:if test="${item eq null}">
@@ -42,16 +39,21 @@
                     <tbody>
                     <tr>
                         <td align="center" width="50%">
-                            <img src="../product/${item.pimage}"
-                                 class="img-fluid magnify"  data-magnifyby="2" style="width: 50%;">
-                            <!-- </a> -->
+                            <c:if test="${item.pimage eq null or empty item.pimage}">
+                                <img src="../image/noimage.png"
+                                     class="img-fluid magnify"  data-magnifyby="2" style="width: 50%;">
+                            </c:if>
+                            <c:if test="${item.pimage ne null and not empty item.pimage}">
+                                <img src="../product/upload/${item.pimage}"
+                                     class="img-fluid magnify"  data-magnifyby="2" style="width: 50%;">
+                            </c:if>
                         </td>
                         <td align="left"  width="50%" class="pl-5">
                             상품이름: ${item.pname} <br>
                             가격:<span style="color:red;font-weight:bold">
-				<fmt:formatNumber value="${item.price}"
-                                  pattern="###,###" />
-			</span><H1 class="badge badge-info">Point</H1><br>
+            <fmt:formatNumber value="${item.price}"
+                              pattern="###,###" />
+         </span><H1 class="badge badge-info">Point</H1><br>
                             <!-- form시작---------- -->
                             <form name="frm" id="frm" method="POST">
                                 <!-- 상품번호를 hidden으로 넘기자------ -->
@@ -65,12 +67,24 @@
                     </tr>
                     <tr style="border:0">
                         <td align="center">
-                            <img src="../product/${item.pimage2}"
-                                 class="img-fluid img-thumbnail"  style="width: 50%;">
+                            <c:if test="${item.pimage2 eq null or empty item.pimage2}">
+                                <img src="../image/noimage.png"
+                                     class="img-fluid magnify"  data-magnifyby="2" style="width: 50%;">
+                            </c:if>
+                            <c:if test="${item.pimage2 ne null and not empty item.pimage2}">
+                                <img src="../product/upload/${item.pimage2}"
+                                     class="img-fluid img-thumbnail"  style="width: 50%;">
+                            </c:if>
                         </td>
                         <td align="center">
-                            <img src="../product/${item.pimage3}"
-                                 class="img-fluid img-thumbnail"  style="width: 50%;">
+                            <c:if test="${item.pimage3 eq null or empty item.pimage3}">
+                                <img src="../image/noimage.png"
+                                     class="img-fluid magnify"  data-magnifyby="2" style="width: 50%;">
+                            </c:if>
+                            <c:if test="${item.pimage3 ne null and not empty item.pimage3}">
+                                <img src="../product/upload/${item.pimage3}"
+                                     class="img-fluid img-thumbnail"  style="width: 50%;">
+                            </c:if>
                         </td>
                     </tr>
                     <tr>

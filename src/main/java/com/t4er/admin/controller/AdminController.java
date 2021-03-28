@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.t4er.admin.model.AdminPagingVO;
+import com.t4er.point.model.ProductPagingVO;
 import com.t4er.point.model.ProductVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.t4er.admin.service.AdminService;
 import com.t4er.common.CommonUtil;
-import com.t4er.point.service.PointService;
+import com.t4er.point.service.ProductService;
 import com.t4er.user.model.UserVO;
 
 import lombok.extern.log4j.Log4j;
@@ -38,7 +39,7 @@ public class AdminController {
     private AdminService adminService;
 
     @Autowired
-    private PointService pointService;
+    private ProductService productService;
 
     @Autowired
     private CommonUtil util;
@@ -57,7 +58,6 @@ public class AdminController {
         log.info("userConut=" + totalUser);
 
         paging.setTotalCount(totalUser);
-        paging.setPageSize(5);
         paging.setPagingBlock(5);
         paging.init(req.getSession());
 
@@ -120,9 +120,29 @@ public class AdminController {
     }
 
     @GetMapping("/shopList")
-    public String shopList() {
+    public String shopList(Model m, HttpServletRequest req,
+                           @ModelAttribute("cgnum") String cgnum,
+                           @RequestHeader("User-Agent") String userAgent,
+                           @ModelAttribute("paging") ProductPagingVO paging) {
 
-        return "/admin/shopList";
+        // 총 상품 수 가져오기
+        int totalCount = this.productService.getProductTotalCount(paging);
+        paging.setTotalCount(totalCount);
+        paging.setPagingBlock(5);
+        paging.init(req.getSession());
+        log.info(paging);
+
+        // 상품 목록 가져오기
+        List<ProductVO> pList = this.productService.getProdList(paging);
+        String myctx = req.getContextPath();
+        String loc = "point";
+        String pageNavi = paging.getPageNavi(myctx, loc, userAgent, cgnum);
+
+        m.addAttribute("cgnum", cgnum);
+        m.addAttribute("pList", pList);
+        m.addAttribute("pageNavi", pageNavi);
+
+        return "admin/shopList";
     }
 
     @GetMapping("/prodInsert")
@@ -196,6 +216,32 @@ public class AdminController {
         m.addAttribute("loc", loc);
 
         return "message";
+    }
+
+    @GetMapping("/prodEdit")
+    public String prodEdit(Model m, HttpServletRequest req,
+                           @RequestParam int pnum) {
+        HttpSession ses = req.getSession();
+
+        log.info("pnum===" + pnum);
+        if (pnum == 0)
+            return "redirect:/admin";
+
+        ProductVO product = this.adminService.getProd(pnum);
+        m.addAttribute("product", product);
+
+        return "admin/prodEdit";
+    }
+
+    @PostMapping("/prodEdit")
+    public String prodEditEnd(Model m, @RequestParam String pnum, @ModelAttribute("product") ProductVO product) {
+        if (product.getPnum()==null)
+            return "admin/shopList";
+
+        int n = this.adminService.updateProd(product);
+        String str = (n > 0) ? "수정 성공" : "수정 실패";
+        String loc = (n > 0) ? "prodEdit?idx=" + product.getPnum() : "javascript:history.back()";
+        return util.addMsgLoc(m, str, loc);
     }
 
     @RequestMapping("/adminMenubar")

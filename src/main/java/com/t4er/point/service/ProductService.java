@@ -6,7 +6,7 @@ import com.t4er.point.model.ProductCategoryVO;
 
 import java.util.List;
 
-public interface PointService {
+public interface ProductService {
     /* Pspec 별로 상품 정보 가져오기 */
     List<ProductVO> selectByPspec(String pspec);
     /* 카테고리별 상품정보 가져오기 */
@@ -17,6 +17,8 @@ public interface PointService {
     List<ProductCategoryVO> getCategory();
 
     int getProductTotalCount(ProductPagingVO paging);
+
+    int getProdByCateTotalCount(ProductPagingVO paging);
 
     List<ProductVO> getProdList(ProductPagingVO paging);
 

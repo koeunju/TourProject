@@ -52,4 +52,5 @@ public class IndexController {
     public void foot_sub(){
 
     }
+
 }

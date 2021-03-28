@@ -33,9 +33,9 @@
                 </tr>
             </c:if>
             <c:if test="${mypoint ne null and not empty mypoint }">
-                <c:forEach var="mypoint" items="${mypoint }">
+                <c:forEach var="mypoint" items="${mypoint }" varStatus="status">
                     <tr>
-                        <td>${mypoint.pidx }</td>
+                        <td> ${status.count}</td>
                         <td><c:if
                                 test="${mypoint.pcontent eq 400 or empty mypoint.pcontent}">
                             -
@@ -59,11 +59,16 @@
                         </c:if> <c:if test="${mypoint.pcontent==500 }">
                             <label>이달의 여행지 선정</label>
                         </c:if></td>
+
                         <td>${mypoint.ptotalPoint }</td>
                     </tr>
                 </c:forEach>
             </c:if>
         </table>
+        <hr style="color:Navy;">
+        <div class="text-right">
+            <h4 id="font1"> 현재 포인트 : ${mytotalpoint }point</h4>
+        </div>
     </div>
 </div>
 <c:import url="/foot_sub" />

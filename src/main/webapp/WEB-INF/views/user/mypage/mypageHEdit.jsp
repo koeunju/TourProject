@@ -7,22 +7,51 @@
         alert('준비중에 있습니다.');
     }
 
-    function openWin(idx) {
-        var win = window.open("pwdCheck?idx=" + idx, "pwdCheck", "width=400, height=400, left=100, top=100");
+    //비밀번호 변경 체크
+    function checkPwd(idx){
+        let str = '<input type="text" id="repwd" name="repwd" class="form-control" onchange="checkp(${user.idx},this.value)" placeholder="현재 비밀번호를 입력해주세요">';
+        $('#msgPwd').html(str);
+        $('#checkmypwd').hide();
+    }
+
+    function checkp(idx,repwd){
+        $.ajax({
+            type:'get',
+            url:'/user/pwdcheck?idx='+idx+"&pwd="+repwd,
+            dataType:'json',
+            cache:false,
+        }).done(function(res){
+            let n = parseInt(res.check);
+            let cls='';
+            if(n>0){
+                cls='text-primary';
+                $('#pwdstate').val(1);
+            }else{
+                cls='text-danger'
+                $('#pwdstate').val("");
+            }
+            $('#msgPwd').text(res.okPwd).addClass(cls);
+            document.meF.pwd.readOnly = false;
+            document.meF.remypwd.readOnly = false;
+
+        }).fail(function(err){
+            alert('error: '+err.status);
+
+        })
     }
 
     $(function () {
         $('#rewrite').on('click', function (e) {
             e.preventDefault();
-            var $nick = $('#nick');
+            var $name = $('#nick');
             var $pwd = $('#pwd');
             var $pwd2 = $('#remypwd');
             var $tel = $('#tel');
             var $email = $('#email');
 
-            if (!$nick.val()) {
+            if (!$name.val()) {
                 alert('닉네임을 입력하세요');
-                $nick.focus();
+                $name.focus();
                 return;
             }
             if (!$pwd.val()) {
@@ -40,11 +69,6 @@
                 $tel.focus();
                 return;
             }
-            if (!$email.val()) {
-                alert('이메일을 입력하세요');
-                $email.focus();
-                return;
-            }
 
             $('#meF').submit();
         })
@@ -52,7 +76,7 @@
 </script>
 
 <!-- 메뉴사이드바 -->
-<c:import url="/user/mypageMenubar"/>
+<c:import url="/user/mypageMenubar" />
 
 <!-- 내정보 -->
 <div class="container">
@@ -82,13 +106,13 @@
             <table class="table table-hover" id="mypageT">
                 <tr>
                     <td rowspan="7" style="width: 30%; padding: 10px;"><img
-                            src="../image/ready.png"
+                            src="../image/noimage.png"
                             style="width: 100%; j margin: 20px; border: 1px solid gray"><br>
                         <br> 사진</td>
                 </tr>
                 <tr>
                     <th>닉네임</th>
-                    <td><input type="text" value="${user.nick }" name="nick"
+                    <td><input type="text" value="${user.nick}" name="nick"
                                id="nick" class="form-control"></td>
                     <th>가입일</th>
                     <td>${user.indate }</td>
@@ -97,8 +121,7 @@
                     <th>아이디</th>
                     <td>${user.id }</td>
                     <th>이메일</th>
-                    <td><input type="text" value="${user.email }" name="email"
-                               id="email" class="form-control"></td>
+                    <td>${user.email }</td>
                 </tr>
 
                 <tr>
@@ -111,19 +134,21 @@
                     <th colspan="2">비밀번호 변경여부</th>
                     <td colspan="2">
 
-                        <button type="button" onclick="openWin(${user.idx })">비밀번호
-                            변경하기</button>
+                        <button type="button" id="checkmypwd"
+                                onclick="checkPwd(${user.idx })">비밀번호 변경하기</button> <input
+                            type="hidden" name="pwdState" id="pwdState">
+                        <div id="msgPwd"></div>
                     </td>
                 </tr>
                 <tr>
                     <th colspan="2">비밀번호 입력</th>
                     <td colspan="2"><input type="password" name="pwd" id="pwd"
-                                           class="form-control" value="${user.pwd }" readonly></td>
+                                           class="form-control" readonly></td>
                 </tr>
                 <tr>
                     <th colspan="2">비밀번호 재 입력</th>
                     <td colspan="2"><input type="password" name="remypwd"
-                                           id="remypwd" value="${user.pwd }" class="form-control" readonly></td>
+                                           id="remypwd" class="form-control" readonly></td>
                 </tr>
                 <tr>
                     <th colspan="2">내 상태</th>
@@ -169,25 +194,19 @@
                             </c:if>
 
                             <c:if test="${user.stat==9 }">
-                                <label class="radio-inline text-warning">당신은
-                                    관리자 입니다.
-                                </label>
+                                <label class="radio-inline text-warning">당신은 관리자 입니다. </label>
 
                             </c:if>
-
                         </div>
                     </td>
                 </tr>
-
             </table>
             <div class="container text-right">
                 <input type="hidden" id="res" name="res">
                 <button class="btn btn-success" id="rewrite" name="rewirte">수정하기</button>
                 <button type="reset" class="btn btn-info" id="resetbtn">다시쓰기</button>
             </div>
-
         </form>
-
         <!-- 버튼정렬div -->
     </div>
     <!-- 내정보 div -->

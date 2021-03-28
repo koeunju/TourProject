@@ -19,5 +19,9 @@ public interface AdminService {
 	UserVO getUser(Integer idx);
 	
 	int insertProd(ProductVO product);
+
+	ProductVO getProd(Integer pnum);
+
+	int updateProd(ProductVO prod);
 	
 }

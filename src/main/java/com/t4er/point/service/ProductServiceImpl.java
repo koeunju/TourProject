@@ -11,7 +11,7 @@ import com.t4er.point.model.ProductVO;
 import com.t4er.point.model.ProductCategoryVO;
 
 @Service("pointService")
-public class PointServiceImpl implements PointService {
+public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductMapper productMapper;
@@ -46,5 +46,9 @@ public class PointServiceImpl implements PointService {
         return this.productMapper.getProductTotalCount(paging);
     }
 
+    @Override
+    public int getProdByCateTotalCount(ProductPagingVO paging) {
+        return this.productMapper.getProdByCateTotalCount(paging);
+    }
 }
 

@@ -3,11 +3,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:import url="/top" />
 
-<script
-        src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-
-</script>
-
 <script>
    function send() {
       if (!$('#id').val()) {
@@ -61,7 +56,10 @@
                <label for="saveId"> <input type="checkbox" name="saveId"
                                            id="saveId" <%=(flag) ? "checked" : ""%>>아이디 저장
                </label>
-
+            </div>
+            <div>
+               <a href="${pageContext.request.contextPath}/user/userSearch">&nbsp; 아이디</a>
+               /<a href="${pageContext.request.contextPath}/user/pwdSearch">비밀번호 찾기</a>
             </div>
             <button class="btn btn-lg btn-primary btn-block">로그인</button>
          </form>
@@ -69,6 +67,5 @@
       </div>
    </div>
 </div>
-
 
 <c:import url="/foot" />

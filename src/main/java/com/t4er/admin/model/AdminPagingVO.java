@@ -27,12 +27,12 @@ public class AdminPagingVO {
 
     public void init(HttpSession ses) {
         if (pageSize < 0) {
-            pageSize = 5;
+            pageSize = 10;
         }
         if (pageSize == 0) {
             Integer ps = (Integer) ses.getAttribute("pageSize");
             if (ps == null) {
-                pageSize = 5;
+                pageSize = 10;
             } else {
                 pageSize = ps;
             }

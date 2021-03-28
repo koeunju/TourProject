@@ -48,10 +48,22 @@ public class AdminServiceImpl implements AdminService {
 		 return this.userMapper.getUser(idx);
 	
 	}
+
 	//여기부터 상품
 	@Override
 	public int insertProd(ProductVO product) {
 		return this.productMapper.insertProd(product);
 	}
+
+	@Override
+	public ProductVO getProd(Integer pnum) {
+		return this.productMapper.getProd(pnum);
+	}
+
+	@Override
+	public int updateProd(ProductVO prod) {
+		return this.productMapper.updateProd(prod);
+	}
+
 
 }
