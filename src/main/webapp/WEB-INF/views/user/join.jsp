@@ -181,7 +181,7 @@
     }
 </script>
 
-<script src="./js/join.js"></script>
+<script src="../js/join.js"></script>
 
 
 <div class="in" style="display: inline-block; margin: 0 auto;">

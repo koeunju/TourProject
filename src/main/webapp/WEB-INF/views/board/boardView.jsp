@@ -16,17 +16,14 @@
         <table class="table table-bordered">
             <tr>
                 <th width="25%">게시물 유형</th>
-                <td width="30%" class="text-center">
-                    <c:if test="${board.cg_num==0 }">
-                        <b>여행지 추천</b>
-                    </c:if>
-                    <c:if test="${board.cg_num==1 }">
-                        <b>자유게시판</b>
-                    </c:if>
-                    <c:if test="${board.cg_num==2 }">
-                        <b>고객센터</b>
-                    </c:if>
-                </td>
+                <td width="30%" class="text-center"><c:if
+                        test="${board.cg_num==0 }">
+                    <b>여행지 추천</b>
+                </c:if> <c:if test="${board.cg_num==1 }">
+                    <b>자유게시판</b>
+                </c:if> <c:if test="${board.cg_num==2 }">
+                    <b>고객센터</b>
+                </c:if></td>
                 <th width="25%">글쓴이</th>
                 <td width="30%"><c:out value="${board.idx}" /></td>
             </tr>
@@ -50,9 +47,9 @@
                     <c:if
                             test="${fn:endsWith(fname,'.png')
 							or fn:endsWith(fname,'.jpg') or fn:endsWith(fname,'.gif')}">
-                        <img
-                                src="${pageContext.request.contextPath}/Upload/${board.filename}"
-                                class="img-thumbnail" width="100px">
+                        <%-- <img
+                            src="${pageContext.request.contextPath}/Upload/${board.filename}"
+                            class="img-thumbnail" width="100px"> --%>
                     </c:if>
                     [
                     <c:out value="${board.filesize}" />
@@ -78,86 +75,54 @@
                    value="<c:out value="${board.bnum}"/>">
             <button class="btn btn-primary" onclick="goEdit()">수정</button>
             <button class="btn btn-primary" onclick="goDel()">삭제</button>
-            <button class="btn btn-primary" onclick="goList()">목록</button>
         </form>
         <h6 class='text-right'>
+            <button class="btn btn-primary" onclick="history.back()">목록</button>
             <button class="btn btn-primary" onclick="goRe()">답글달기</button>
         </h6>
     </div>
 </div>
 <!-- 댓글 폼---------------------------------------------- -->
 
-<div class="col-lg-12">
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="form-group col-sm-2">
-                    <input class="form-control input-sm" id="newReplyWriter"
-                           type="text" value="${board.idx }" disabled>
-                </div>
-                <div class="form-group col-sm-8">
-                    <input class="form-control input-sm" id="newReplyText" type="text"
-                           placeholder="댓글 입력">
-                </div>
-                <div class="form-group col-sm-2">
-                    <button type="button"
-                            class="btn btn-primary btn-sm btn-block replyAddBtn">
-                        <i class="fa fa-save"></i> 저장
-                    </button>
-                </div>
+<!-- Reply Form {s} -->
+<div class="my-3 p-3 bg-white rounded shadow-sm"
+     style="padding-top: 10px">
+    <form name="form" id="form" action="form" modelAttribute="replyVO"
+          method="post">
+        <input type="hidden" name="bnum" id="bnum" />
+        <div class="row">
+            <div class="col-sm-10">
+				<textarea name="content" id="content" class="form-control" rows="3"
+                          placeholder="댓글을 입력해 주세요"></textarea>
+            </div>
+            <div class="col-sm-2">
+                <input name="idx" class="form-control" id="idx" value="${board.idx}"
+                       disabled></input>
+                <button type="button" class="btn btn-sm btn-primary"
+                        id="btnReplySave" style="width: 100%; margin-top: 10px">저
+                    장</button>
             </div>
         </div>
-        <div class="card-footer">
-            <ul id="replies">
-            </ul>
-        </div>
-        <div class="card-footer">
-            <nav aria-label="Contacts Page Navigation">
-                <ul
-                        class="pagination pagination-sm no-margin justify-content-center m-0">
-                </ul>
-            </nav>
-        </div>
-    </div>
+    </form>
 </div>
-<div class="modal fade" id="modifyModal" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">댓글 수정창</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="reply_no">댓글 번호</label> <input class="form-control"
-                                                               id="reply_no" name="reply_no" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="reply_text">댓글 내용</label> <input class="form-control"
-                                                                 id="reply_text" name="reply_text" placeholder="댓글 내용을 입력해주세요">
-                </div>
-                <div class="form-group">
-                    <label for="reply_writer">댓글 작성자</label> <input
-                        class="form-control" id="reply_writer" name="reply_writer"
-                        readonly>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left"
-                        data-dismiss="modal">닫기</button>
-                <button type="button" class="btn btn-success modalModBtn">수정</button>
-                <button type="button" class="btn btn-danger modalDelBtn">삭제</button>
-            </div>
-        </div>
-    </div>
+
+<!-- Reply Form {e} -->
+
+<!-- Reply List {s}-->
+<div class="my-3 p-3 bg-white rounded shadow-sm"
+     style="padding-top: 10px">
+    <h6 class="border-bottom pb-2 mb-0">Reply list</h6>
+    <div id="replyList"></div>
 </div>
+<!-- Reply List {e}-->
+
 
 <!-- -답변 달기 form -->
 <form name="reF" action="reInsert" method="post">
     <!-- hidden으로 부모글(원글)의 글번호(idx)와 제목(subject)를 넘기자. -->
-    <input type="hidden" name="bnum" value="${board.bnum}">
-    <input type="hidden" name="btitle" value="${board.btitle}">
-    <input type="hidden" name="cg_num" value="${board.cg_num}">
+    <input type="hidden" name="bnum" value="${board.bnum}"> <input
+        type="hidden" name="btitle" value="${board.btitle}"> <input
+        type="hidden" name="cg_num" value="${board.cg_num}">
 
 </form>
 
@@ -169,82 +134,161 @@
 </form>
 
 <!-- 댓글---------------------------------------------------- -->
-<script type="text/javascript" src="../js/reply.js"></script>
 <script>
-    /* 댓글 가져오는 이벤트 */
-    $(document).ready(function () {
+    /* 댓글보여주기 */
+    $(document).ready(function(){
 
-        var bnumValue = '<c:out value="${board.bnum}"/>';
-        var replyUL = $(".chat");
+        showReplyList();
 
-        showList(1);
-        function showList(page) {
-            replyService.getList(bnum:bnumValue,page: page||1
-        }, function(list) {
-            var str="";
-            if(list==null||list.length==0) {
-                replyUL.html("");
+    });
 
-                return;
+    function showReplyList(){
+        var url = "${pageContext.request.contextPath}/restBoard/getReplyList";
+        var paramData = {"bnum" : "${boardContent.bnum}"};
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: paramData,
+            dataType: 'json',
+            success: function(result) {
+                var htmls = "";
+                if(result.length < 1){
+                    htmls.push("등록된 댓글이 없습니다.");
+                } else {
+                    $(result).each(function(){
+                        htmls += '<div class="media text-muted pt-3" id="rnum' + this.rnum + '">';
+                        htmls += '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder:32x32">';
+                        htmls += '<title>Placeholder</title>';
+                        htmls += '<rect width="100%" height="100%" fill="#007bff"></rect>';
+                        htmls += '<text x="50%" fill="#007bff" dy=".3em">32x32</text>';
+                        htmls += '</svg>';
+                        htmls += '<p class="media-body pb-3 mb-0 small lh-125 border-bottom horder-gray">';
+                        htmls += '<span class="d-block">';
+                        htmls += '<strong class="text-gray-dark">' + this.idx + '</strong>';
+                        htmls += '<span style="padding-left: 7px; font-size: 9pt">';
+                        htmls += '<a href="javascript:void(0)" onclick="fn_editReply(' + this.rnum + ', \'' + this.idx + '\', \'' + this.content + '\' )" style="padding-right:5px">수정</a>';
+                        htmls += '<a href="javascript:void(0)" onclick="fn_deleteReply(' + this.rnum + ')" >삭제</a>';
+                        htmls += '</span>';
+                        htmls += '</span>';
+                        htmls += this.content;
+                        htmls += '</p>';
+                        htmls += '</div>';
+                    });	//each end
+                }
+                $("#replyList").html(htmls);
+
+            }	   // Ajax success end
+        });	// Ajax end /
+
+        <!-- 댓글 저장 버튼 클릭 이벤트 -->
+        $(document).on('click', '#btnReplySave', function(){
+            var replyContent = $('#content').val();
+            var replyidx = $('#idx').val();
+
+            var paramData = JSON.stringify({"content": replyContent
+                , "idx": replyidx
+                , "bnum":'${boardContent.bnum}'
+            });
+
+            var headers = {"Content-Type" : "application/json"
+                , "X-HTTP-Method-Override" : "POST"};
+
+            $.ajax({
+                url: "${saveReplyURL}"
+                , headers : headers
+                , data : paramData
+                , type : 'POST'
+                , dataType : 'text'
+                , success: function(result){
+                    showReplyList();
+
+                    $('#content').val('');
+                    $('#idx').val('');
+                }
+                , error: function(error){
+                    console.log("에러 : " + error);
+                }
+            });
+        });
+
+        /* 댓글수정 */
+        function fn_editReply(rnum, idx, content){
+            var htmls = "";
+            htmls += '<div class="media text-muted pt-3" id="rnum' + rnum + '">';
+            htmls += '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder:32x32">';
+            htmls += '<title>Placeholder</title>';
+            htmls += '<rect width="100%" height="100%" fill="#007bff"></rect>';
+            htmls += '<text x="50%" fill="#007bff" dy=".3em">32x32</text>';
+            htmls += '</svg>';
+            htmls += '<p class="media-body pb-3 mb-0 small lh-125 border-bottom horder-gray">';
+            htmls += '<span class="d-block">';
+            htmls += '<strong class="text-gray-dark">' + idx + '</strong>';
+            htmls += '<span style="padding-left: 7px; font-size: 9pt">';
+            htmls += '<a href="javascript:void(0)" onclick="fn_updateReply(' + rnum + ', \'' + idx + '\')" style="padding-right:5px">저장</a>';
+            htmls += '<a href="javascript:void(0)" onClick="showReplyList()">취소<a>';
+            htmls += '</span>';
+            htmls += '</span>';
+            htmls += '<textarea name="editContent" id="editContent" class="form-control" rows="3">';
+            htmls += content;
+            htmls += '</textarea>';
+
+            htmls += '</p>';
+            htmls += '</div>';
+
+            $('#rnum' + rnum).replaceWith(htmls);
+            $('#rnum' + rnum + ' #editContent').focus();
+        }
+
+        /* 수정 후 저장 */
+        function fn_updateReply(rnum, idx){
+            var replyEditContent = $('#editContent').val();
+
+            var paramData = JSON.stringify({
+                    "content": replyEditContent
+                }
+                , "rnum": rnum
+        });
+
+    var headers = {"Content-Type" : "application/json"
+        , "X-HTTP-Method-Override" : "POST"};
+
+    $.ajax({
+        url: "${updateReplyURL}"
+        , headers : headers
+        , data : paramData
+        , type : 'POST'
+        , dataType : 'text'
+        , success: function(result){
+            console.log(result);
+            showReplyList();
+        }
+        , error: function(error){
+            console.log("에러 : " + error);
+        }
+    });
+    }
+
+    /* 댓글 삭제 */
+    function fn_deleteReply(rnum){
+        var paramData = {"rnum": rnum};
+
+        $.ajax({
+            url: "${deleteReplyURL}"
+            , data : paramData
+            , type : 'POST'
+            , dataType : 'text'
+            , success: function(result){
+                showReplyList();
             }
-            for(var i = 0; len = list.length || 0; i < len; i++) {
-                str += "<li class='left clearfix' data-rnum='"+list[i].rnum+"'>";
-                str += " <div><div class='header'><strong class='primary-font'>"+list[i].idx+"</strong>";
-                str += " <small class='pull-right text-muted'>"+list[i].replyDate+"</small></div>";
-                str += " <p>"+list[i].reply+"</p></div></li>";
+            , error: function(error){
+                console.log("에러 : " + error);
             }
-            replyUL.html(str);
         });
     }
-    });
-
-    console.log('----------');
-    console.log("JS Test");
-
-    var bnumValue = '<c:out value="${bouard.bnum}"/>';
-
-    //추가
-    replyService.add(
-        {reply:"JS TEST", idx:"tester", bnum:bnumValue}
-        ,
-        function(result){
-            alert("Result "+Result);
-        }
-    );
-
-    //리스트
-    replyService.getList({bnum:bnumValue, page:1}, function(list){
-        for(var i = 0, len = list.length||0; i < len; i++) {
-            console.log(list[i]);
-        }
-    });
-
-    //삭제
-    replyService.remove(rnum:rnumValue, function(count) {
-        console.log(count);
-
-        if(count ==="success") {
-            alert("삭제완료");
-        }
-    }, function(err) {
-        alert('Error...')
-    });
-
-    //수정
-    replyService.update({
-        rnum : rnumvalue,
-        bnum : bnumValue,
-        reply : "midified Reply..."
-    }, function(result) {
-        alert("수정완료");
-    });
-
-    //목록
-    replyService.get(rnum:rnumValue, function(data) {
-        console.log(data);
-    });
 
 </script>
+
+
 
 <!-- 함수 -------------------------------------- -->
 <script type="text/javascript">

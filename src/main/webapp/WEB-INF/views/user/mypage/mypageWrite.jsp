@@ -23,12 +23,11 @@
 				<th style="width:10%">조회수</th>
 				<th style="width:20%">작성일</th>
 			</tr>
-			<c:forEach var="board" items="${board }">
+			<c:forEach var="board" items="${board}">
 				<tr>
 					<td>
 						<c:if test="${board.cg_num==0 }">
-							<a href="/board/boardView.do?bnum=<c:out value="${board.bnum}"/>">
-								여행지 추천</a>
+							<a>여행지 추천</a>
 						</c:if>
 						<c:if test="${board.cg_num==1 }">
 							<a>자유게시판</a>

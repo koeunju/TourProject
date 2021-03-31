@@ -43,15 +43,15 @@
     $(function () {
         $('#rewrite').on('click', function (e) {
             e.preventDefault();
-            var $name = $('#nick');
+            var $nick = $('#nick');
             var $pwd = $('#pwd');
             var $pwd2 = $('#remypwd');
             var $tel = $('#tel');
             var $email = $('#email');
 
-            if (!$name.val()) {
+            if (!$nick.val()) {
                 alert('닉네임을 입력하세요');
-                $name.focus();
+                $nick.focus();
                 return;
             }
             if (!$pwd.val()) {

@@ -8,13 +8,13 @@
     <div class="row">
 
         <div class="col-sm-12 text-center">
-            <h1 class="text-center">Board Write</h1>
+            <h1 class="text-center">자유게시판</h1>
 
             <form name="boardF" id="boardF" action="insert" method="post"
                   enctype="multipart/form-data">
 
                 <input type="hidden" name="mode" value="insert">
-
+                <input type="hidden" name="idx" value="${idx}">
                 <table class="table table-bordered">
                     <tr>
                         <th style="width: 20%">게시물 유형</th>
@@ -35,13 +35,6 @@
                         <th style="width: 20%">제목</th>
                         <td style="width: 80%"><input type="text" name="btitle"
                                                       id="btitle" placeholder="" class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <th style="width:20%">글쓴이</th>
-                        <td style="width:80%">
-                            <input type="text" name="name"
-                                   id="name" placeholder="Name" class="form-control">
-                        </td>
                     </tr>
                     <tr>
                         <th style="width: 20%">첨부파일</th>
@@ -108,8 +101,6 @@
              history.back();
          }) */
     })
-
-
 </script>
 
 <c:import url="/foot_sub" />

@@ -10,21 +10,14 @@
     <input type="hidden" name="mode" value="reInsert">
     <input type="hidden" name="bnum" value="${bnum}">
     <input type="hidden" name="cg_num" value="${cg_num}">
-
-
-
+    <input type="hidden" name="idx" id="idx" value="${idx}" >
 
     <table class="table table-bordered">
         <tr>
-            <th style="width: 20%">제목</th>
+            <th sdtyle="width: 20%">제목</th>
             <td style="width: 80%"><input type="text" name="btitle"
                                           id="btitle" placeholder="btitle"
                                           value="[RE]${btitle}" class="form-control"></td>
-        </tr>
-        <tr>
-            <th style="width: 20%">글쓴이</th>
-            <td style="width: 80%"><input type="text" name="name" id="name"
-                                          class="form-control" value="${board.idx}" disabled></td>
         </tr>
         <tr>
             <th style="width: 20%">글내용</th>
@@ -54,7 +47,7 @@
         <button class="btn btn-success" style="width: 100px;" name="btnList"
                 id="btnList" onclick="history.back()">본문 보기</button>
         <button class="btn btn-success" style="width: 100px;" name="btnList"
-                id="btnList" onclick="location.href='list'">글 목록</button>
+                id="btnList" onclick="goList()">글 목록</button>
     </h6>
 
 </div>
@@ -76,4 +69,8 @@
 
         })
     })
+    function goList() {
+        location.href = '/board/list?cg_num=' + ${cg_num}
+    }
 </script>
+

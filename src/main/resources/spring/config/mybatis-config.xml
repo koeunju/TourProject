@@ -27,7 +27,7 @@
         <mapper resource="spring/mapper/ReviewMapper.xml"/>
         <mapper resource="spring/mapper/UserMapper.xml"/>
         <mapper resource="spring/mapper/BoardMapper.xml"/>
-        <mapper resource="spring/mapper/BoardReplyMapper.xml"/>
+        <!--<mapper resource="spring/mapper/BoardReplyMapper.xml"/>-->
         <mapper resource="spring/mapper/ProductMapper.xml"/>
         <mapper resource="spring/mapper/PointMapper.xml"/>
     </mappers>

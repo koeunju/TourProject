@@ -2,14 +2,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<c:import url="/top_sub" />
+<c:import url="/top" />
+
 
 <div id="wrap" align="center">
-
-    <h2>자유게시판</h2>
-
+    <c:if test="${cg_num==1 }">
+        <h2>자유게시판</h2>
+    </c:if>
+    <c:if test="${cg_num==2 }">
+        <h2>고객센터</h2>
+    </c:if>
     <!-- 검색폼 -->
-    <div class="col-md-12">
+    <div class="col-md-8">
         <form name="findF" id="findF" action="list" class="form-inline">
             <select name="findType" id="findType" class="form-control m-3">
                 <option value="0">::검색 유형::</option>
@@ -23,7 +27,7 @@
     </div>
 
     <!-- 분류 -->
-    <table class="table table-striped table-hover" id="bbs">
+    <table class="table table-striped table-hover col-md-10" id="bbs">
         <tr class="table-secondary">
             <th width="10%">글번호</th>
             <th width="30%">제 목</th>
@@ -67,52 +71,55 @@
                     </a> <c:if test="${board.filesize > 0 }">
                         <img src="../image/file.png" width="26px">
                     </c:if></td>
-                    <td><c:out value="${board.idx}" /></td>
+                    <td><c:out value="${user.nick }" /></td>
                     <td><fmt:formatDate value="${board.bdate}"
                                         pattern="yyyy-MM-dd" /></td>
                     <td><c:out value="${board.binquiry}" /></td>
+                    <td><c:out value="아직안함" /></td>
                 </tr>
             </c:forEach>
         </c:if>
 
         <!-- 페이징 시작 -->
         <tr>
-            <td colspan="3" class="text-center">${pageNavi}</td>
+            <td colspan="10" class="text-center col-md-10">${pageNavi}</td>
             <%-- <td colspan="2"><span class="text-primary">총게시글수: <c:out
                         value="${paging.totalCount}" />개
             </span> <br> <span class="text-danger">${paging.cpage}</span> / <span>${paging.pageCount}</span>
             </td> --%>
         </tr>
-
-        <!-- 함수 -->
-        <script type="text/javascript">
-            $(function() {
-                $('#findF').on('submit', function() {
-                    var $type = $('#findType');
-                    var $keyword = $('#findKeyword');
-                    if ($type.val() == 0) {
-                        alert('검색 유형을 선택하세요');
-                        $type.focus();
-                        return false;
-                    }
-                    if (!$keyword.val()) {
-                        alert('검색어를 입력하세요');
-                        $keyword.focus();
-                        return false;
-                    }
-                    return true;
-                })
-            })
-        </script>
-
-
     </table>
+
+    <!-- 함수 -->
+    <script type="text/javascript">
+        $(function() {
+            $('#findF').on('submit', function() {
+                var $type = $('#findType');
+                var $keyword = $('#findKeyword');
+                if ($type.val() == 0) {
+                    alert('검색 유형을 선택하세요');
+                    $type.focus();
+                    return false;
+                }
+                if (!$keyword.val()) {
+                    alert('검색어를 입력하세요');
+                    $keyword.focus();
+                    return false;
+                }
+                return true;
+            })
+        })
+    </script>
+
+
+
 </div>
 
 <tr>
-    <td align="center" colspan="5">
+    <td>
         <button class="btn btn-primary" onclick="location.href='insert'">글쓰기</button>
     </td>
 </tr>
 
-<c:import url="/foot_sub" />
+
+<c:import url="/foot" />

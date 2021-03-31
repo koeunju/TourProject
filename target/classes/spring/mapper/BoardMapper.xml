@@ -17,7 +17,7 @@
         filename, originFilename, filesize, brecommend, idx, cg_num,
         refer, lev, sunbun)
         values(#{bnum}, #{btitle}, #{bcontent:VARCHAR}, systimestamp,
-        #{filename:VARCHAR}, #{originFilename:VARCHAR}, #{filesize:NUMERIC}, 0, 99, #{cg_num},
+        #{filename:VARCHAR}, #{originFilename:VARCHAR}, #{filesize:NUMERIC}, 0,#{idx}, #{cg_num},
         #{bnum}, #{lev}, #{sunbun})
     </insert>
 
@@ -30,7 +30,7 @@
         filename, originFilename, filesize, brecommend, idx, cg_num,
         refer, lev, sunbun)
         values(#{bnum}, #{btitle}, #{bcontent:VARCHAR}, systimestamp,
-        #{filename:VARCHAR}, #{originFilename:VARCHAR}, #{filesize:NUMERIC}, 0, 99, #{cg_num},
+        #{filename:VARCHAR}, #{originFilename:VARCHAR}, #{filesize:NUMERIC}, 0, #{idx}, #{cg_num},
         #{bnum}, #{lev}, #{sunbun})
     </insert>
 
@@ -53,8 +53,6 @@
     <!-- 글목록(고객센터) -->
     <select id="getBoardList2" resultType="Board"
             parameterType="BPaging">
-        <!-- select * from spring_board order by bnum desc -->
-
         select * from (
         select board.*,
         sysdate - to_date(to_char(wdate, 'yyyy-mm-dd')) newImg,
@@ -69,19 +67,30 @@
     </select>
 
     <!--페이징 처리 게시목록 -->
+    <!-- 자유게시판 -->
     <select id="selectBoardAllPaging" resultType="Board"
             parameterType="BPaging">
         select * from (
-        select board.*,
-        sysdate - to_date(to_char(bdate, 'yyyy-mm-dd')) newImg,
-        row_number() over(order by refer desc, sunbun asc) rn
-        from board
-        <include refid="findWhere"/>
-        )
-        <![CDATA[
+		select board.*,
+		sysdate - to_date(to_char(bdate, 'yyyy-mm-dd')) newImg,
+		row_number() over(order by refer desc, sunbun asc) rn
+		from board where cg_num in (0,1))
+		<![CDATA[
 		where rn > #{start} and rn < #{end}
 		]]>
-
+    </select>
+    <!-- 고객센터 -->
+    <select id="selectBoardAllPaging2" resultType="Board"
+            parameterType="BPaging">
+   		select * from (
+		select board.*,
+		sysdate - to_date(to_char(bdate, 'yyyy-mm-dd')) newImg,
+		row_number() over(order by refer desc, sunbun asc) rn
+		from board where cg_num = 2
+		)
+		<![CDATA[
+		where rn > #{start} and rn < #{end}
+		]]>
     </select>
 
     <!-- 글검색 -->
@@ -106,9 +115,8 @@
         </if>
     </sql>
 
-    <select id="getTotalCountPaging" resultType="int" parameterType="BPaging">
-        select count(bnum) from board
-        <include refid="findWhere"/>
+    <select id="getTotalCount" resultType="int" parameterType="BPaging">
+        select count(*) cnt from board
     </select>
 
     <!-- 글 검색 목록 -->
@@ -168,7 +176,7 @@
         filename, originFilename, filesize, brecommend, idx, cg_num,
         refer, lev, sunbun)
         values(#{bnum}, #{btitle}, #{bcontent:VARCHAR}, systimestamp,
-        #{filename:VARCHAR}, #{originFilename:VARCHAR}, #{filesize:NUMERIC}, 0, 99, #{cg_num},
+        #{filename:VARCHAR}, #{originFilename:VARCHAR}, #{filesize:NUMERIC}, 0, #{idx}, #{cg_num},
         #{refer}, #{lev}, #{sunbun})
     </insert>
 

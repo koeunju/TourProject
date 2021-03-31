@@ -3,12 +3,8 @@
 <c:import url="/top_sub"/>
 <c:import url="/admin/adminMenubar"/>
 
-
-
 <div class="container" style="margin-top:30px">
   <div class="row">
-   
-   
     <div class="col-sm-9">
 		<h1 class="text-center">상품정보 수정[ADMIN모드]</h1>
 			
@@ -39,9 +35,9 @@
 									${upCate.upCg_name}
 									</option>
 								</c:forEach>
-									
+
 									<!-- <option value="2">의류</option> -->
-									
+
 							</select> 
 							<span id="selectDcg"> 
 							    <select name="downCg_code">

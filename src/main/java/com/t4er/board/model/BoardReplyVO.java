@@ -6,11 +6,11 @@ import java.sql.Date;
 
 @Data
 public class BoardReplyVO {
+
     private Integer rnum;
     private Integer bnum;
-
-    private String reply;
-    private Integer idx;
-    private Date replyDate;
-    private Date updateDate;
+    private String content;
+    private String idx;
+    private Date reg_dt;
+    private Date edit_dt;
 }

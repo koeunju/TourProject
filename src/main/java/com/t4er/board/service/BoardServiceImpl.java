@@ -3,6 +3,7 @@ package com.t4er.board.service;
 import java.util.List;
 import java.util.Map;
 
+import com.t4er.board.model.BoardReplyVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,12 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public int insertBoard2(BoardVO board) {
+        log.info("boardMapper===" + boardMapper);
+        return boardMapper.insertBoard2(board);
+    }
+
+    @Override
     public List<BoardVO> selectBoardAll(Map<String, Integer> map) {
 
         return this.boardMapper.selectBoardAll(map);
@@ -38,18 +45,23 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public List<BoardVO> selectBoardAllPaging2(BoardPagingVO paging) {
+        return this.boardMapper.selectBoardAllPaging2(paging);
+    }
+
+    @Override
     public List<BoardVO> findBoard(BoardPagingVO paging) {
         return null;
     }
 
-    @Override
-    public int getTotalCount() {
-        return this.boardMapper.getTotalCount();
-    }
+    /*
+     * @Override public int getTotalCount() { return
+     * this.boardMapper.getTotalCount(); }
+     */
 
     @Override
     public int getTotalCount(BoardPagingVO paging) {
-        return this.boardMapper.getTotalCountPaging(paging);
+        return this.boardMapper.getTotalCount(paging);
     }
 
     @Override
@@ -86,7 +98,6 @@ public class BoardServiceImpl implements BoardService {
         return n;
     }
 
-
     @Override
     public BoardVO selectRefLevSunbun(Integer bnum) {
 
@@ -97,6 +108,27 @@ public class BoardServiceImpl implements BoardService {
     public int updateSunbun(BoardVO parent) {
 
         return 0;
+    }
+
+    // 댓글 리스트
+    @Override
+    public List<BoardReplyVO> getReplyList(Integer bnum) throws Exception {
+        return this.boardMapper.getReplyList(bnum);
+    }
+
+    @Override
+    public int saveReply(BoardReplyVO replyVO) throws Exception {
+        return this.boardMapper.saveReply(replyVO);
+    }
+
+    @Override
+    public int updateReply(BoardReplyVO replyVO) throws Exception {
+        return this.boardMapper.updateReply(replyVO);
+    }
+
+    @Override
+    public int deleteReply(Integer rnum) throws Exception {
+        return this.boardMapper.deleteReply(rnum);
     }
 
 }

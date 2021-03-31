@@ -134,9 +134,6 @@
              history.back();
          }) */
     })
-
-
 </script>
-
 
 <c:import url="/foot" />

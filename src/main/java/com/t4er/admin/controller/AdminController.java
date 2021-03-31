@@ -135,7 +135,7 @@ public class AdminController {
         // 상품 목록 가져오기
         List<ProductVO> pList = this.productService.getProdList(paging);
         String myctx = req.getContextPath();
-        String loc = "point";
+        String loc = "admin/shopList";
         String pageNavi = paging.getPageNavi(myctx, loc, userAgent, cgnum);
 
         m.addAttribute("cgnum", cgnum);
