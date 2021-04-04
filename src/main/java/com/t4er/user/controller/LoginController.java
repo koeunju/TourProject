@@ -1,77 +1,73 @@
 package com.t4er.user.controller;
 
-import javax.servlet.http.HttpSession;
-
+import com.t4er.common.CommonUtil;
+import com.t4er.user.exception.NotUserException;
+import com.t4er.user.model.UserVO;
+import com.t4er.user.security.UserSha256;
+import com.t4er.user.service.UserService;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
-
-import com.t4er.common.CommonUtil;
-import com.t4er.user.model.NotUserException;
-import com.t4er.user.model.UserSha256;
-import com.t4er.user.model.UserVO;
-import com.t4er.user.service.UserService;
-
-import lombok.extern.log4j.Log4j;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @Log4j
+@RequestMapping("/user")
 public class LoginController {
-	
-	@Autowired
-	private UserService userService;
-	
-	@Autowired
-	private CommonUtil util;
 
-	@GetMapping("/login")
-	public String login() {
+    @Autowired
+    private UserService userService;
 
-		return "user/login";
-	}
-	
-	@PostMapping("/loginEnd")
-	public String loginEnd(Model m, HttpSession ses, @ModelAttribute("user") UserVO user) 
-			throws NotUserException {
-		log.info("user==="+user);
-		
-		System.out.println("Ã¹¹øÂ°:" + user.getPwd());
-		String encryPassword = UserSha256.encrypt(user.getPwd());
-		user.setPwd(encryPassword);
-		System.out.println("µÎ¹øÂ°:" + user.getPwd());
-		
-		UserVO loginUser=this.userService.loginCheck(user.getId(), user.getPwd());
-		String st = this.userService.checkState(user.getId());
-		if(st.trim().equals("4")) {
-			return util.addMsgLoc(m, "Å»ÅğÈ¸¿øÀÔ´Ï´Ù. °í°´¼¾ÅÍ¿¡ ¹®ÀÇ ¹Ù¶ø´Ï´Ù.", "index");
-		}
-		
-		if(st.trim().equals("0")) {
-			return util.addMsgLoc(m, "ÀÌ¸ŞÀÏ ÀÎÁõÀÌ ¾ÈµÈ È¸¿øÀÔ´Ï´Ù. ÀÌ¸ŞÀÏ ÀÎÁõÀ» ÇØÁÖ¼¼¿ä.", "index");
-		}
-		
-				
-		if(loginUser!=null) {
-			//È¸¿øÀÓÀ» ÀÎÁõ ¹Ş¾Ò´Ù¸é ==> ¼¼¼Ç¿¡ ·Î±×ÀÎÇÑ È¸¿øÁ¤º¸¸¦ ÀúÀåÇÏÀÚ.
-			ses.setAttribute("loginUser", loginUser);
-		}
-		return "redirect:index";
-	}
-	
-	@GetMapping("/logout")
-	public String logout(HttpSession ses) {
-		//¼¼¼Ç ¹«È¿È­
-		ses.invalidate();
-		return "redirect:index";
-		
-	}
-	@ExceptionHandler(NotUserException.class)
-	public String exceptionHandler(Exception ex) {
-		return  "user/errorAlert";
-	}
+    @Autowired
+    private CommonUtil util;
+
+    @GetMapping("/login")
+    public String login() {
+
+        return "user/login";
+    }
+
+    @PostMapping("/login")
+    public String loginEnd(Model m, HttpSession ses, @ModelAttribute("user") UserVO user)
+            throws NotUserException {
+        log.info("user===" + user);
+
+        String encryPassword = UserSha256.encrypt(user.getPwd());
+        user.setPwd(encryPassword);
+
+        UserVO loginUser = this.userService.loginCheck(user.getId(), user.getPwd());
+        String st = this.userService.checkState(user.getId());
+
+        if (st.trim().equals("4")) {
+            return util.addMsgLoc(m, "íƒˆí‡´íšŒì›ì…ë‹ˆë‹¤. ê³ ê°ì„¼í„°ì— ë¬¸ì˜ ë°”ëë‹ˆë‹¤.", "/index");
+        }
+        if (st.trim().equals("5")) {
+            return util.addMsgLoc(m, "ì°¨ë‹¨íšŒì›ì…ë‹ˆë‹¤. ê³ ê°ì„¼í„°ì— ë¬¸ì˜ ë°”ëë‹ˆë‹¤.", "/index");
+        }
+        if(st.trim().equals("0")) {
+            return util.addMsgLoc(m, "ì´ë©”ì¼ ì¸ì¦ì´ ì•ˆëœ íšŒì›ì…ë‹ˆë‹¤. ì´ë©”ì¼ ì¸ì¦ì„ í•´ì£¼ì„¸ìš”.", "/index");
+        }
+
+        if (loginUser != null) {
+            // íšŒì›ì„ì„ ì¸ì¦ ë°›ì•˜ë‹¤ë©´ ==> ì„¸ì…˜ì— ë¡œê·¸ì¸í•œ íšŒì›ì •ë³´ë¥¼ ì €ì¥í•˜ì.
+            ses.setAttribute("loginUser", loginUser);
+        }
+        return "redirect:/index";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession ses) {
+        // ì„¸ì…˜ ë¬´íš¨í™”
+        ses.invalidate();
+        return "redirect:/index";
+
+    }
+
+    @ExceptionHandler(NotUserException.class)
+    public String exceptionHandler(Exception ex) {
+        return "user/errorAlert";
+    }
 }

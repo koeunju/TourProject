@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xmlns:context="http://www.springframework.org/schema/context"
-   xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
-   xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
-      http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+       xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 		<!-- context, mybatis-spring 네임스페이스 추가  -->
@@ -17,8 +17,8 @@
 	-->
 		<!-- <1> DriverManagerDataSource -->
 		<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-			<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
-			<property name="url" value="jdbc:oracle:thin:@192.168.219.105:1521:XE"/>
+			<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+			<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
 			<property name="username" value="t4er"/>
 			<property name="password" value="t4er"/>			
 		</bean>
@@ -55,7 +55,12 @@
 	<!-- [4] mybatis-spring:scan 설정  
 		여기에 설정된 패키지의 인터페이스들을 scan해서 해당 인터페이스를 구현한 
 		객체(Proxy)를 스프링이 대신 생성해준다
-	--> 
-      <mybatis-spring:scan base-package="com.t4er.user.mapper"/>    
-      <mybatis-spring:scan base-package="com.t4er.point.mapper"/>    
+	-->
+
+		<mybatis-spring:scan base-package="com.t4er.olan.mapper"/>
+    	<mybatis-spring:scan base-package="com.t4er.review.mapper"/>
+    	<mybatis-spring:scan base-package="com.t4er.point.mapper"/>
+   	 	<mybatis-spring:scan base-package="com.t4er.user.mapper"/>
+    	<mybatis-spring:scan base-package="com.t4er.board.mapper"/>
+    	<mybatis-spring:scan base-package="com.t4er.tour.mapper"/>
 </beans>

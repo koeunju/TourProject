@@ -1,243 +1,235 @@
 package com.t4er.user.service;
 
-import java.util.Random;
+import com.t4er.point.mapper.PointMapper;
+import com.t4er.user.exception.NotUserException;
+import com.t4er.user.mapper.UserMapper;
+import com.t4er.user.model.UserVO;
+
+import com.t4er.user.security.UserSha256;
+import lombok.extern.log4j.Log4j;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Service;
-
-import com.t4er.user.mapper.UserMapper;
-import com.t4er.user.model.NotUserException;
-import com.t4er.user.model.UserSha256;
-import com.t4er.user.model.UserVO;
-
-import lombok.extern.log4j.Log4j;
+import java.util.Random;
 
 @Service("userService")
 @Log4j
 public class UserServiceImpl implements UserService {
-	
 
-	@Autowired
-	private UserMapper userMapper;
-	
-	@Autowired
-	private JavaMailSender mailSender;
-	
+    @Autowired
+    private SqlSessionTemplate sqlSession;
 
-	
-	   @Override
-	   public int createUser(UserVO user) {
-	      return this.userMapper.createUser(user);
-	   }
-	   
-	   @Override
-	   public boolean idCheck(String id) {
-	      Integer idx=userMapper.idCheck(id);
-	      //¾ÆÀÌµğ·Î È¸¿ø¹øÈ£ ¹Ş¾Æ¿À±â
-	      if(idx==null) {
-	         return true;
-	      }else {
-	         return false;
-	      }
-	   }
-	   
-	   public boolean emailCheck(String email) {
-		   Integer idx=userMapper.emailCheck(email);
-		   if(idx==null) {
-		        return true;
-		   }else {
-	          return false;
-		      }
-	   }
-	   
-	   public boolean nickCheck(String nick) {
-		   Integer idx=userMapper.nickCheck(nick);
-		   if(idx==null) {
-		        return true;
-		   }else {
-	          return false;
-		      }
-	   }
-	   
-	   public boolean telCheck(String tel) {
-		   Integer idx=userMapper.telCheck(tel);
-		   if(idx==null) {
-		        return true;
-		   }else {
-	          return false;
-		      }
-	   }
-	   
-		//È¸¿ø»óÅÂ Á¶È¸
-		@Override
-		public String checkState(String id) {
-			return this.userMapper.checkState(id);
-		}
+    @Autowired
+    private UserMapper userMapper;
 
-	
-	 /**¾ÆÀÌµğ·Î È¸¿øÁ¤º¸ °¡Á®¿À±â*/
-	   @Override
-	   public UserVO findUser(UserVO findUser) throws NotUserException {
-	      UserVO user = this.userMapper.findUser(findUser);
-	      if(user==null) {
-	         throw new NotUserException("Á¸ÀçÇÏÁö ¾Ê´Â ¾ÆÀÌµğÀÔ´Ï´Ù."); 
-	      }
-	      return user;
-	   }
-	
-	@Override
-	   public UserVO loginCheck(String id, String pwd) throws NotUserException {
-	      UserVO user = new UserVO();
-	      user.setId(id);//      
-	      user.setPwd(pwd);
-	      
-	      UserVO dbUser=this.findUser(user);//db¿¡¼­ user¿¡ ´ëÇÑ Á¤º¸¸¦ µé°í¿Â´Ù.
-	      log.info("dbUser=="+dbUser);
-	      if(dbUser!=null) {
-	         if(dbUser.getPwd().equals(user.getPwd())) {
-	            //È¸¿øÀÌ ¸Â´Ù¸é (ºñ¹øÀÏÄ¡)
-	            return dbUser;
-	         }
-	         
-	         //ºñ¹Ğ¹øÈ£ ºÒÀÏÄ¡¶ó¸é ==> ¿¹¿Ü¸¦ ¹ß»ı½ÃÅ°ÀÚ.
-	         throw new NotUserException("ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
-	      }
-	      return null;
-	   }
-	
+    @Autowired
+    private PointMapper pointMapper;
 
-	@Override
-	public UserVO userCheck(String id, String email) throws NotUserException {
-		 UserVO user = new UserVO();
-	      user.setId(id);//      
-	      user.setEmail(email);
-	      
-	      UserVO dbUser=this.findUser(user);//db¿¡¼­ user¿¡ ´ëÇÑ Á¤º¸¸¦ µé°í¿Â´Ù.
-	      log.info("dbUser=="+dbUser);
-	      if(dbUser!=null) {
-	         if(dbUser.getEmail().equals(user.getEmail())) {
-	            //È¸¿øÀÌ ¸Â´Ù¸é (ºñ¹øÀÏÄ¡)
-	            return dbUser;
-	         }
-	           
-	         throw new NotUserException("Á¸ÀçÇÏÁö ¾Ê´Â ÀÌ¸ŞÀÏ ÀÔ´Ï´Ù.");
-	      }
-		return null;
-	}
+    @Autowired
+    private JavaMailSender mailSender;
 
-	public void mailSendWithUserKey(String email, String id, HttpServletRequest req) {
-				
-		MimeMessage mail = mailSender.createMimeMessage();
-		String htmlStr = "<h2>¾È³çÇÏ¼¼¿ä ¿Ã¶û¿Ã¶ûÀÔ´Ï´Ù</h2><br><br>" 
-				+ "<h3>" + id + "´Ô</h3>" + "<p>ÀÎÁõÇÏ±â ¹öÆ°À» ´©¸£½Ã¸é ·Î±×ÀÎ ÇÏ½Ç ¼ö ÀÖ½À´Ï´Ù : "
-				+ "<a href='http://localhost:9090" + req.getContextPath() + "/user/stat_alter?id="+ id +"'>ÀÎÁõÇÏ±â</a></p>";
-		try {
-		
-			mail.setSubject("[º»ÀÎÀÎÁõ] ¿Ã¶û¿Ã¶û °¡ÀÔ ÀÎÁõ¸ŞÀÏÀÔ´Ï´Ù", "utf-8");
-			mail.setText(htmlStr, "utf-8", "html");
-			mail.addRecipient(RecipientType.TO, new InternetAddress(email));
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		}
-		mailSender.send(mail);	
-		
-	}
-	
-	
-	@Override
-	public int statAlter(String id) {
-		return this.userMapper.statAlter(id);
-		
-	}
-	
-	//¾ÆÀÌµğ Ã£±â
+    @Override
+    public int createUser(UserVO user) {
+        return this.userMapper.createUser(user);
+    }
 
-	public String searchId(String nick, String email) {
-		
-		String result = "";
+    @Override
+    public boolean idCheck(String id) {
+        Integer idx = userMapper.idCheck(id);
+        //ì•„ì´ë””ë¡œ íšŒì›ë²ˆí˜¸ ë°›ì•„ì˜¤ê¸°
+        if (idx == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-		try {
-			result = userMapper.searchId(nick, email);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    public boolean emailCheck(String email) {
+        Integer idx = userMapper.emailCheck(email);
+        if (idx == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-		return result;
-	}
-	
-	//ºñ¹Ğ¹øÈ£ Ã£±â ÀÓ½Ã ºñ¹Ğ¹øÈ£ ¸¸µå´Â ÄÚµå 
-	private String init() {
-		Random ran = new Random();
-		StringBuffer sb = new StringBuffer();
-		int num = 0;
-	
+    public boolean nickCheck(String nick) {
+        Integer idx = userMapper.nickCheck(nick);
+        if (idx == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-		do {
-			num = ran.nextInt(75) + 48;
-			if ((num >= 48 && num <= 57) || (num >= 65 && num <= 90) || (num >= 97 && num <= 122)) {
-				sb.append((char) num);
-			} else {
-				continue;
-			}
+    public boolean telCheck(String tel) {
+        Integer idx = userMapper.telCheck(tel);
+        if (idx == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-		} while (sb.length() < size);
-		if (lowerCheck) {
-			return sb.toString().toLowerCase();
-		}
-		return sb.toString();
-	}
+    //íšŒì›ìƒíƒœ ì¡°íšŒ
+    @Override
+    public String checkState(String id) {
+        return this.userMapper.checkState(id);
+    }
 
-	// ³­¼ö¸¦ ÀÌ¿ëÇÑ Å° »ı¼º
-	private boolean lowerCheck;
-	private int size;
+    /**
+     * ì•„ì´ë””ë¡œ íšŒì›ì •ë³´ ê°€ì ¸ì˜¤ê¸°
+     */
+    @Override
+    public UserVO findUser(UserVO findUser) throws NotUserException {
+        UserVO user = this.userMapper.findUser(findUser);
+        if (user == null) {
+            throw new NotUserException("ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ì•„ì´ë””ì…ë‹ˆë‹¤.");
+        }
+        return user;
+    }
 
-	public String getKey(boolean lowerCheck, int size) {
-		this.lowerCheck = lowerCheck;
-		this.size = size;
-		return init();
-	}
+    @Override
+    public UserVO loginCheck(String id, String pwd) throws NotUserException {
+        UserVO user = new UserVO();
+        user.setId(id);
+        user.setPwd(pwd);
 
-	public void mailSendPwd(String id, String email, HttpServletRequest req) {
-	
-		
-		String key = getKey(false, 6);
-	
-		MimeMessage mail = mailSender.createMimeMessage();
-		String htmlStr = "<h2>¾È³çÇÏ¼¼¿ä '"+ id +"' ´Ô</h2><br><br>" 
-				+ "<p>ÀÓ½Ã ¹ß±Ş ºñ¹Ğ¹øÈ£´Â <h2 style='color : blue'>'" + key +"'</h2>ÀÌ¸ç ·Î±×ÀÎ ÈÄ ¸¶ÀÌÆäÀÌÁö¿¡¼­ ºñ¹Ğ¹øÈ£¸¦ º¯°æÇÏ½Ç ¼ö ÀÖ½À´Ï´Ù.</p><br>"
-				+ "<h3><a href='http://localhost:9090/olan/index'>È¨ÆäÀÌÁö Á¢¼Ó</a></h3><br><br>";
-		try {
-			mail.setSubject("ÀÓ½Ã ºñ¹Ğ¹øÈ£°¡ ¹ß±ŞµÇ¾ú½À´Ï´Ù", "utf-8");
-			mail.setText(htmlStr, "utf-8", "html");
-			mail.addRecipient(RecipientType.TO, new InternetAddress(email));
-			mailSender.send(mail);
-		} catch (MessagingException e) { 
-			e.printStackTrace();
-		}
-		
-		key = UserSha256.encrypt(key);
-			
-		this.userMapper.searchPwd(id,email,key);
+        UserVO dbUser = this.findUser(user); // dbì—ì„œ userì— ëŒ€í•œ ì •ë³´ë¥¼ ë“¤ê³ ì˜¨ë‹¤.
+        log.info("dbUser==" + dbUser);
+        if (dbUser != null) {
+            if (dbUser.getPwd().equals(user.getPwd())) {
+                // íšŒì›ì´ ë§ë‹¤ë©´ (ë¹„ë²ˆì¼ì¹˜)
+                return dbUser;
+            }
 
+            // ë¹„ë°€ë²ˆí˜¸ ë¶ˆì¼ì¹˜ë¼ë©´ ==> ì˜ˆì™¸ë¥¼ ë°œìƒì‹œí‚¤ì.
+            throw new NotUserException("ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+        }
+        return null;
+    }
 
-	}
+    @Override
+    public UserVO userCheck(String id, String email) throws NotUserException {
+        UserVO user = new UserVO();
+        user.setId(id);
+        user.setEmail(email);
 
+        UserVO dbUser=this.findUser(user);// dbì—ì„œ userì— ëŒ€í•œ ì •ë³´ë¥¼ ë“¤ê³ ì˜¨ë‹¤.
+        log.info("dbUser=="+dbUser);
+        if(dbUser!=null) {
+            if(dbUser.getEmail().equals(user.getEmail())) {
+                return dbUser;
+            }
 
-	@Override
-	public int searchPwd(String id, String email, String key) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+            throw new NotUserException("ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ì´ë©”ì¼ ì…ë‹ˆë‹¤.");
+        }
+        return null;
+    }
 
+    public void mailSendWithUserKey(String email, String id, HttpServletRequest req) {
 
-	}
+        MimeMessage mail = mailSender.createMimeMessage();
+        String htmlStr = "<h2>ì•ˆë…•í•˜ì„¸ìš” ì˜¬ë‘ì˜¬ë‘ì…ë‹ˆë‹¤</h2><br><br>"
+                + "<h3>" + id + "ë‹˜</h3>" + "<p>ì¸ì¦í•˜ê¸° ë²„íŠ¼ì„ ëˆ„ë¥´ì‹œë©´ ë¡œê·¸ì¸ í•˜ì‹¤ ìˆ˜ ìˆìŠµë‹ˆë‹¤ : "
+                + "<a href='http://localhost:8080" + req.getContextPath() + "/user/stat_alter?id=" + id + "'>ì¸ì¦í•˜ê¸°</a></p>";
+        try {
+            mail.setSubject("[ë³¸ì¸ì¸ì¦] ì˜¬ë‘ì˜¬ë‘ ê°€ì… ì¸ì¦ë©”ì¼ì…ë‹ˆë‹¤", "utf-8");
+            mail.setText(htmlStr, "utf-8", "html");
+            mail.addRecipient(RecipientType.TO, new InternetAddress(email));
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        mailSender.send(mail);
+    }
 
+    @Override
+    public int statAlter(String id) {
+        return this.userMapper.statAlter(id);
+    }
 
+    // ì•„ì´ë”” ì°¾ê¸°
+    public String searchId(String nick, String email) {
+
+        String result = "";
+
+        try {
+            result = userMapper.searchId(nick, email);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    // ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸° ì„ì‹œ ë¹„ë°€ë²ˆí˜¸ ë§Œë“œëŠ” ì½”ë“œ
+    private String init() {
+        Random ran = new Random();
+        StringBuffer sb = new StringBuffer();
+        int num = 0;
+
+        do {
+            num = ran.nextInt(75) + 48;
+            if ((num >= 48 && num <= 57) || (num >= 65 && num <= 90) || (num >= 97 && num <= 122)) {
+                sb.append((char) num);
+            } else {
+                continue;
+            }
+
+        } while (sb.length() < size);
+        if (lowerCheck) {
+            return sb.toString().toLowerCase();
+        }
+        return sb.toString();
+    }
+
+    // ë‚œìˆ˜ë¥¼ ì´ìš©í•œ í‚¤ ìƒì„±
+    private boolean lowerCheck;
+    private int size;
+
+    public String getKey(boolean lowerCheck, int size) {
+        this.lowerCheck = lowerCheck;
+        this.size = size;
+        return init();
+    }
+
+    public void mailSendPwd(String id, String email, HttpServletRequest req) {
+
+        String key = getKey(false, 6);
+
+        MimeMessage mail = mailSender.createMimeMessage();
+        String htmlStr = "<h2>ì•ˆë…•í•˜ì„¸ìš” '"+ id +"' ë‹˜</h2><br><br>"
+                + "<p>ì„ì‹œ ë°œê¸‰ ë¹„ë°€ë²ˆí˜¸ëŠ” <h2 style='color : blue'>'" + key +"'</h2>ì´ë©° ë¡œê·¸ì¸ í›„ ë§ˆì´í˜ì´ì§€ì—ì„œ ë¹„ë°€ë²ˆí˜¸ë¥¼ ë³€ê²½í•˜ì‹¤ ìˆ˜ ìˆìŠµë‹ˆë‹¤.</p><br>"
+                + "<h3><a href='http://localhost:8080/index'>í™ˆí˜ì´ì§€ ì ‘ì†</a></h3><br><br>";
+        try {
+            mail.setSubject("ì„ì‹œ ë¹„ë°€ë²ˆí˜¸ê°€ ë°œê¸‰ë˜ì—ˆìŠµë‹ˆë‹¤", "utf-8");
+            mail.setText(htmlStr, "utf-8", "html");
+            mail.addRecipient(RecipientType.TO, new InternetAddress(email));
+            mailSender.send(mail);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+
+        key = UserSha256.encrypt(key);
+
+        this.userMapper.searchPwd(id,email,key);
+    }
+
+    //íšŒì›ê°€ì…ì‹œ í¬ì¸íŠ¸ ë¶€ì—¬
+    @Override
+    public int firstPoint(String id) {
+        //ë°›ì€ ì•„ì´ë””ë¡œ íšŒì›ë²ˆí˜¸ ê²€ìƒ‰
+        Integer idx = userMapper.findIdx(id);
+
+        return this.pointMapper.firstPoint(idx);
+    }
+
+}

@@ -1,3 +1,3 @@
-<%@ page language="java" contentType="application/json; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="application/json;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 ${tourList}
 

@@ -6,7 +6,7 @@
 
 <div class="container">
     <!-- category include --------------------- -->
-    <c:import url="point/category" />
+    <c:import url="/point/category" />
     <!-- ------------------------------------- -->
 
     <script type="text/javascript">
@@ -27,7 +27,7 @@
     <c:set var="myctx" value="${pageContext.request.contextPath}"/>
     <div class="col-sm-9 text-center">
         <!-- 검색폼------------------------------------- -->
-        <form name="findF" id="findF" action="productFind.do#bbs"
+        <form name="findF" id="findF" action="productFind#bbs"
               class="form-inline">
             <input type="text" name="findKeyword" id="findKeyword"
                    placeholder="상품명을 입력하세요" class="form-control m-3" required>
@@ -54,18 +54,18 @@
                 <c:forEach var="pd" items="${bList}" varStatus="state">
                     <div class="col-md-3">
                         <c:if test="${pd.pimage eq null or empty pd.pimage}">
-                            <a href="prodDetail.do?pnum=${pd.pnum}"> <img
-                                    src="product_images/noimage.png" class="rounded img-fluid"
+                            <a href="prodDetail?pnum=${pd.pnum}"> <img
+                                    src="../product/noimage.png" class="rounded img-fluid"
                                     style="height: 100px"/>
                             </a> <br> <br>
                         </c:if>
                         <c:if test="${pd.pimage ne null and not empty pd.pimage }">
-                            <a href="prodDetail.do?pnum=${pd.pnum}"> <img
-                                    src="product_images/${pd.pimage}" class="rounded img-fluid"
+                            <a href="prodDetail?pnum=${pd.pnum}"> <img
+                                    src="../product/${pd.pimage}" class="rounded img-fluid"
                                     style="height: 100px"/>
                             </a> <br> <br>
                         </c:if>
-                        <h6><a href="prodDetail.do?pnum=${pd.pnum}">${pd.pname}</a></h6>
+                        <h6><a href="prodDetail?pnum=${pd.pnum}">${pd.pname}</a></h6>
                             ${pd.price}
                         <H1 class="badge badge-info">Point</H1>
                     </div>
@@ -75,6 +75,5 @@
         </div>
     </div>
 </div>
-
 
 <c:import url="/foot" />

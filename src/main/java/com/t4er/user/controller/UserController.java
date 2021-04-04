@@ -1,200 +1,186 @@
 package com.t4er.user.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
+import com.t4er.common.CommonUtil;
+import com.t4er.user.exception.NotUserException;
+import com.t4er.user.model.UserVO;
+import com.t4er.user.security.UserSha256;
+import com.t4er.user.service.UserService;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import com.t4er.common.CommonUtil;
-import com.t4er.user.model.NotUserException;
-import com.t4er.user.model.UserSha256;
-import com.t4er.user.model.UserVO;
-import com.t4er.user.service.UserService;
-
-import lombok.extern.log4j.Log4j;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @Log4j
+@RequestMapping("/user")
 public class UserController {
 
-	@Autowired
-	private CommonUtil util;
+    @Autowired
+    private CommonUtil util;
 
-	@Autowired
-	private UserService userService;
-	
-	@Autowired
-	private JavaMailSenderImpl mailSender;
-	
-	
-	
-	@GetMapping("/join")
-	public String joinForm() {
+    @Autowired
+    private UserService userService;
 
-		return "/user/join";
-	}
+    @Autowired
+    private JavaMailSenderImpl mailSender;
 
-	@PostMapping("/join")
-	public String joinEnd(Model m, HttpSession ses, @Valid  @ModelAttribute("user") UserVO user, BindingResult result, HttpServletRequest req) {
-		log.info("user=="+user);
-		//À¯È¿¼º Ã¼Å©ÇÑ °á°ú==> BidingResult°´Ã¼¿¡ ´ã±ä´Ù.
-		//ÀÌ °´Ã¼¿¡ ¿¡·¯¸¦ °¡Áö°í ÀÖ´Ù¸é
-		if(result.hasErrors()) {
-			log.info("À¯È¿¼º Ã¼Å© ½ÇÆĞ");
-			return "user/join";
+    @GetMapping("/join")
+    public String joinForm() {
 
-		}
+        return "/user/join";
+    }
 
-		//ºñ¹Ğ¹øÈ£ ¾ÏÈ£È­(sha256) 
-		System.out.println("Ã¹¹øÂ°:" + user.getPwd());
-		String encryPassword = UserSha256.encrypt(user.getPwd());
-		user.setPwd(encryPassword);
-		System.out.println("µÎ¹øÂ°:" + user.getPwd());
-		
+    @PostMapping("/join")
+    public String joinEnd(Model m, HttpSession ses,
+                          @Valid @ModelAttribute("user") UserVO user, BindingResult result, HttpServletRequest req) {
+        log.info("user==" + user);
+        // ìœ íš¨ì„± ì²´í¬í•œ ê²°ê³¼==> BidingResultê°ì²´ì— ë‹´ê¸´ë‹¤.
+        // ì´ ê°ì²´ì— ì—ëŸ¬ë¥¼ ê°€ì§€ê³  ìˆë‹¤ë©´
+        if (result.hasErrors()) {
+            log.info("ìœ íš¨ì„± ì²´í¬ ì‹¤íŒ¨");
+            return "user/join";
+        }
+
+        // ë¹„ë°€ë²ˆí˜¸ ì•”í˜¸í™”(sha256)
+        String encryPassword = UserSha256.encrypt(user.getPwd());
+        user.setPwd(encryPassword);
+
+        //ì—ëŸ¬ê°€ ì—†ë‹¤ë©´ ì•„ë˜ ë¡œì§ ìˆ˜í–‰
+        int n = this.userService.createUser(user);
+
+        if (n > 0) {
+            ses.setAttribute("authUser", user);
+        }
+
+        String str = (n > 0) ? "íšŒì›ê°€ì… ì™„ë£Œ" : "íšŒì›ê°€ì… ì‹¤íŒ¨";
+        String loc = (n > 0) ? "/user/chkMail" : "javascript:history.back()";
+        return util.addMsgLoc(m, str, loc);
+    }
+
+    //íšŒì›ê°€ì… í˜ì´ì§€ ë„˜ì–´ê°€ë©´ì„œ ì´ë©”ì¼ ë°œì†¡ì²˜ë¦¬
+    @GetMapping("/chkMail")
+    public String chkMail(HttpServletRequest req) {
+        HttpSession ses = req.getSession();
+        UserVO user = (UserVO) ses.getAttribute("authUser");
+
+        String email = user.getEmail();
+        String id = user.getId();
+
+        this.userService.mailSendWithUserKey(email, id, req);
+        return "user/joinEnd";
+    }
 
 
-		
-		//¿¡·¯°¡ ¾ø´Ù¸é ¾Æ·¡ ·ÎÁ÷ ¼öÇà
-		int n = this.userService.createUser(user);
+    // ì´ë©”ì¼ ì¸ì¦ ì™„ë£Œ
+    @GetMapping(value = "/stat_alter")
+    public String statAlter(Model m, @RequestParam("id") String id) {
 
-		if(n>0) {
-			ses.setAttribute("authUser", user);
-		}
-		
-		String str=(n>0)?"È¸¿ø°¡ÀÔÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù. ÀÌ¸ŞÀÏ ÀÎÁõÀ» ÇØÁÖ¼¼¿ä.":"È¸¿ø°¡ÀÔ ½ÇÆĞ";
-		String loc=(n>0)?"chkMail":"javascript:history.back()";
-		return util.addMsgLoc(m, str, loc);
-	}
-	
-	//È¸¿ø°¡ÀÔ ÆäÀÌÁö ³Ñ¾î°¡¸é¼­ ÀÌ¸ŞÀÏ ¹ß¼ÛÃ³¸® 
-	@GetMapping("/chkMail")
-	public String chkMail(HttpServletRequest req) {
-		HttpSession ses = req.getSession();
-		UserVO user = (UserVO) ses.getAttribute("authUser");
-		
-		String email = user.getEmail();
-		String id = user.getId();
-		
-		this.userService.mailSendWithUserKey(email,id, req);
-		return"user/joinEnd";
-	}
+        this.userService.statAlter(id);
 
-	
-	    // ÀÌ¸ŞÀÏ ÀÎÁõ ¿Ï·á 
-	    @GetMapping(value="/user/stat_alter")
-		public String statAlter(Model m, @RequestParam("id") String id) {
+        return "user/joinSuccess";
+    }
 
-	    this.userService.statAlter(id);
+    @GetMapping(value = "/idcheck", produces = "application/json")
+    public @ResponseBody
+    Map<String, String> idCheck(@RequestParam("id") String id) {
+        boolean isUse = userService.idCheck(id);
 
-		return "user/joinSuccess";
-		
-		}
-	
-	@GetMapping(value="/idcheck",produces = "application/json")
-	public @ResponseBody Map<String, String> idCheck(@RequestParam("id") String id){
-		boolean isUse=userService.idCheck(id);
+        String msg = (isUse) ? id + "ëŠ” ì‚¬ìš© ê°€ëŠ¥í•©ë‹ˆë‹¤." : id + "ëŠ” ì´ë¯¸ ì‚¬ìš©ì¤‘ì…ë‹ˆë‹¤";
+        int n = (isUse) ? 1 : -1;
+        Map<String, String> map = new HashMap<>();
+        map.put("idResult", msg);
+        map.put("isUse", String.valueOf(n));
+        return map;
+    }
 
-		String msg=(isUse)? "»ç¿ë °¡´ÉÇÑ ¾ÆÀÌµğÀÔ´Ï´Ù.":"ÀÌ¹Ì Á¸ÀçÇÏ´Â ¾ÆÀÌµğÀÔ´Ï´Ù.";
-		int n=(isUse)? 1: -1;
-		Map<String, String> map=new HashMap<>();
-		map.put("idResult", msg);
-		map.put("isUse", String.valueOf(n));
-		return map;
-	}//---------------------------
-	
-	@GetMapping(value="/emailcheck",produces = "application/json")
-	public @ResponseBody Map<String,String> emailCheck(@RequestParam("email") String email){
-		boolean isEma=userService.emailCheck(email);
-	
-		String msg=(isEma)? "»ç¿ë °¡´ÉÇÑ ÀÌ¸ŞÀÏÀÔ´Ï´Ù.":"ÀÌ¹Ì µî·ÏµÈ ÀÌ¸ŞÀÏÀÔ´Ï´Ù.";
-		int n=(isEma)? 1: -1;
-		Map<String, String> map=new HashMap<>();
-		map.put("emailResult", msg);
-		map.put("isEma", String.valueOf(n));
-		return map;
-	}
-	
-	@GetMapping(value="/nickcheck",produces = "application/json")
-	public @ResponseBody Map<String,String> nickCheck(@RequestParam("nick") String nick){
-		boolean isNic=userService.nickCheck(nick);
-	
-		String msg=(isNic)? "»ç¿ë °¡´ÉÇÑ ´Ğ³×ÀÓÀÔ´Ï´Ù.":"ÀÌ¹Ì Á¸ÀçÇÏ´Â ´Ğ³×ÀÓÀÔ´Ï´Ù.";
-		int n=(isNic)? 1: -1;
-		Map<String, String> map=new HashMap<>();
-		map.put("nickResult", msg);
-		map.put("isNic", String.valueOf(n));
-		return map;
-	}
-	
-	@GetMapping(value="/telcheck",produces = "application/json")
-	public @ResponseBody Map<String,String> telCheck(@RequestParam("tel") String tel){
-		boolean isTel=userService.telCheck(tel);
-	
-		String msg=(isTel)? "»ç¿ë °¡´ÉÇÑ ÀüÈ­¹øÈ£ÀÔ´Ï´Ù.":"ÀÌ¹Ì Á¸ÀçÇÏ´Â ÀüÈ­¹øÈ£ÀÔ´Ï´Ù.";
-		int n=(isTel)? 1: -1;
-		Map<String, String> map=new HashMap<>();
-		map.put("telResult", msg);
-		map.put("isTel", String.valueOf(n));
-		return map;
-	}
-	
-	//¾ÆÀÌµğ Ã£±â
-	@GetMapping("/userSearch")
-	public String userSearch() {
-		
-		return "/user/userSearch";
-	}
-	
-	
-	@PostMapping("/userSearch")
-	@ResponseBody
-	public String userSearchEnd(@RequestParam("inputNick") String nick,
-			                 @RequestParam("inputEmail") String email) {
-		
-		String result = userService.searchId(nick, email);
+    @GetMapping(value = "/emailcheck", produces = "application/json")
+    public @ResponseBody
+    Map<String, String> emailCheck(@RequestParam("email") String email) {
+        boolean isEma = userService.emailCheck(email);
 
-		return result;
-	}
-	
-	//ºñ¹Ğ¹øÈ£ Ã£±â 
-	@GetMapping("/pwdSearch")
-	public String pwdSearch() {
-		
-		return "/user/pwdSearch";
-	}
-	
-	@GetMapping("/pwdSearchEnd")
-	public String pwdSearchEnd(@RequestParam("id") String id,
-			                   @RequestParam("email") String email, HttpServletRequest req, Model m) throws NotUserException {
-		 
-		UserVO user = this.userService.userCheck(id, email);
-		
-		if (user != null) {
-			userService.mailSendPwd(id, email, req);
-		}
-		
-		return "user/pwdSearchEnd";
-	}
-		
-		@ExceptionHandler(NotUserException.class)
-		public String exceptionHandler(Exception ex) {
-			return  "user/errorAlert";
-		}
-	
-	
+        String msg = (isEma) ? "ì‚¬ìš© ê°€ëŠ¥í•œ ì´ë©”ì¼ì…ë‹ˆë‹¤." : "ì´ë¯¸ ë“±ë¡ëœ ì´ë©”ì¼ì…ë‹ˆë‹¤.";
+        int n = (isEma) ? 1 : -1;
+        Map<String, String> map = new HashMap<>();
+        map.put("emailResult", msg);
+        map.put("isEma", String.valueOf(n));
+        return map;
+    }
+
+    @GetMapping(value = "/nickcheck", produces = "application/json")
+    public @ResponseBody
+    Map<String, String> nickCheck(@RequestParam("nick") String nick) {
+        boolean isNic = userService.nickCheck(nick);
+
+        String msg = (isNic) ? "ì‚¬ìš© ê°€ëŠ¥í•œ ë‹‰ë„¤ì„ì…ë‹ˆë‹¤." : "ì´ë¯¸ ì¡´ì¬í•˜ëŠ” ë‹‰ë„¤ì„ì…ë‹ˆë‹¤.";
+        int n = (isNic) ? 1 : -1;
+        Map<String, String> map = new HashMap<>();
+        map.put("nickResult", msg);
+        map.put("isNic", String.valueOf(n));
+        return map;
+    }
+
+    @GetMapping(value = "/telcheck", produces = "application/json")
+    public @ResponseBody
+    Map<String, String> telCheck(@RequestParam("tel") String tel) {
+        boolean isTel = userService.telCheck(tel);
+
+        String msg = (isTel) ? "ì‚¬ìš© ê°€ëŠ¥í•œ ì „í™”ë²ˆí˜¸ì…ë‹ˆë‹¤." : "ì´ë¯¸ ì¡´ì¬í•˜ëŠ” ì „í™”ë²ˆí˜¸ì…ë‹ˆë‹¤.";
+        int n = (isTel) ? 1 : -1;
+        Map<String, String> map = new HashMap<>();
+        map.put("telResult", msg);
+        map.put("isTel", String.valueOf(n));
+        return map;
+    }
+
+    //ì•„ì´ë”” ì°¾ê¸°
+    @GetMapping("/userSearch")
+    public String userSearch() {
+
+        return "/user/userSearch";
+    }
+
+    @PostMapping("/userSearch")
+    @ResponseBody
+    public String userSearchEnd(@RequestParam("inputNick") String nick,
+                                @RequestParam("inputEmail") String email) {
+
+        String result = userService.searchId(nick, email);
+
+        return result;
+    }
+
+    //ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸°
+    @GetMapping("/pwdSearch")
+    public String pwdSearch() {
+
+        return "/user/pwdSearch";
+    }
+
+    @GetMapping("/pwdSearchEnd")
+    public String pwdSearchEnd(@RequestParam("id") String id,
+                               @RequestParam("email") String email, HttpServletRequest req, Model m) throws NotUserException {
+
+        UserVO user = this.userService.userCheck(id, email);
+
+        if (user != null) {
+            userService.mailSendPwd(id, email, req);
+        }
+
+        return "user/pwdSearchEnd";
+    }
+
+    @ExceptionHandler(NotUserException.class)
+    public String exceptionHandler(Exception ex) {
+        return "user/errorAlert";
+    }
+
 }

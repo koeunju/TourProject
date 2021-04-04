@@ -1,30 +1,25 @@
 package com.t4er.point.service;
 
+import com.t4er.point.model.ProductPagingVO;
+import com.t4er.point.model.ProductVO;
+import com.t4er.point.model.ProductCategoryVO;
 
 import java.util.List;
 
-import com.t4er.point.model.PagingVO;
-import com.t4er.point.model.ProductVO;
-import com.t4er.point.model.Product_CategoryVO;
-
 public interface ProductService {
-	
-	/*Pspec º°·Î »óÇ° Á¤º¸ °¡Á®¿À±â*/
-	List<ProductVO> selectByPspec(String pspec);
-	/*Ä«Å×°í¸®º° »óÇ°Á¤º¸ °¡Á®¿À±â*/
-	List<ProductVO> selectByCategory(PagingVO pvo);
-	/**»óÇ°¹øÈ£·Î Æ¯Á¤ »óÇ° Á¤º¸ °¡Á®¿À±â*/
-	ProductVO selectByPnum(Integer pnum);
+    /* Pspec ë³„ë¡œ ìƒí’ˆ ì •ë³´ ê°€ì ¸ì˜¤ê¸° */
+    List<ProductVO> selectByPspec(String pspec);
+    /* ì¹´í…Œê³ ë¦¬ë³„ ìƒí’ˆì •ë³´ ê°€ì ¸ì˜¤ê¸° */
+    List<ProductVO> selectByCategory(ProductPagingVO pvo);
+    /** ìƒí’ˆë²ˆí˜¸ë¡œ íŠ¹ì • ìƒí’ˆ ì •ë³´ ê°€ì ¸ì˜¤ê¸° */
+    ProductVO selectByPnum(Integer pnum);
 
-    List<Product_CategoryVO> getCategory();
-    
- 
-	int getProductTotalCount(PagingVO paging);
-	
-	int getProdByCateTotalCount(PagingVO paging);
-	
-	List<ProductVO> getProdList(PagingVO paging);
+    List<ProductCategoryVO> getCategory();
 
-	
+    int getProductTotalCount(ProductPagingVO paging);
+
+    int getProdByCateTotalCount(ProductPagingVO paging);
+
+    List<ProductVO> getProdList(ProductPagingVO paging);
 
 }

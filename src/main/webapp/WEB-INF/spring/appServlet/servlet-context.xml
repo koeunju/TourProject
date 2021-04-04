@@ -15,13 +15,16 @@
 	요청을 받아 해당 요청과 매핑된 컨트롤러를 찾아 실행시키려고 한다. 그러한 수고를 하지 않도록
 	resources태그로 설정을 하면 해당 디렉토리에 있는 파일들은 정적인 파일로 인식하고 서비를 해준다
     -->
-    <resources mapping="/resources/**" location="/resources/"/>
+  	<resources mapping="/resources/**" location="/resources/"/>
     <resources mapping="/image/**" location="/image/"/>
-    <resources mapping="/product_images/**" location="/product_images/" />
     <resources mapping="/css/**" location="/css/"/>
     <resources mapping="/js/**" location="/js/"/>
     <resources mapping="/upload/**" location="/upload/"/>
-
+    <resources mapping="/review/**" location="/review/"/>
+    <resources mapping="/board/**" location="/board/"/>
+    <resources mapping="/product/**" location="/product/"/>
+    <resources mapping="/easterEgg/**" location="/easterEgg/"/>
+    
     <!--viewResolver 설정-->
     <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <beans:property name="prefix" value="/WEB-INF/views/" />
@@ -43,45 +46,47 @@
         <!-- -1값을 주면 업로드 용량 무제한  -->
     </beans:bean>
     
-    <!-- 회원가입 메일 인증(메일 보내기) -->
-	<beans:bean id="mailSender"	class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<beans:property name="host" value="smtp.gmail.com" />
-		<beans:property name="port" value="587" /><!-- 465 or 25 -->
-		<beans:property name="username" value="bluedmoel3@gmail.com" />
-		<beans:property name="password" value="asl06081211@" />
-		<beans:property name="defaultEncoding" value="utf-8" />
+        <!-- 회원가입 메일 인증(메일 보내기) -->
+    <beans:bean id="mailSender"	class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <beans:property name="host" value="smtp.gmail.com" />
+        <beans:property name="port" value="587" /><!-- 465 or 25 -->
+        <beans:property name="username" value="bluedmoel3@gmail.com" />
+        <beans:property name="password" value="asl06081211@" />
+        <beans:property name="defaultEncoding" value="utf-8" />
 
         <!-- email 요청시는 SMTP -->
-		<beans:property name="javaMailProperties">
-			<beans:props>
-				<beans:prop key="mail.transport.protocol">smtp</beans:prop>
-				<beans:prop key="mail.smtp.auth">true</beans:prop>
-				<beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
-				<beans:prop key="mail.debug">true</beans:prop>
-			</beans:props>
-		</beans:property>
-	</beans:bean>
-   
+        <beans:property name="javaMailProperties">
+            <beans:props>
+                <beans:prop key="mail.transport.protocol">smtp</beans:prop>
+                <beans:prop key="mail.smtp.auth">true</beans:prop>
+                <beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+                <beans:prop key="mail.debug">true</beans:prop>
+            </beans:props>
+        </beans:property>
+    </beans:bean>
 
-    <!-- Interceptor 설정 =====================  -->
-    <!--<interceptors>
+     <!-- Interceptor 설정 =====================-->
+    <interceptors>
         <interceptor>
-            <mapping path="/user/**"/>
+            <!-- <mapping path="/user/**"/> -->
+             <mapping path="/user/myInfo"/>
+            <mapping path="/review/write"/>
+            <mapping path="/board/insert"/>
             <mapping path="/admin/**"/>
-            <beans:bean class="com.my.common.interceptor.LoginCheckInterceptor"/>
+            <mapping path="/tour/save"/>
+            <beans:bean class="com.t4er.common.interceptor.LoginCheckInterceptor"/>
         </interceptor>
-        <interceptor>
+<!--        <interceptor>
             <mapping path="/admin/**"/>
             <beans:bean class="com.my.common.interceptor.AdminCheckInterceptor"/>
-        </interceptor>
-    </interceptors> -->
+        </interceptor>-->
+    </interceptors>
 
-    <!-- MessageResource ======================= -->
-    <!--<beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+   <!-- MessageResource ======================= -->
+<!--    <beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <beans:property name="defaultEncoding" value="UTF-8"/>
         <beans:property name="basename" value="classpath:spring/message/messagesAnnotation"/>
-    </beans:bean> -->
-	
+    </beans:bean>-->
 	
 	
 	

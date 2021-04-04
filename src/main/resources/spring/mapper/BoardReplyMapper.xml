@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.t4er.board.mapper.BoardReplyMapper">
+
+	<insert id="insert">
+		insert in to baord_reply(rnum, bnum, reply, idx)
+		values(seq_reply.nextval, #{bnum}, #{reply}, #{idx})
+	</insert>
+	
+	<select id="read" resultType="BReply">
+		select * from board_reply where rnum = #{rnum}
+	</select>
+	
+	<delete id="delete">
+		delete from board_reply where rnum= #{rnum}
+	</delete>
+	
+	<update id="update">
+		update board_reply set reply= #{reply}, updatedate = sysdate where rnum= #{rnum}
+	</update>
+	
+	<select id="getList" resultType="BReply">
+		select rnum, bnum, reply, idx, replyDate, updatedate
+		from board_reply
+		where bnum = #{bnum}
+		order by rnum asc		
+	</select>
+</mapper>

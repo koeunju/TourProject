@@ -1,39 +1,37 @@
 package com.t4er.user.service;
 
+import com.t4er.user.exception.NotUserException;
+import com.t4er.user.model.UserVO;
+import org.apache.ibatis.annotations.Param;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.apache.ibatis.annotations.Param;
-
-import com.t4er.user.model.NotUserException;
-import com.t4er.user.model.UserVO;
-
 public interface UserService {
 
-	UserVO loginCheck(String id, String pwd) throws NotUserException;
-	
-	UserVO userCheck(String id, String email) throws NotUserException;
+    UserVO loginCheck(String id, String pwd) throws NotUserException;
 
-	UserVO findUser(UserVO findUser) throws NotUserException;
+    UserVO userCheck(String id, String email) throws NotUserException;
 
-	int createUser(@Valid UserVO user); //À¯Àú È¸¿ø°¡ÀÔ
+    UserVO findUser(UserVO findUser) throws NotUserException;
 
-	boolean idCheck(String id);
-	boolean emailCheck(String email);
-	boolean nickCheck(String nick);
-	boolean telCheck(String nick);
-	
-	int statAlter(String id); // À¯Àú stat 1·Î ¹Ù²ãÁÖ´Â ¸Ş¼­µå
+    int createUser(@Valid UserVO user); //ìœ ì € íšŒì›ê°€ì…
 
-	void mailSendWithUserKey(String email, String id, HttpServletRequest req);
+    boolean idCheck(String id);
+    boolean emailCheck(String email);
+    boolean nickCheck(String nick);
+    boolean telCheck(String nick);
 
-	String checkState(String id);
+    int statAlter(String id); // ìœ ì € stat 1ë¡œ ë°”ê¿”ì£¼ëŠ” ë©”ì„œë“œ
 
-	String searchId(@Param("nick")String nick, @Param("email")String email);
+    void mailSendWithUserKey(String email, String id, HttpServletRequest req);
 
-	void mailSendPwd(String id, String email, HttpServletRequest req);
-	
-	int searchPwd(String id, String email, String key);
+    String checkState(String id);
 
+    String searchId(@Param("nick")String nick, @Param("email")String email);
 
+    void mailSendPwd(String id, String email, HttpServletRequest req);
+
+    //ì²« ë¡œê·¸ì¸ì‹œ í¬ì¸íŠ¸ ë¶€ì—¬
+    int firstPoint(String id);
 }

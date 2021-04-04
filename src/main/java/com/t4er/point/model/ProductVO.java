@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ProductVO {
-	
+
     private String pnum;
     private String pname;
     private String pcontent;
@@ -15,5 +15,4 @@ public class ProductVO {
 
     private String Cg_num;
     private String Cg_name;
-
 }

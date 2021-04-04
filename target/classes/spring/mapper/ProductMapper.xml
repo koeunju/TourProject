@@ -1,79 +1,72 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.t4er.point.mapper.ProductMapper">
-	<select id="getProductTotalCount" resultType="int" parameterType="Paging">
-		select count(*) cnt from product
-		<if test="findKeyword != null and findKeyword !=''">
-			<include refid="findWhere" />
-		</if>
-	</select>
-	
-    <select id="getProdByCateTotalCount" resultType="int" parameterType="Paging">
-		select count(*) cnt from product
-		<if test="cgnum != null and (findKeyword ==null or findKeyword=='')">
-			<where>
-				cg_num=#{cgnum}
-			</where>
-		</if>
-		<if test="findKeyword != null and findKeyword !=''">
-			<include refid="findWhere" />
-			<if test="cgnum != null">
-				and cg_num=#{cgnum}
-			</if>
-		</if>
-	</select>
-	
+    <select id="getProductTotalCount" resultType="int" parameterType="PPaging">
+        select count(*) cnt from product
+        <if test="findKeyword != null and findKeyword !=''">
+            <include refid="findWhere" />
+        </if>
+    </select>
 
+    <select id="getProdByCateTotalCount" resultType="int" parameterType="PPaging">
+        select count(*) cnt from product
+        <if test="cgnum != null and (findKeyword ==null or findKeyword=='')">
+            <where>
+                cg_num=#{cgnum}
+            </where>
+        </if>
+        <if test="findKeyword != null and findKeyword !=''">
+            <include refid="findWhere" />
+            <if test="cgnum != null">
+                and cg_num=#{cgnum}
+            </if>
+        </if>
+    </select>
 
-	<!-- 페이징 처리후 상품보여줌 -->
-	<select id="getProdList" resultType="Product"
-		parameterType="Paging">
-		select * from(
-		select product.*, row_number() over(order by pnum desc) rn from product 
-		<include refid="findWhere" /> 
-		)
-	<![CDATA[
+    <!-- 페이징 처리후 상품보여줌 -->
+    <select id="getProdList" resultType="Product" parameterType="PPaging">
+        select * from(
+        select product.*, row_number() over(order by pnum desc) rn from product
+        <include refid="findWhere"/>
+        )
+        <![CDATA[
 	where rn > #{start} and rn < #{end}
 	]]>
-	</select>
+    </select>
 
-	<select id="getCategory" resultType="PCategory">
+    <select id="getCategory" resultType="PCategory">
 		select * from
-		product_category order by 1 asc 
+		product_category order by 1 asc
 	</select>
 
-	<select id="selectByCategory" resultType="Product"
-		parameterType="Paging">
-		select * from(
-		select product.*, row_number() over(order by pnum desc) rn from product
-		<if test="cgnum != null and (findKeyword ==null or findKeyword=='')">
-			<where>
-				cg_num=#{cgnum}
-			</where>
-		</if>
-		<if test="findKeyword != null and findKeyword !=''">
-			<include refid="findWhere" />
-			<if test="cgnum != null">
-				and cg_num=#{cgnum}
-			</if>
-		</if>
-		)
-	<![CDATA[
+    <select id="selectByCategory" resultType="Product" parameterType="PPaging">
+        select * from(
+        select product.*, row_number() over(order by pnum desc) rn from product
+        <if test="cgnum != null and (findKeyword ==null or findKeyword=='')">
+            <where>
+                cg_num=#{cgnum}
+            </where>
+        </if>
+        <if test="findKeyword != null and findKeyword !=''">
+            <include refid="findWhere"/>
+            <if test="cgnum != null">
+                and cg_num=#{cgnum}
+            </if>
+        </if>
+        )
+        <![CDATA[
 	where rn > #{start} and rn < #{end}
 	]]>
-	</select>
+    </select>
 
-	<select id="selectByPnum" resultType="Product"
-		parameterType="int">
-		select
-		<include refid="product_column" />
-		from product where pnum=#{pnum}
-	</select>
+    <select id="selectByPnum" resultType="Product" parameterType="int">
+        select * from product where pnum=#{pnum}
+    </select>
 
-	<sql id="product_column">
+    <sql id="product_column">
 		pnum, pname, pcontent, price,
 		nvl(pimage, 'noimage.png') pimage,
 		nvl(pimage2, 'noimage.png') pimage2,
@@ -81,40 +74,42 @@
 		cg_num
 	</sql>
 
-	<select id="getFindTotalCount" resultType="int">
-		select count(pnum) from product
-		<include refid="findWhere" />
-	</select>
+<!--    <select id="getFindTotalCount" resultType="int">
+        select count(pnum) from product
+        <include refid="findWhere"/>
+    </select>-->
 
-	<sql id="findWhere">
-		<if test="findKeyword != null">
-			<where>
-				pname like '%'||#{findKeyword}||'%'
-			</where>
-		</if>
-	</sql>
+    <sql id="findWhere">
+        <if test="findKeyword != null">
+            <where>
+                pname like '%'||#{findKeyword}||'%'
+            </where>
+        </if>
+    </sql>
 
-	<select id="getFindList" resultType="Product"
-		parameterType="Paging">
-		select * from(
-		select a.*,row_number() over(order by pnum desc) rn from
-		product a
-		<include refid="findWhere" />
-		)
-		where rn between #{start,jdbcType=NUMBERIC} and #{end}
-	</select>
+<!--
+    <select id="getFindList" resultType="Product" parameterType="PPaging">
+        select * from(
+        select a.*,row_number() over(order by pnum desc) rn from
+        product a
+        <include refid="findWhere"/>
+        )
+        where rn between #{start,jdbcType=NUMBERIC} and #{end}
+    </select>
+-->
 
-	<!-- 여기부터 admin입니다 -->
-	<!-- 상품등록 -->
-	<insert id="insertProduct" parameterType="Product">
-		<selectKey keyProperty="pnum" resultType="int"
-			order="BEFORE">
-			select product_seq.nextval from dual
-		</selectKey>
-		insert into product(pnum, pname, pcontent, price, pimage, pimage2,
-		pimage3, cg_num)
-		values(#{pnum}, #{pname}, #{pcontent},#{price},
-		#{pimage:VARCHAR}, #{pimage2:VARCHAR}, #{pimage3:VARCHAR}, 0)
-	</insert>
+    <!-- 여기부터 admin입니다 -->
+    <!-- 상품등록 -->
+    <insert id="insertProd" parameterType="Product">
+        <selectKey keyProperty="pnum" resultType="String" order="BEFORE">
+            select product_seq.nextval from dual
+        </selectKey>
+        insert into product(pnum, pname, pcontent, price, pimage, pimage2, pimage3, cg_num)
+        values(#{pnum}, #{pname}, #{pcontent},#{price}, #{pimage:VARCHAR}, #{pimage2:VARCHAR}, #{pimage3:VARCHAR}, 99)
+    </insert>
+
+    <select id="getProd" parameterType="int" resultType="Product">
+   		select * from product where pnum = #{pnum,jdbcType=NUMERIC}
+   </select>
 
 </mapper>

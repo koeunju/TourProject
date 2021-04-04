@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
@@ -23,7 +22,6 @@ $(document).ready(function() {
          }
 	});
 });
-
 
 var idV = "";
 // 닉네임 값 받고 출력하는 ajax
@@ -61,7 +59,7 @@ var idSearch_click = function(){
 					 <br>
 					<div class="form-group">
 					<button id="searchBtn" type="button" onclick="idSearch_click()" class="btn btn-primary btn-block">확인</button>
-					<a class="btn btn-danger btn-block"	href="${pageContext.request.contextPath}">취소</a>
+					<a class="btn btn-danger btn-block"	href="${pageContext.request.contextPath}/user/login">취소</a>
 					</div>
 			</div>
 		</div>

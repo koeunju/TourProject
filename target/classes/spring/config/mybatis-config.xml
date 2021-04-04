@@ -4,17 +4,31 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <!-- 타입 별칭 설정============================  -->
- <typeAliases>
+    <typeAliases>
+        <typeAlias type="com.t4er.board.model.BoardVO" alias="Board"/>
+        <typeAlias type="com.t4er.board.model.BoardCategoryVO" alias="BCategory"/>
+        <typeAlias type="com.t4er.board.model.BoardPagingVO" alias="BPaging"/>
+        <typeAlias type="com.t4er.board.model.BoardReplyVO" alias="BReply"/>
         <typeAlias type="com.t4er.user.model.UserVO" alias="User"/>
+        <typeAlias type="com.t4er.point.model.PointVO" alias="Point"/>
         <typeAlias type="com.t4er.point.model.ProductVO" alias="Product"/>
-        <typeAlias type="com.t4er.point.model.Product_CategoryVO" alias="PCategory"/>
-        <typeAlias type="com.t4er.point.model.PagingVO" alias="Paging"/> 
+        <typeAlias type="com.t4er.point.model.ProductCategoryVO" alias="PCategory" />
+        <typeAlias type="com.t4er.point.model.ProductPagingVO" alias="PPaging" />
+        <typeAlias type="com.t4er.review.model.ReviewVO" alias="Review" />
+        <typeAlias type="com.t4er.review.model.ReviewPagingVO" alias="RPaging"/>
+        <typeAlias type="com.t4er.tour.model.TourVO" alias="Tour"/>
+        <typeAlias type="com.t4er.admin.model.AdminPagingVO" alias="APaging"/>
     </typeAliases>
-    
 
- 
+    <!-- 매퍼 정의================================ -->
     <mappers>
+        <mapper resource="spring/mapper/SampleMapper.xml"/>
+        <mapper resource="spring/mapper/TourMapper.xml"/>
+        <mapper resource="spring/mapper/ReviewMapper.xml"/>
         <mapper resource="spring/mapper/UserMapper.xml"/>
+        <mapper resource="spring/mapper/BoardMapper.xml"/>
+        <mapper resource="spring/mapper/BoardReplyMapper.xml"/>
         <mapper resource="spring/mapper/ProductMapper.xml"/>
+        <mapper resource="spring/mapper/PointMapper.xml"/>
     </mappers>
 </configuration>

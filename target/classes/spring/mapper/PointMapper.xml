@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.t4er.point.mapper.PointMapper">
+
+<!--[포인드 적립] 회원가입시 포인트 적립  -->
+<insert id="firstPoint" parameterType="String">
+	insert into point values(point_seq.nextval,'100',sysdate,1000,1000,#{idx})
+</insert>
+
+<!--[포인트 조회] 마이페이지에서 내 포인트 조회 -->
+<select id="myTotalPoint" parameterType="int" resultType="String">
+  select PTOTALPOINT from(select * from point order by pdate desc)where ROWNUM = 1 and idx=#{idx}
+</select>
+
+<!--[포인트 조회] 내 포인트 전체 조회 -->
+<select id = "mypoint" parameterType="int" resultType="Point">
+	select * from point where idx=#{idx} order by pdate asc
+</select>
+
+</mapper>
