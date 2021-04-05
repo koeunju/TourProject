@@ -78,7 +78,26 @@ public class UserController {
         this.userService.mailSendWithUserKey(email, id, req);
         return "user/joinEnd";
     }
-
+    
+    @PostMapping("/chkMail")
+    public String chkMailEnd(HttpServletRequest req, Model m) {
+    	HttpSession ses = req.getSession();
+        UserVO user = (UserVO) ses.getAttribute("authUser");
+        
+        String email = user.getEmail();
+        String id = user.getId();
+        
+        this.userService.mailSendWithUserKey(email, id, req);
+        return util.addMsgLoc(m, "이메일 전송이 완료되었습니다.", "redirect");
+    }
+    
+    
+    
+    @GetMapping("/resendEmail")
+    public String ResendEmail() {
+        return "user/resendEmail";
+    }
+    
 
     // 이메일 인증 완료
     @GetMapping(value = "/stat_alter")
