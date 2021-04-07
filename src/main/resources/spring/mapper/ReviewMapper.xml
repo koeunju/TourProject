@@ -24,4 +24,11 @@
 		where rn > #{start} and rn < #{end}
 		]]>
 	</select>
+
+	<select id="selectNick" resultType="String">
+		select nick from member where idx in (
+		select idx from reivew where rnum = #{rnum}
+		)
+	</select>
+
 </mapper>

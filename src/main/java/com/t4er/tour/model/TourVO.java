@@ -10,5 +10,6 @@ public class TourVO {
     private Integer contentId;
     private Integer idx;
     private Date sdate;
+    private String title;
 
 }

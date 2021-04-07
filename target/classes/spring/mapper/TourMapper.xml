@@ -10,6 +10,6 @@
 
 	<!-- 여행지 저장 -->
 	<insert id="insertSaveTour" parameterType="Tour">
-		insert into travelsave values (#{idx}, #{contentId}, sysdate)
+		insert into travelsave values (#{idx}, #{contentId}, sysdate, #{title})
 	</insert>
 </mapper>

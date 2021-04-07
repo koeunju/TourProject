@@ -2,18 +2,18 @@ let pstart = 1;
 $(function () {
     $('#btnKeyword').click((e) => {
         e.preventDefault();
-        let keyword = $('#keyword').val();
-        if (!keyword) {
-            alert('키워드를 입력하세요');
-            $('#keyword').focus();
-            return;
-        }
-        let url = "/tour/keywordList?keyword=" + keyword + "&pageNo=" + pstart;
-        send(url, keyword, 1);
+        let cat1 = $('#cat1').val();
+        let contentTypeId = $('#contentTypeId').val();
+        let areaCode = $('#areaCode').val();
+        let sigunguCode = $('#sigunguCode').val();
+        let cat2 = $('#cat2').val();
+
+        let url = "/tour/areaList?areaCode=" + areaCode + "&sigunguCode=" + sigunguCode + "&contentTypeId=" + contentTypeId + "&cat1=" + cat1 + "&cat2=" + cat2 + "&pageNo=" + pstart;
+        send(url, areaCode, sigunguCode, contentTypeId, cat1, cat2, 1);
     })
 })
 
-function send(url, keyword, pageNo) {
+function send(url, areaCode, sigunguCode, contentTypeId, cat1, cat2, pageNo) {
     $.ajax({
         type: 'get',
         url: url,
@@ -26,21 +26,15 @@ function send(url, keyword, pageNo) {
         let display = data.response.body.numOfRows; // 페이지당 보여줄 개수
         let total = parseInt(pages);
 
-        if (pages === 0) {
-            send3(keyword); // 검색 결과 없을 경우
-        } else if (pages === 1) {
-            send2(item, keyword); // 특정 키워드 검색시
-        } else {
-            showList(items, total, keyword);
-            showPage(pages, keyword, display, pageNo)
-        }
+        showList(items, total);
+        showPage(pages, display, pageNo)
     }).fail((err) => {
         alert('error: ' + err.status)
         console.dir(err)
     })
 }
 
-function showPage(total, keyword, display, pageNo) { // 페이징 처리
+function showPage(total, display, pageNo) { // 페이징 처리
 
     if (pageNo === undefined) {
         pageNo = 1;
@@ -83,13 +77,13 @@ function showPage(total, keyword, display, pageNo) { // 페이징 처리
     $('div.page').html(str);
 }
 
-function fetch(keyword, start, pageNo) { // 페이지
-    let url = "/tour/keywordList?keyword=" + keyword + "&pageNo=" + pageNo;
-    send(url, keyword, pageNo);
+function fetch(start, pageNo) { // 페이지
+    let url = "/tour/areaList?cat1=" + cat1 + "&contentTypeId=" + contentTypeId + "&areaCode=" + areaCode + "&sigunguCode=" + sigunguCode + "&cat2=" + cat2 + "&pageNo=" + pstart;
+    send(url, cat1, contentTypeId, areaCode, sigunguCode, cat2, pageNo);
 }
 
-function showList(items, total, keyword) { // 검색결과 1
-    let str = "<h2>" + keyword + " 검색 결과: " + total + "개</h2>"
+function showList(items, total) { // 검색결과 1
+    let str = "<h2> 검색 결과: " + total + "개</h2>"
     str += "<table class='table table-hover' id='tourTable'>"
     str += "<tr>"
     $.each(items, (i, tour) => {
@@ -161,7 +155,7 @@ function showList(items, total, keyword) { // 검색결과 1
     str += "<div class='page'></div>"  // 5개당 블록처리 + 중앙에 오게 만들기
     $('#openAPI').html(str)
 }
-
+/*
 function send2(item, keyword, pageNo) { // 특정 키워드 검색시
     $.ajax({
         type: 'get',
@@ -294,7 +288,8 @@ function Detail(contentId) { // 디테일
         console.dir(err)
     })
 }
-
+*/
+/*
 function sendImg(dtItems, contentId) { // 사진
     $.ajax({
         type: 'get',
@@ -421,20 +416,20 @@ function showDt(dtItems, imgItems, contentId) { // 디테일
         str += "<th> 장르: </th>";
         str += "<td>" + contentTypeId + "</td>";
         str += "</tr>";
-
-        str += "<tr>"
-        str += "<button class='btn btn-primary' onclick='review(" + contentId + ")'>리뷰 보러 가기</button>";
-        str += "&nbsp;&nbsp;&nbsp;&nbsp;";
-        str += "<button class='btn btn-success' onclick='saveInfo(" + contentId + "," + title +")'>여행지 저장</button>";
-        str += "&nbsp;&nbsp;&nbsp;&nbsp;";
-        str += "<button class='btn btn-info' onclick='rollBack()'>돌아가기</button>";
     })
     str += "</tr>";
     str += "</table>";
 
-    $('#openAPI').html(str)
-}
+    str += "<button class='btn btn-primary' onclick='review(" + contentId + ")'>리뷰 보러 가기</button>";
+    //str += "<button class='btn btn-primary'><a href='"+contextPath+"/review/list?contentId="+contentId+"'>리뷰 보러 가기</a></button>";
+    str += "&nbsp;&nbsp;&nbsp;&nbsp;";
+    str += "<button class='btn btn-success' onclick='saveInfo(" + contentId + ")'>여행지 저장</button>";
+    str += "&nbsp;&nbsp;&nbsp;&nbsp;";
+    str += "<button class='btn btn-info' onclick='rollBack()'>돌아가기</button>";
 
+    $('#openAPI').html(str)
+}*/
+/*
 function sendImg2(dtItems, imgItem, contentId) {
     $.ajax({
         type: 'get',
@@ -555,27 +550,28 @@ function showDt2(dtItems, imgItem, contentId) { // 디테일
         str += "<th> 장르: </th>";
         str += "<td>" + contentTypeId + "</td>";
         str += "</tr>";
-
-        str += "<button class='btn btn-primary' onclick='review(" + contentId + ")'>리뷰 보러 가기</button>";
-        str += "&nbsp;&nbsp;&nbsp;&nbsp;";
-        str += "<button class='btn btn-success' onclick='saveInfo(" + contentId + "," + title +")'>여행지 저장</button>";
-        str += "&nbsp;&nbsp;&nbsp;&nbsp;";
-        str += "<button class='btn btn-info' onclick='rollBack()'>돌아가기</button>";
     })
     str += "</tr>";
     str += "</table>";
 
+    str += "<button class='btn btn-primary' onclick='review(" + contentId + ")'>리뷰 보러 가기</button>";
+    str += "&nbsp;&nbsp;&nbsp;&nbsp;";
+    str += "<button class='btn btn-success' onclick='saveInfo(" + contentId + ")'>여행지 저장</button>";
+    str += "&nbsp;&nbsp;&nbsp;&nbsp;";
+    str += "<button class='btn btn-info' onclick='rollBack()'>돌아가기</button>";
+
     $('#openAPI').html(str)
 }
-
+*//*
 function rollBack() {
-    alert("기능구현중");
+    alert(기능구현중);
 }
 
 function review(contentId) {
     location.href = contextPath + '/review/list?contentId=' + contentId;
 }
 
-function saveInfo(contentId, title) {
-    location.href = '/tour/save?contentId=' + contentId +"&title=" + title;
+function saveInfo(contentId) {
+    location.href = '/tour/save?contentId=' + contentId;
 }
+*/
