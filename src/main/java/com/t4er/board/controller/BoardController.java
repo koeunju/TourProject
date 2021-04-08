@@ -1,12 +1,16 @@
 package com.t4er.board.controller;
 
-import com.t4er.board.model.BoardPagingVO;
-import com.t4er.board.model.BoardReplyVO;
-import com.t4er.board.model.BoardVO;
-import com.t4er.board.service.BoardService;
-import com.t4er.common.CommonUtil;
-import com.t4er.user.model.UserVO;
-import lombok.extern.log4j.Log4j;
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.List;
+import java.util.UUID;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
@@ -14,18 +18,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.List;
-import java.util.UUID;
+import com.t4er.board.model.BoardPagingVO;
+import com.t4er.board.model.BoardVO;
+import com.t4er.board.service.BoardService;
+import com.t4er.common.CommonUtil;
+import com.t4er.user.model.UserVO;
+
+import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
@@ -274,7 +282,7 @@ public class BoardController {
         BoardVO board = this.boardService.selectBoardBybnum(bnum);
 
         m.addAttribute("board", board);
-        m.addAttribute("replyVO", new BoardReplyVO());
+       
         return "board/boardView";
     }// -------------------------------------
 

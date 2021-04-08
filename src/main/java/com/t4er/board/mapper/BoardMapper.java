@@ -1,11 +1,10 @@
 package com.t4er.board.mapper;
 
-import com.t4er.board.model.BoardPagingVO;
-import com.t4er.board.model.BoardReplyVO;
-import com.t4er.board.model.BoardVO;
-
 import java.util.List;
 import java.util.Map;
+
+import com.t4er.board.model.BoardPagingVO;
+import com.t4er.board.model.BoardVO;
 
 public interface BoardMapper {
 
@@ -37,13 +36,7 @@ public interface BoardMapper {
 
     int getTotalCount(BoardPagingVO paging);
     // 댓글 리스트
-    public List<BoardReplyVO> getReplyList(int bnum) throws Exception;
-
-    public int saveReply(BoardReplyVO Reply) throws Exception;
-
-    public int updateReply(BoardReplyVO Reply) throws Exception;
-
-    public int deleteReply(int rnum) throws Exception;
+   
 
     // 내가 쓴 글 조회
     List<BoardVO> selMyBoard(Integer idx);
