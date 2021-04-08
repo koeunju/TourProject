@@ -21,7 +21,6 @@ public class UserVO {
     private String image;
     private Integer stat;
     private java.sql.Date indate;
-    private int point;
 
     private Integer adminCheck;
 

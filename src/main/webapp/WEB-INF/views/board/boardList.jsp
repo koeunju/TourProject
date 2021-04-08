@@ -71,7 +71,7 @@
                     </a> <c:if test="${board.filesize > 0 }">
                         <img src="../image/file.png" width="26px">
                     </c:if></td>
-                    <td><c:out value="${user.nick }" /></td>
+                    <td><c:out value="${board.nick }" /></td>
                     <td><fmt:formatDate value="${board.bdate}"
                                         pattern="yyyy-MM-dd" /></td>
                     <td><c:out value="${board.binquiry}" /></td>
@@ -117,7 +117,12 @@
 
 <tr>
     <td>
+    <c:if test="${cg_num==1 }">
         <button class="btn btn-primary" onclick="location.href='insert'">글쓰기</button>
+        </c:if>
+        <c:if test="${cg_num==2 }">
+        <button class="btn btn-primary" onclick="location.href='insert2'">글쓰기</button>
+        </c:if>
     </td>
 </tr>
 

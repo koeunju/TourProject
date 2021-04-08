@@ -67,9 +67,9 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">게시판</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">이달의 여행지</a>
-                    <a class="dropdown-item" href="/board/list">자유게시판</a>
-                    <a class="dropdown-item" href="/board/list2">고객센터</a>
+                  <a class="dropdown-item" href="#">이달의 여행지</a>
+                    <a class="dropdown-item" href="/board/list?cg_num=1">자유게시판</a>
+                    <a class="dropdown-item" href="/board/list?cg_num=2">고객센터</a>
                 </div>
             </li>
 
@@ -82,5 +82,6 @@
         </ul>
     </div>
 </nav>
+
 
 <div class="m-5 p-3 text-center" style="border:1px solid gray; border-radius:15px" id="font2">

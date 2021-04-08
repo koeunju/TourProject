@@ -1,17 +1,23 @@
 @charset "UTF-8";
 
 @font-face {
-    font-family: 'MapoFlowerIsland';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+	font-family: 'MapoFlowerIsland';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
 }
+
 @font-face {
-    font-family: 'GmarketSansLight';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+	font-family: 'GmarketSansLight';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
 }
+
 * {
 	margin: 0;
 	padding: 0;
@@ -20,9 +26,36 @@
 #title {
 	background-color: #C9C0B1;
 }
-#font1{
-	font-family:'GmarketSansLight';
+
+#font1 {
+	font-family: 'GmarketSansLight';
 }
-#font2{
-	 font-family: 'MapoFlowerIsland';
+
+#font2 {
+	font-family: 'MapoFlowerIsland';
+}
+
+#morePoint:link {
+	text-decoration: none;
+	border: rgba(75, 112, 253, 0.3) solid;
+	border-width: 0 0 6px 0;
+}
+
+#morePoint:visited {
+	text-decoration: none;
+	border: rgba(140, 89, 185, 0.3) solid;
+	border-width: 0 0 6px 0;
+}
+
+#morePoint {
+	display: inline;
+}
+
+
+.viewBoard{
+	color:#000000;
+}
+
+a:link{
+	text-decoration: none;
 }

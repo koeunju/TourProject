@@ -14,7 +14,7 @@
                   enctype="multipart/form-data">
 
                 <input type="hidden" name="mode" value="insert">
-                <input type="hidden" name="idx" value="${idx}">
+                <input type="hidden" name="idx" value="${loginUser.idx}">
                 <table class="table table-bordered">
                     <tr>
                         <th style="width: 20%">게시물 유형</th>

@@ -1,12 +1,16 @@
 package com.t4er.board.controller;
 
-import com.t4er.board.model.BoardPagingVO;
-import com.t4er.board.model.BoardReplyVO;
-import com.t4er.board.model.BoardVO;
-import com.t4er.board.service.BoardService;
-import com.t4er.common.CommonUtil;
-import com.t4er.user.model.UserVO;
-import lombok.extern.log4j.Log4j;
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.List;
+import java.util.UUID;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
@@ -14,18 +18,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.List;
-import java.util.UUID;
+import com.t4er.board.model.BoardPagingVO;
+import com.t4er.board.model.BoardVO;
+import com.t4er.board.service.BoardService;
+import com.t4er.common.CommonUtil;
+import com.t4er.user.model.UserVO;
+
+import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
@@ -63,10 +71,11 @@ public class BoardController {
     public String boardInsert(Model m,
                               HttpServletRequest req,
                               @RequestParam("mfilename") MultipartFile mfilename,//여기가 문제가 맞는
-                              @ModelAttribute("board") BoardVO board) {
+                              @ModelAttribute("board") BoardVO board, @RequestParam("idx") Integer idx) {
         log.info("mode===" + board.getMode());
         log.info("board==" + board);
-
+        log.info("idx==="+idx);
+        
         // 업로드 디렉토리의 절대경로
         ServletContext app = req.getServletContext();
         String upDir = app.getRealPath("/board/upload");
@@ -84,7 +93,8 @@ public class BoardController {
             String originFile = mfilename.getOriginalFilename(); // 파일이름
             long fsize = mfilename.getSize(); // 파일크기
             log.info(originFile + ">>>" + fsize);
-
+           
+            
             // 동일한 파일명일 경우 덮어쓰기 방지를 위해서
             // 물리적 파일명을 "랜덤한문자열_원본파일명"
             UUID uuid = UUID.randomUUID();
@@ -109,6 +119,8 @@ public class BoardController {
         String str = "";
         if (mode.equals("insert")) {
             n = boardService.insertBoard(board);
+            //this.boardService.writePoint(idx,board.getCg_num());포인트 관련
+            
         } else if (mode.equals("edit")) {
             n = boardService.updateBoard(board);
         } else if (mode.equals("reInsert")) {
@@ -118,7 +130,7 @@ public class BoardController {
         log.info("n = " + n);
         String cg_num = board.getCg_num();
         str += (n > 0) ? "성공" : "실패";
-
+       
         String loc = (n > 0) ? "list?cg_num=" + cg_num : "javascript:history.back()";
 
         m.addAttribute("msg", str);
@@ -215,13 +227,13 @@ public class BoardController {
         List<BoardVO> bArr = null;
         //게시 목록 가져오기
         String loc = "";
-        if (cg_num == 1) {
+        if (cg_num == 2) { //고객센터 리스트 출력
+        	bArr = this.boardService.selectBoardAllPaging2(paging);
+            loc = "board/list?cg_num=2";
+        }
+        else{ //그 외에 리스트 출력            
             bArr = this.boardService.selectBoardAllPaging(paging);// start, end
             loc = "board/list?cg_num=1";
-        }
-        else if (cg_num == 2) {
-            bArr = this.boardService.selectBoardAllPaging2(paging);
-            loc = "board/list?cg_num=2";
         }
 
         String myctx = req.getContextPath();
@@ -274,7 +286,7 @@ public class BoardController {
         BoardVO board = this.boardService.selectBoardBybnum(bnum);
 
         m.addAttribute("board", board);
-        m.addAttribute("replyVO", new BoardReplyVO());
+      
         return "board/boardView";
     }// -------------------------------------
 

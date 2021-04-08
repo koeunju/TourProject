@@ -140,7 +140,7 @@ public class UserServiceImpl implements UserService {
         MimeMessage mail = mailSender.createMimeMessage();
         String htmlStr = "<h2>안녕하세요 올랑올랑입니다</h2><br><br>"
                 + "<h3>" + id + "님</h3>" + "<p>인증하기 버튼을 누르시면 로그인 하실 수 있습니다 : "
-                + "<a href='http://localhost:8080" + req.getContextPath() + "/user/stat_alter?id=" + id + "'>인증하기</a></p>";
+                + "<a href='http://localhost:9090" + req.getContextPath() + "/user/stat_alter?id=" + id + "'>인증하기</a></p>";
         try {
             mail.setSubject("[본인인증] 올랑올랑 가입 인증메일입니다", "utf-8");
             mail.setText(htmlStr, "utf-8", "html");
@@ -208,7 +208,7 @@ public class UserServiceImpl implements UserService {
         MimeMessage mail = mailSender.createMimeMessage();
         String htmlStr = "<h2>안녕하세요 '"+ id +"' 님</h2><br><br>"
                 + "<p>임시 발급 비밀번호는 <h2 style='color : blue'>'" + key +"'</h2>이며 로그인 후 마이페이지에서 비밀번호를 변경하실 수 있습니다.</p><br>"
-                + "<h3><a href='http://localhost:8080/index'>홈페이지 접속</a></h3><br><br>";
+                + "<h3><a href='http://localhost:9090/index'>홈페이지 접속</a></h3><br><br>";
         try {
             mail.setSubject("임시 비밀번호가 발급되었습니다", "utf-8");
             mail.setText(htmlStr, "utf-8", "html");

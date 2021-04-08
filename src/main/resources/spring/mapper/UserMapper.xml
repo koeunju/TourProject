@@ -6,8 +6,8 @@
 <mapper namespace="com.t4er.user.mapper.UserMapper">
 
 	<insert id="createUser" parameterType="User">
-	insert into member(idx, id, pwd, email, nick, tel, image, stat, indate ,point)
-	values(member_seq.nextval, #{id}, #{pwd}, #{email}, #{nick}, #{tel}, null , 0 ,sysdate, 0)
+	insert into member(idx, id, pwd, email, nick, tel, image, stat, indate)
+	values(member_seq.nextval, #{id}, #{pwd}, #{email}, #{nick}, #{tel}, null , 0 ,sysdate)
 	</insert>
 
     <select id="idCheck" parameterType="string" resultType="int">
@@ -103,7 +103,7 @@
 	<!-- 유저 정보 수정 --> <!-- 회원상태와 기타 추가 -->
 	<update id="updateUser" parameterType="User">
 		update member set
-		<if test="adminCheck != 9">
+		<if test="adminCheck != 9 or pwd != null">
 		pwd=#{pwd,jdbcType=VARCHAR},
 		</if>
 		email=#{email,jdbcType=VARCHAR} , nick=#{nick,jdbcType=VARCHAR}, tel=#{tel,jdbcType=VARCHAR}, stat=#{stat,jdbcType=NUMERIC}, image = #{image:VARCHAR}
@@ -131,7 +131,7 @@
 	</update>
 
 	<!--아이디로 회원번호 조회  -->
-	<select id="findIdx" resultType="String" parameterType="int">
-		select idx from member where id=#{id}
+	<select id="findIdx" resultType="int" parameterType="String">
+		select idx from member where id=#{id,jdbcType=VARCHAR}
 	</select>
 </mapper>

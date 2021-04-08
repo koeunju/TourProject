@@ -3,14 +3,13 @@ package com.t4er.board.service;
 import java.util.List;
 import java.util.Map;
 
-import com.t4er.board.model.BoardReplyVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.t4er.board.mapper.BoardMapper;
 import com.t4er.board.model.BoardPagingVO;
 import com.t4er.board.model.BoardVO;
+import com.t4er.point.mapper.PointMapper;
 
 import lombok.extern.log4j.Log4j;
 
@@ -20,6 +19,8 @@ public class BoardServiceImpl implements BoardService {
 
     @Autowired
     private BoardMapper boardMapper; // 영속성계층
+    @Autowired
+    private PointMapper pointMapper; // 영속성계층
 
     @Override
     public int insertBoard(BoardVO board) {
@@ -110,25 +111,19 @@ public class BoardServiceImpl implements BoardService {
         return 0;
     }
 
-    // 댓글 리스트
-    @Override
-    public List<BoardReplyVO> getReplyList(Integer bnum) throws Exception {
-        return this.boardMapper.getReplyList(bnum);
-    }
+    
 
-    @Override
-    public int saveReply(BoardReplyVO replyVO) throws Exception {
-        return this.boardMapper.saveReply(replyVO);
-    }
-
-    @Override
-    public int updateReply(BoardReplyVO replyVO) throws Exception {
-        return this.boardMapper.updateReply(replyVO);
-    }
-
-    @Override
-    public int deleteReply(Integer rnum) throws Exception {
-        return this.boardMapper.deleteReply(rnum);
-    }
+    //글작성시 포인트 부여
+	@Override
+	public void writePoint(Integer idx,String cg_num) {
+		// cg_num == 1 : 자유 게시판
+		if(cg_num.equals("1")) {
+			 this.pointMapper.writePoint(idx);
+		}
+		// cg_num == 0 : 여행지 추천
+		else if(cg_num.equals("0")) {
+			 this.pointMapper.tourWritePoint(idx);
+		}
+	}
 
 }

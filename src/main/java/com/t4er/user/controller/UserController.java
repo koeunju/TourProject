@@ -83,9 +83,9 @@ public class UserController {
     // 이메일 인증 완료
     @GetMapping(value = "/stat_alter")
     public String statAlter(Model m, @RequestParam("id") String id) {
-
+    	this.userService.firstPoint(id);
         this.userService.statAlter(id);
-
+        
         return "user/joinSuccess";
     }
 

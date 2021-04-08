@@ -12,4 +12,9 @@
 	<insert id="insertSaveTour" parameterType="Tour">
 		insert into travelsave values (#{idx}, #{contentId}, sysdate)
 	</insert>
+	
+	<!-- 여행지 리스트 불러오기 -->
+	<select id = "myTour" resultType="Tour" parameterType="int">
+		select * from travelsave where idx =#{idx}
+	</select>
 </mapper>

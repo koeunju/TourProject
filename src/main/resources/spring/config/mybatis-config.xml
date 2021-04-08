@@ -14,6 +14,7 @@
         <typeAlias type="com.t4er.point.model.ProductVO" alias="Product"/>
         <typeAlias type="com.t4er.point.model.ProductCategoryVO" alias="PCategory" />
         <typeAlias type="com.t4er.point.model.ProductPagingVO" alias="PPaging" />
+        <typeAlias type="com.t4er.point.model.PointPagingVO" alias="PointPaging" />
         <typeAlias type="com.t4er.review.model.ReviewVO" alias="Review" />
         <typeAlias type="com.t4er.review.model.ReviewPagingVO" alias="RPaging"/>
         <typeAlias type="com.t4er.tour.model.TourVO" alias="Tour"/>

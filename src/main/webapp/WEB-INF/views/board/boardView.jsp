@@ -25,7 +25,7 @@
                     <b>고객센터</b>
                 </c:if></td>
                 <th width="25%">글쓴이</th>
-                <td width="30%"><c:out value="${board.idx}" /></td>
+                <td width="30%"><c:out value="${board.nick}" /></td>
             </tr>
             <tr>
                 <td width="25%"><b>작성일</b></td>
@@ -96,7 +96,7 @@
                           placeholder="댓글을 입력해 주세요"></textarea>
             </div>
             <div class="col-sm-2">
-                <input name="idx" class="form-control" id="idx" value="${board.idx}"
+                <input name="idx" class="form-control" id="idx" value="${board.nick}"
                        disabled></input>
                 <button type="button" class="btn btn-sm btn-primary"
                         id="btnReplySave" style="width: 100%; margin-top: 10px">저
@@ -240,14 +240,14 @@
         }
 
         /* 수정 후 저장 */
-        function fn_updateReply(rnum, idx){
+        var fn_updateReply = function(rnum, idx){
             var replyEditContent = $('#editContent').val();
 
             var paramData = JSON.stringify({
                     "content": replyEditContent
-                }
+                })
                 , "rnum": rnum
-        });
+        };
 
     var headers = {"Content-Type" : "application/json"
         , "X-HTTP-Method-Override" : "POST"};
