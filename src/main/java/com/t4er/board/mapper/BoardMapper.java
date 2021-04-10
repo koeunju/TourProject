@@ -1,10 +1,16 @@
 package com.t4er.board.mapper;
 
+<<<<<<< HEAD
 import com.t4er.board.model.BoardPagingVO;
 import com.t4er.board.model.BoardVO;
 
+=======
+>>>>>>> refs/remotes/origin/master
 import java.util.List;
 import java.util.Map;
+
+import com.t4er.board.model.BoardPagingVO;
+import com.t4er.board.model.BoardVO;
 
 public interface BoardMapper {
 
@@ -35,6 +41,11 @@ public interface BoardMapper {
     int reInsertBoard(BoardVO board);
 
     int getTotalCount(BoardPagingVO paging);
+<<<<<<< HEAD
+=======
+    // 댓글 리스트
+   
+>>>>>>> refs/remotes/origin/master
 
     // 내가 쓴 글 조회
     List<BoardVO> selMyBoard_old(Integer idx);
