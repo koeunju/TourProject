@@ -12,4 +12,5 @@ public interface ReviewService {
     int getReviewTotalCount(ReviewPagingVO paging);
 
     List<ReviewVO> selectReview(ReviewPagingVO paging);
+
 }
