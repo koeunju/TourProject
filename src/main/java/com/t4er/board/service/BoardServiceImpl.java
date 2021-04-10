@@ -107,11 +107,4 @@ public class BoardServiceImpl implements BoardService {
 
         return 0;
     }
-<<<<<<< HEAD
-=======
-
-    // 댓글 리스트
-   
-
->>>>>>> refs/remotes/origin/master
 }

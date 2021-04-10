@@ -42,10 +42,4 @@ public interface BoardService {
 
     int updateSunbun(BoardVO parent);// [답변형]
 
-<<<<<<< HEAD
-=======
-    // 댓글 리스트
-
-   
->>>>>>> refs/remotes/origin/master
 }
