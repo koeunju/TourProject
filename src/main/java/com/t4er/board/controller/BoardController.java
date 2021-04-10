@@ -1,7 +1,6 @@
 package com.t4er.board.controller;
 
 import com.t4er.board.model.BoardPagingVO;
-import com.t4er.board.model.BoardReplyVO;
 import com.t4er.board.model.BoardVO;
 import com.t4er.board.service.BoardService;
 import com.t4er.common.CommonUtil;
@@ -63,7 +62,7 @@ public class BoardController {
     public String boardInsert(Model m,
                               HttpServletRequest req,
                               @RequestParam("mfilename") MultipartFile mfilename,//여기가 문제가 맞는
-                              @ModelAttribute("board") BoardVO board) {
+                              @ModelAttribute("board") BoardVO board, @RequestParam("idx") Integer idx) {
         log.info("mode===" + board.getMode());
         log.info("board==" + board);
 
@@ -71,7 +70,6 @@ public class BoardController {
         ServletContext app = req.getServletContext();
         String upDir = app.getRealPath("/board/upload");
         log.info("upDir==" + upDir);
-        System.out.println(upDir);
 
         File dir = new File(upDir);
         if (!dir.exists()) {
@@ -139,7 +137,6 @@ public class BoardController {
         ServletContext app = req.getServletContext();
         String upDir = app.getRealPath("/board/upload");
         log.info("upDir==" + upDir);
-        System.out.println(upDir);
 
         File dir = new File(upDir);
         if (!dir.exists()) {
@@ -215,13 +212,12 @@ public class BoardController {
         List<BoardVO> bArr = null;
         //게시 목록 가져오기
         String loc = "";
-        if (cg_num == 1) {
-            bArr = this.boardService.selectBoardAllPaging(paging);// start, end
-            loc = "board/list?cg_num=1";
-        }
-        else if (cg_num == 2) {
+        if (cg_num == 2) { //고객센터 리스트 출력
             bArr = this.boardService.selectBoardAllPaging2(paging);
             loc = "board/list?cg_num=2";
+        } else { //그 외에 리스트 출력
+            bArr = this.boardService.selectBoardAllPaging(paging);// start, end
+            loc = "board/list?cg_num=1";
         }
 
         String myctx = req.getContextPath();
@@ -274,7 +270,7 @@ public class BoardController {
         BoardVO board = this.boardService.selectBoardBybnum(bnum);
 
         m.addAttribute("board", board);
-        m.addAttribute("replyVO", new BoardReplyVO());
+
         return "board/boardView";
     }// -------------------------------------
 

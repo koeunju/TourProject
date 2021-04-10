@@ -25,7 +25,7 @@
                     <b>고객센터</b>
                 </c:if></td>
                 <th width="25%">글쓴이</th>
-                <td width="30%"><c:out value="${board.idx}" /></td>
+                <td width="30%"><c:out value="${board.nick}" /></td>
             </tr>
             <tr>
                 <td width="25%"><b>작성일</b></td>
@@ -96,7 +96,7 @@
                           placeholder="댓글을 입력해 주세요"></textarea>
             </div>
             <div class="col-sm-2">
-                <input name="idx" class="form-control" id="idx" value="${board.idx}"
+                <input name="idx" class="form-control" id="idx" value="${board.nick}"
                        disabled></input>
                 <button type="button" class="btn btn-sm btn-primary"
                         id="btnReplySave" style="width: 100%; margin-top: 10px">저
@@ -137,11 +137,8 @@
 <script>
     /* 댓글보여주기 */
     $(document).ready(function(){
-
         showReplyList();
-
     });
-
     function showReplyList(){
         var url = "${pageContext.request.contextPath}/restBoard/getReplyList";
         var paramData = {"bnum" : "${boardContent.bnum}"};
@@ -176,23 +173,18 @@
                     });	//each end
                 }
                 $("#replyList").html(htmls);
-
             }	   // Ajax success end
         });	// Ajax end /
-
         <!-- 댓글 저장 버튼 클릭 이벤트 -->
         $(document).on('click', '#btnReplySave', function(){
             var replyContent = $('#content').val();
             var replyidx = $('#idx').val();
-
             var paramData = JSON.stringify({"content": replyContent
                 , "idx": replyidx
                 , "bnum":'${boardContent.bnum}'
             });
-
             var headers = {"Content-Type" : "application/json"
                 , "X-HTTP-Method-Override" : "POST"};
-
             $.ajax({
                 url: "${saveReplyURL}"
                 , headers : headers
@@ -201,7 +193,6 @@
                 , dataType : 'text'
                 , success: function(result){
                     showReplyList();
-
                     $('#content').val('');
                     $('#idx').val('');
                 }
@@ -210,7 +201,6 @@
                 }
             });
         });
-
         /* 댓글수정 */
         function fn_editReply(rnum, idx, content){
             var htmls = "";
@@ -231,47 +221,39 @@
             htmls += '<textarea name="editContent" id="editContent" class="form-control" rows="3">';
             htmls += content;
             htmls += '</textarea>';
-
             htmls += '</p>';
             htmls += '</div>';
-
             $('#rnum' + rnum).replaceWith(htmls);
             $('#rnum' + rnum + ' #editContent').focus();
         }
-
         /* 수정 후 저장 */
-        function fn_updateReply(rnum, idx){
+        var fn_updateReply = function(rnum, idx){
             var replyEditContent = $('#editContent').val();
-
             var paramData = JSON.stringify({
-                    "content": replyEditContent
-                }
+                "content": replyEditContent
+            })
                 , "rnum": rnum
+        };
+        var headers = {"Content-Type" : "application/json"
+            , "X-HTTP-Method-Override" : "POST"};
+        $.ajax({
+            url: "${updateReplyURL}"
+            , headers : headers
+            , data : paramData
+            , type : 'POST'
+            , dataType : 'text'
+            , success: function(result){
+                console.log(result);
+                showReplyList();
+            }
+            , error: function(error){
+                console.log("에러 : " + error);
+            }
         });
-
-    var headers = {"Content-Type" : "application/json"
-        , "X-HTTP-Method-Override" : "POST"};
-
-    $.ajax({
-        url: "${updateReplyURL}"
-        , headers : headers
-        , data : paramData
-        , type : 'POST'
-        , dataType : 'text'
-        , success: function(result){
-            console.log(result);
-            showReplyList();
-        }
-        , error: function(error){
-            console.log("에러 : " + error);
-        }
-    });
     }
-
     /* 댓글 삭제 */
     function fn_deleteReply(rnum){
         var paramData = {"rnum": rnum};
-
         $.ajax({
             url: "${deleteReplyURL}"
             , data : paramData
@@ -285,7 +267,6 @@
             }
         });
     }
-
 </script>
 
 
@@ -295,26 +276,21 @@
     function down() {
         $('#fileF').submit();
     }
-
     function goDel() {
         var yn = confirm('${board.bnum}번 글을 정말 삭제할까요?');
         if (yn) {
-
             $('#boardF').prop('method', 'post');
             $('#boardF').prop('action', 'delete');
         }
     }
-
     function goEdit() {
         $('#boardF').prop('method', 'post');
         $('#boardF').prop('action', 'edit');
     }
-
     function goList() {
         $('#boardF').prop('method', 'get');
         $('#boardF').prop('action', 'list');
     }
-
     function goRe(){
         reF.submit();
     }

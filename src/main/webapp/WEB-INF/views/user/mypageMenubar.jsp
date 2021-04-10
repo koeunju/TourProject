@@ -10,10 +10,11 @@
         <ul class="navbar-nav">
             <li class="nav-item"><a class="nav-link"
                                     href="${pageContext.request.contextPath}/user/myInfo?idx=${loginUser.idx}">내정보확인</a></li>
-            <li class="nav-item"><a class="nav-link" href="#"
-                                    onclick="ready()">찜한여행지</a></li>
             <li class="nav-item"><a class="nav-link"
-                                    href="${pageContext.request.contextPath}/user/write?idx=${loginUser.idx}">내가 쓴 글</a></li>
+                                    href="${pageContext.request.contextPath}/user/myTour?idx=${loginUser.idx}">찜한여행지</a></li>
+            <li class="nav-item"><a class="nav-link"
+                                    href="${pageContext.request.contextPath}/user/write?idx=${loginUser.idx}">내가
+                쓴 글</a></li>
 
         </ul>
     </div>

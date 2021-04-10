@@ -17,5 +17,5 @@ public class ReviewVO {
     private Date rdate;
     private Integer contentId;
     private Integer idx;
-
+    private String nick;
 }

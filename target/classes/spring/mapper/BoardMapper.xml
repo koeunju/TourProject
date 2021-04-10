@@ -5,43 +5,52 @@
 
 <mapper namespace="com.t4er.board.mapper.BoardMapper">
     <select id="totalCount" resultType="int">
-		select count(*) cnt from board
+		select count(*) cnt from
+		board
 	</select>
 
     <!-- 글작성(자유게시판) -->
     <insert id="insertBoard" parameterType="Board">
-        <selectKey keyProperty="bnum" order="BEFORE" resultType="int">
+        <selectKey keyProperty="bnum" order="BEFORE"
+                   resultType="int">
             select board_seq.nextval from dual
         </selectKey>
         insert into board(bnum, btitle, bcontent, bdate,
-        filename, originFilename, filesize, brecommend, idx, cg_num,
+        filename,
+        originFilename, filesize, brecommend, idx, cg_num,
         refer, lev, sunbun)
         values(#{bnum}, #{btitle}, #{bcontent:VARCHAR}, systimestamp,
-        #{filename:VARCHAR}, #{originFilename:VARCHAR}, #{filesize:NUMERIC}, 0,#{idx}, #{cg_num},
+        #{filename:VARCHAR}, #{originFilename:VARCHAR}, #{filesize:NUMERIC},
+        0,#{idx}, #{cg_num},
         #{bnum}, #{lev}, #{sunbun})
     </insert>
 
     <!-- 글작성(고객센터) -->
     <insert id="insertBoard2" parameterType="Board">
-        <selectKey keyProperty="bnum" order="BEFORE" resultType="int">
+        <selectKey keyProperty="bnum" order="BEFORE"
+                   resultType="int">
             select board_seq.nextval from dual
         </selectKey>
         insert into board(bnum, btitle, bcontent, bdate,
-        filename, originFilename, filesize, brecommend, idx, cg_num,
+        filename,
+        originFilename, filesize, brecommend, idx, cg_num,
         refer, lev, sunbun)
         values(#{bnum}, #{btitle}, #{bcontent:VARCHAR}, systimestamp,
-        #{filename:VARCHAR}, #{originFilename:VARCHAR}, #{filesize:NUMERIC}, 0, #{idx}, #{cg_num},
+        #{filename:VARCHAR}, #{originFilename:VARCHAR}, #{filesize:NUMERIC},
+        0, #{idx}, #{cg_num},
         #{bnum}, #{lev}, #{sunbun})
     </insert>
 
     <!-- 글목록(자유게시판) -->
     <select id="getBoardList" resultType="Board"
-            parameterType="BPaging">
+            parameterType="BoardPaging">
         select * from (
         select board.*,
-        sysdate - to_date(to_char(wdate, 'yyyy-mm-dd')) newImg,
+        sysdate - to_date(to_char(wdate,
+        'yyyy-mm-dd')) newImg,
         row_number()
-        over(order by refer desc, sunbun asc) rn
+        over(order by refer desc, sunbun
+        asc) rn
         from board
         <include refid="findWhere" />
         )
@@ -52,12 +61,14 @@
 
     <!-- 글목록(고객센터) -->
     <select id="getBoardList2" resultType="Board"
-            parameterType="BPaging">
+            parameterType="BoardPaging">
         select * from (
         select board.*,
-        sysdate - to_date(to_char(wdate, 'yyyy-mm-dd')) newImg,
+        sysdate - to_date(to_char(wdate,
+        'yyyy-mm-dd')) newImg,
         row_number()
-        over(order by refer desc, sunbun asc) rn
+        over(order by refer desc, sunbun
+        asc) rn
         from board
         <include refid="findWhere" />
         )
@@ -69,11 +80,13 @@
     <!--페이징 처리 게시목록 -->
     <!-- 자유게시판 -->
     <select id="selectBoardAllPaging" resultType="Board"
-            parameterType="BPaging">
-        select * from (
+            parameterType="BoardPaging">
+		select * from (
 		select board.*,
-		sysdate - to_date(to_char(bdate, 'yyyy-mm-dd')) newImg,
-		row_number() over(order by refer desc, sunbun asc) rn
+		sysdate - to_date(to_char(bdate,
+		'yyyy-mm-dd')) newImg,
+		row_number() over(order by refer desc, sunbun
+		asc) rn
 		from board where cg_num in (0,1))
 		<![CDATA[
 		where rn > #{start} and rn < #{end}
@@ -81,11 +94,13 @@
     </select>
     <!-- 고객센터 -->
     <select id="selectBoardAllPaging2" resultType="Board"
-            parameterType="BPaging">
-   		select * from (
+            parameterType="BoardPaging">
+		select * from (
 		select board.*,
-		sysdate - to_date(to_char(bdate, 'yyyy-mm-dd')) newImg,
-		row_number() over(order by refer desc, sunbun asc) rn
+		sysdate - to_date(to_char(bdate,
+		'yyyy-mm-dd')) newImg,
+		row_number() over(order by refer desc, sunbun
+		asc) rn
 		from board where cg_num = 2
 		)
 		<![CDATA[
@@ -94,7 +109,8 @@
     </select>
 
     <!-- 글검색 -->
-    <select id="getFindTotalCount" resultType="int" parameterType="map">
+    <select id="getFindTotalCount" resultType="int"
+            parameterType="map">
         select count(bnum) from board
         <include refid="findWhere" />
     </select>
@@ -115,40 +131,46 @@
         </if>
     </sql>
 
-    <select id="getTotalCount" resultType="int" parameterType="BPaging">
-        select count(*) cnt from board
-    </select>
+    <select id="getTotalCount" resultType="int"
+            parameterType="BoardPaging">
+		select count(*) cnt from board
+	</select>
 
     <!-- 글 검색 목록 -->
     <select id="getFindList" resultType="Board" parameterType="map">
         select * from(
-        select a.*,row_number() over(order by bnum desc) rn from board a
+        select a.*,row_number() over(order by bnum desc) rn from
+        board a
         <include refid="findWhere" />
         )
         where rn between #{start} and #{end}
     </select>
 
     <!-- 글 상세 -->
-    <select id="selectBoardBybnum" resultType="Board" parameterType="int">
+    <select id="selectBoardBybnum" resultType="Board"
+            parameterType="int">
 		select * from board where bnum=#{bnum}
 	</select>
 
     <!-- 글 조회수 -->
     <update id="updateReadnum" parameterType="int">
-		update board set binquiry = binquiry+1 where bnum=#{bnum}
+		update board set
+		binquiry = binquiry+1 where bnum=#{bnum}
 	</update>
 
     <!-- 글 추천 -->
 
     <!-- 글 삭제 -->
     <delete id="deleteBoard" parameterType="int">
-		delete from board where bnum=#{bnum}
+		delete from board where
+		bnum=#{bnum}
 	</delete>
 
     <!-- 글수정 -->
     <update id="updateBoard" parameterType="Board">
         update board set btitle = #{btitle:VARCHAR},
-        bcontent = #{bcontent:VARCHAR},
+        bcontent =
+        #{bcontent:VARCHAR},
         <if test="filename != null and filename != ''">
             , filename =#{filename}, originFilename =#{originFilename}
             , filesize =#{filesize}
@@ -157,31 +179,36 @@
     </update>
 
     <!-- 답변 글 원글의 refer, lev, sunbun가져오기 -->
-    <select id="selectReferLevSunbun" parameterType="int" resultType="Board">
+    <select id="selectReferLevSunbun" parameterType="int"
+            resultType="Board">
 		select refer, lev, sunbun from board where bnum =#{bnum}
 	</select>
 
     <!-- 답변글들의 순번을 하나씩 증가 -->
     <update id="updateSunbun" parameterType="Board">
-		update board set sunbun = sunbun+1
+		update board set sunbun
+		= sunbun+1
 		where refer = #{refer} and sunbun > #{sunbun}
 	</update>
 
     <!-- 답변글 추가 -->
     <insert id="reInsertBoard" parameterType="Board">
-        <selectKey keyProperty="bnum" order="BEFORE" resultType="int">
+        <selectKey keyProperty="bnum" order="BEFORE"
+                   resultType="int">
             select board_seq.nextval from dual
         </selectKey>
         insert into board(bnum, btitle, bcontent, bdate,
-        filename, originFilename, filesize, brecommend, idx, cg_num,
+        filename,
+        originFilename, filesize, brecommend, idx, cg_num,
         refer, lev, sunbun)
         values(#{bnum}, #{btitle}, #{bcontent:VARCHAR}, systimestamp,
-        #{filename:VARCHAR}, #{originFilename:VARCHAR}, #{filesize:NUMERIC}, 0, #{idx}, #{cg_num},
+        #{filename:VARCHAR}, #{originFilename:VARCHAR}, #{filesize:NUMERIC},
+        0, #{idx}, #{cg_num},
         #{refer}, #{lev}, #{sunbun})
     </insert>
 
     <!-- 글 카테고리 -->
-    <select id="getCategory" resultType="BCategory">
+    <select id="getCategory" resultType="BoardCategory">
 		select * from board_category
 	</select>
 
@@ -193,8 +220,21 @@
 
     <!-- mypage -->
     <!-- 내정보에서 글 검색 -->
-    <select id="selMyBoard" parameterType="int"
-            resultType="string">
+    <select id="selMyBoard_old" parameterType="int"
+            resultType="Board">
 		select * from board where idx=#{idx}
+	</select>
+
+    <select id="selMyBoard" parameterType="BoardPaging" resultType="Board">
+		select * from (
+		select board.*, row_number() over(order by bdate desc) rn
+		from board where idx=#{idx})
+		<![CDATA[
+		where rn > #{start} and rn < #{end}
+		]]>
+    </select>
+
+    <select id = "myTotalCountBoard" resultType="int" parameterType="BoardPaging">
+	select count(*) cnt from board where idx = #{idx}
 	</select>
 </mapper>

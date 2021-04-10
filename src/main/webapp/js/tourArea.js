@@ -77,9 +77,9 @@ function showPage(total, display, pageNo) { // 페이징 처리
     $('div.page').html(str);
 }
 
-function fetch(start, pageNo) { // 페이지
-    let url = "/tour/areaList?cat1=" + cat1 + "&contentTypeId=" + contentTypeId + "&areaCode=" + areaCode + "&sigunguCode=" + sigunguCode + "&cat2=" + cat2 + "&pageNo=" + pstart;
-    send(url, cat1, contentTypeId, areaCode, sigunguCode, cat2, pageNo);
+function fetch(start, areaCode, sigunguCode, contentTypeId, cat1, cat2, pageNo) { // 페이지
+    let url = "/tour/areaList?areaCode=" + areaCode + "&sigunguCode=" + sigunguCode + "&contentTypeId=" + contentTypeId + "&cat1=" + cat1 + "&cat2=" + cat2 + "&pageNo=" + pstart;
+    send(url, areaCode, sigunguCode, contentTypeId, cat1, cat2, pageNo);
 }
 
 function showList(items, total) { // 검색결과 1

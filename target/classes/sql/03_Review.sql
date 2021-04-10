@@ -27,7 +27,7 @@ CREATE TABLE REVIEW (
 	RFILE3 VARCHAR2(500) DEFAULT 'noimage.png', /* 첨부파일3 */
 	RCONTENT VARCHAR2(500) NOT NULL, /* 내용 */
 	RDATE DATE NOT NULL , /* 작성날짜 */
-	TNUM NUMBER(10) NOT NULL, /* 여행지번호 */
+	CONTENTID NUMBER(10) NOT NULL, /* 여행지번호 */
 	IDX NUMBER(10) NOT NULL /* 회원번호 */
 );
 

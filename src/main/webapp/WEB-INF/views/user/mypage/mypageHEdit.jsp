@@ -26,13 +26,14 @@
             if(n>0){
                 cls='text-primary';
                 $('#pwdstate').val(1);
+                document.meF.pwd.readOnly = false;
+                document.meF.remypwd.readOnly = false;
             }else{
                 cls='text-danger'
                 $('#pwdstate').val("");
             }
             $('#msgPwd').text(res.okPwd).addClass(cls);
-            document.meF.pwd.readOnly = false;
-            document.meF.remypwd.readOnly = false;
+
 
         }).fail(function(err){
             alert('error: '+err.status);
@@ -54,11 +55,7 @@
                 $nick.focus();
                 return;
             }
-            if (!$pwd.val()) {
-                alert('비밀번호를 입력하세요');
-                $pwd.focus();
-                return;
-            }
+
             if ($pwd.val() != $pwd2.val()) {
                 alert('비밀번호가 서로 달라요');
                 $pwd2.focus();
@@ -121,7 +118,8 @@
                     <th>아이디</th>
                     <td>${user.id }</td>
                     <th>이메일</th>
-                    <td>${user.email }</td>
+                    <td>${user.email }
+                        <input type="hidden" id="email" name="email" value="${user.email }"></td>
                 </tr>
 
                 <tr>
@@ -148,8 +146,9 @@
                 <tr>
                     <th colspan="2">비밀번호 재 입력</th>
                     <td colspan="2"><input type="password" name="remypwd"
-                                           id="remypwd" class="form-control" readonly></td>
+                                           id="remypwd" class="form-control"   readonly></td>
                 </tr>
+
                 <tr>
                     <th colspan="2">내 상태</th>
                     <td colspan="2">
@@ -206,6 +205,7 @@
                 <button class="btn btn-success" id="rewrite" name="rewirte">수정하기</button>
                 <button type="reset" class="btn btn-info" id="resetbtn">다시쓰기</button>
             </div>
+            <input type="text" name="adminCheck" value="${adminCheck}">
         </form>
         <!-- 버튼정렬div -->
     </div>

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:import url="/top_sub" />
-
 <script type="text/javascript">
 	function ready(){
 		alert('준비중에 있습니다.');
@@ -27,21 +26,23 @@
 				<tr>
 					<td>
 						<c:if test="${board.cg_num==0 }">
-							<a>여행지 추천</a>
+							<a class = "viewBoard" href="/board/view?bnum=${board.bnum }" style="color:dark;">여행지 추천</a>
 						</c:if>
 						<c:if test="${board.cg_num==1 }">
-							<a>자유게시판</a>
+							<a class = "viewBoard" href="/board/view?bnum=${board.bnum }">자유게시판</a>
 						</c:if>
 						<c:if test="${board.cg_num==2}">
-							<a>고객센터</a>
+							<a class = "viewBoard" href="/board/view?bnum=${board.bnum }">고객센터</a>
 						</c:if>
 					</td>
-					<td><a>${board.btitle }</a></td>
-					<td><a>${board.binquiry }</a></td>
-					<td><a>${board.bdate }</a></td>
+					<td><a class = "viewBoard" href="/board/view?bnum=${board.bnum }">${board.btitle }</a></td>
+					<td><a class = "viewBoard" href="/board/view?bnum=${board.bnum }">${board.binquiry }</a></td>
+					<td><a class = "viewBoard" href="/board/view?bnum=${board.bnum }">${board.bdate }</a></td>
 				</tr>
 			</c:forEach>
 		</table>
+		        <div class="container">
+                ${pageNavi}</div>
 	</div>
 	<!-- 내정보 div -->
 </div>

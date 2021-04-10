@@ -22,6 +22,7 @@ public class BoardVO {
 
     private Integer brecommend; //추천
     private Integer idx; //회원번호
+    private String nick; //닉네임
     private String cg_num; //카테고리번호
 
     private int refer; // 동일한 글 그룹번호

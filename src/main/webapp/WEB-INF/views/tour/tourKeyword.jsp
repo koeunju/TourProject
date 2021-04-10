@@ -3,7 +3,17 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:import url="/top"/>
-
+<style>
+    .carousel-control-prev-icon, .carousel-control-next-icon {
+        height: 100px;
+        width: 100px;
+        outline: black;
+        background-color: rgba(0, 0, 0, 0.3);
+        background-size: 100%, 100%;
+        border-radius: 50%;
+        border: 1px solid black;
+    }
+</style>
 <script>
     let contextPath = "${pageContext.request.contextPath}";
 </script>

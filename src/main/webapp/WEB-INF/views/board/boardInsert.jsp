@@ -14,7 +14,7 @@
                   enctype="multipart/form-data">
 
                 <input type="hidden" name="mode" value="insert">
-                <input type="hidden" name="idx" value="${idx}">
+                <input type="hidden" name="idx" value="${loginUser.idx}">
                 <table class="table table-bordered">
                     <tr>
                         <th style="width: 20%">게시물 유형</th>
@@ -77,7 +77,6 @@
             e.preventDefault();
             var $btitle = $('#btitle');
             var $bcontent = $('#bcontent');
-
             if (!$btitle.val()) {
                 alert('제목을 입력하세요');
                 $btitle.focus();
@@ -94,7 +93,6 @@
                 $('#cg_num').focus();
                 return false;
             }
-
             $('#boardF').submit();
         })
         /*  $('#btnList').on('click', function(e){

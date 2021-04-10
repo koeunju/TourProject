@@ -3,7 +3,6 @@ package com.t4er.board.service;
 import java.util.List;
 import java.util.Map;
 
-import com.t4er.board.model.BoardReplyVO;
 import org.springframework.stereotype.Repository;
 
 import com.t4er.board.model.BoardPagingVO;
@@ -43,13 +42,4 @@ public interface BoardService {
 
     int updateSunbun(BoardVO parent);// [답변형]
 
-    // 댓글 리스트
-
-    List<BoardReplyVO> getReplyList(Integer bnum) throws Exception;
-
-    int saveReply(BoardReplyVO replyVO) throws Exception;
-
-    int updateReply(BoardReplyVO replyVO) throws Exception;
-
-    int deleteReply(Integer rnum) throws Exception;
 }

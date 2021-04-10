@@ -58,7 +58,7 @@
 
 	<!-- admin -->
 	<!-- 전체 회원수 가져오기 -->
-	<select id="getUserCount" resultType="int"  parameterType="APaging">
+	<select id="getUserCount" resultType="int"  parameterType="AdminPaging">
 		select count(idx) from member
 		<include refid="findWhere"/>
 	</select>
@@ -80,7 +80,7 @@
 	</sql>
 
 	<!-- 회원 목록 가져오기 -->
-	<select id="listUser" resultType="User" parameterType="APaging">
+	<select id="listUser" resultType="User" parameterType="AdminPaging">
 		select * from (
 		select m.*, row_number() over(order by idx desc) rn
 		from member m
@@ -103,35 +103,35 @@
 	<!-- 유저 정보 수정 --> <!-- 회원상태와 기타 추가 -->
 	<update id="updateUser" parameterType="User">
 		update member set
-		<if test="adminCheck != 9">
-		pwd=#{pwd,jdbcType=VARCHAR},
-		</if>
 		email=#{email,jdbcType=VARCHAR} , nick=#{nick,jdbcType=VARCHAR}, tel=#{tel,jdbcType=VARCHAR}, stat=#{stat,jdbcType=NUMERIC}, image = #{image:VARCHAR}
-		<if test="adminCheck == 9">
+		<if test="adminCheck == 1 and pwd != null">
+			,pwd=#{pwd}
+		</if>
+		<if test="adminCheck == 9 or adminCheck == 8">
 		,point=#{point,jdbcType=NUMERIC}
 		</if>
 		where idx=#{idx,jdbcType=NUMERIC}
 	</update>
 
     <!-- my mypage-->
-    <!-- 마이페이지에서 내정보 불러올때 -->
-    <select id="selectMy" resultType="User" parameterType="int">
+	<!-- 마이페이지에서 내정보 불러올때 -->
+	<select id="selectMy" resultType="User" parameterType="int">
 		select * from member where idx=#{idx,jdbcType=NUMERIC}
 	</select>
 
-    <!-- 내정보 수정에서 비밀번호 재확인 -->
-    <select id="checkPwd" resultType="User" parameterType="int">
+	<!-- 내정보 수정에서 비밀번호 재확인 -->
+	<select id="checkPwd" resultType="User" parameterType="int">
 		select * from member where idx=#{idx,jdbcType=NUMERIC}
 	</select>
 
-    <!-- 유저 탈퇴 처리 -->
-    <update id="leaveMember" parameterType="int">
+	<!-- 유저 탈퇴 처리 -->
+	<update id="leaveMember" parameterType="int">
 		update member set stat=4
 		where idx=#{idx}
 	</update>
 
 	<!--아이디로 회원번호 조회  -->
-	<select id="findIdx" resultType="String" parameterType="int">
-		select idx from member where id=#{id}
+	<select id="findIdx" resultType="int" parameterType="String">
+		select idx from member where id=#{id,jdbcType=VARCHAR}
 	</select>
 </mapper>

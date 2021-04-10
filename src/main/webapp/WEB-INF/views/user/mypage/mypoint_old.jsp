@@ -1,22 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:import url="/top_sub" />
-<c:import url="/user/mypageMenubar" />
-
-
-<script type="text/javascript">
-    function ready() {
-        alert('준비중에 있습니다.');
-    }
-</script>
-<!-- 메뉴사이드바 -->
-
-<!-- 내정보 -->
-<div class="container">
-    <div class="m-5 p-3 text-center"
-         style="border: 1px solid gray; border-radius: 15px" id="font2">
-        <h1 class="text-bold" id="font1">내 포인트 적립 내역</h1>
-        <br>
         <!-- 포인트 출력 시작 -->
         <table class="table">
             <tr>
@@ -30,7 +13,7 @@
             <!-- 포인트 적립내역 출력 -->
             <c:if test="${mypoint  eq null or empty mypoint  }">
                 <tr>
-                    <td colspan = "6">적립된 포인트가 없습니다.</td>
+                    <td>적립된 포인트가 없습니다.</td>
                 </tr>
             </c:if>
             <c:if test="${mypoint ne null and not empty mypoint }">
@@ -67,12 +50,3 @@
                 </c:forEach>
             </c:if>
         </table>
-        <div class="container">
-                ${pageNavi}</div>
-        <hr style="color:Navy;">
-        <div class="text-right">
-            <h4 id="font1"> 현재 포인트 : ${mytotalpoint }point</h4>
-        </div>
-    </div>
-</div>
-<c:import url="/foot_sub" />

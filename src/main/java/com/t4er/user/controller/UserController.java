@@ -79,6 +79,10 @@ public class UserController {
         return "user/joinEnd";
     }
 
+    @GetMapping("/resendEmail")
+    public String ResendEmail() {
+        return "user/resendEmail";
+    }
 
     // 이메일 인증 완료
     @GetMapping(value = "/stat_alter")

@@ -14,6 +14,7 @@ public class BoardPagingVO {
     private int totalCount; // 총 게시글 수
     private int pageCount; // 페이지 수
 
+    private Integer idx;
     private int start;
     private int end;
 
@@ -105,6 +106,44 @@ public class BoardPagingVO {
                     .append("<a class='page-link' href='" + myctx + "/" + loc + qStr + "&cpage=" + nextBlock + "'>");
             buf.append("Next").append("</a></li>");
         }//if----------------------
+        buf.append("</ul>");
+
+        return buf.toString();
+    }
+
+    public String getPageNavi(String myctx, String loc, Integer idx) {
+
+        String qStr = "?idx=" + idx + "&pageSize=" + pageSize ;
+
+
+        StringBuilder buf = new StringBuilder();
+        buf.append("<ul class='pagination justify-content-center'>");
+        if (prevBlock > 0) {
+            // 이전 n개
+            buf.append("<li class='page-item'>")
+                    .append("<a class='page-link' href='" + myctx + "/" + loc + qStr + "&cpage=" + prevBlock + "'>");
+            buf.append("Prev").append("</a></li>");
+        }
+
+        for (int i = prevBlock + 1; i <= nextBlock - 1 && i <= pageCount; i++) {
+            String css = "";
+            if (i == cpage) {
+                css = "active";
+            } else {
+                css = "";
+            }
+
+            buf.append("<li class='page-item " + css + "'>")
+                    .append("<a class='page-link' href='" + myctx + "/" + loc + qStr + "&cpage=" + i + "'>");
+            buf.append(i).append("</a></li>");
+        }
+
+        if (nextBlock <= pageCount) {
+            // 이후 n개
+            buf.append("<li class='page-item'>")
+                    .append("<a class='page-link' href='" + myctx + "/" + loc + qStr + "&cpage=" + nextBlock + "'>");
+            buf.append("Next").append("</a></li>");
+        }
         buf.append("</ul>");
 
         return buf.toString();

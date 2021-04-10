@@ -12,23 +12,17 @@
 		values (#{rnum}, #{rstar}, 0, #{rfile1:VARCHAR}, #{rfile2:VARCHAR}, #{rfile3:VARCHAR}, #{rcontent}, systimestamp, #{contentId}, #{idx})
 	</insert>
 
-	<select id="getReviewTotalCount" resultType="int" parameterType="RPaging">
+	<select id="getReviewTotalCount" resultType="int" parameterType="ReviewPaging">
 		select count(*) cnt from review where contentId = #{contentId}
 	</select>
 
-	<select id="selectReview" resultType="Review" parameterType="RPaging">
+	<select id="selectReview" resultType="Review" parameterType="ReviewPaging">
 		select * from (
 		select review.*, row_number() over (order by rnum desc) rn from review
 		where contentId = #{contentId})
 		<![CDATA[
 		where rn > #{start} and rn < #{end}
 		]]>
-	</select>
-
-	<select id="selectNick" resultType="String">
-		select nick from member where idx in (
-		select idx from reivew where rnum = #{rnum}
-		)
 	</select>
 
 </mapper>
