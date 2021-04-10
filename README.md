@@ -1,5 +1,7 @@
 # TourProject
 
+<img src="src/main/webapp/upload/KakaoTalk_20210329_174038564.png">
+
 ## 프로젝트 기획의도
 
 여행을 갈때 즉흥적으로 장소를 정하고 가는 사람도 있지만 여행 계획을 짜고 가는 사람도 있습니다.   
