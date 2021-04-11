@@ -40,11 +40,11 @@
 
 ## 프로젝트 사진으로 빠르게 훑어보기
 
-<img src="src/main/webapp/upload/login.png" width="40%" heigth="10%"></img>   
-<img src="src/main/webapp/upload/join.png" width="40%" heigth="10%"></img>   
-<img src="src/main/webapp/upload/admin.png" width="40%" heigth="10%"></img>   
-<img src="src/main/webapp/upload/board.png" width="40%" heigth="10%"></img>   
-<img src="src/main/webapp/upload/tour.png" width="40%" heigth="10%"></img>   
-<img src="src/main/webapp/upload/review.png" width="40%" heigth="10%"></img>   
-<img src="src/main/webapp/upload/point.png" width="40%" heigth="10%"></img>   
-<img src="src/main/webapp/upload/mypage.png" width="40%" heigth="10%"></img>   
+<img src="src/main/webapp/upload/login.png" width="100%" heigth="10%"></img>   
+<img src="src/main/webapp/upload/join.png" width="100%" heigth="10%"></img>   
+<img src="src/main/webapp/upload/admin.png" width="100%" heigth="10%"></img>   
+<img src="src/main/webapp/upload/board.png" width="100%" heigth="10%"></img>   
+<img src="src/main/webapp/upload/tour.png" width="100%" heigth="10%"></img>   
+<img src="src/main/webapp/upload/review.png" width="100%" heigth="10%"></img>   
+<img src="src/main/webapp/upload/point.png" width="100%" heigth="10%"></img>   
+<img src="src/main/webapp/upload/mypage.png" width="100%" heigth="10%"></img>   
