@@ -1,18 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<c:import url="/top_sub"/>
+<c:import url="/top_sub" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    $(function () {
-        $('#btFind').click(function () {
-            var ftype = $('#findType>option:selected').val();
-            if (!ftype) {
+    $(function(){
+        $('#btFind').click(function(){
+            var ftype=$('#findType>option:selected').val();
+            if(!ftype){
                 alert("검색 유형을 선택하세요");
                 return;
             }
-            var fkey = $('#findKeyword');
-            if (!fkey.val()) {
+            var fkey =$('#findKeyword');
+            if(!fkey.val()){
                 alert('검색어를 입력하세요');
                 fkey.focus();
                 return;
@@ -27,6 +28,7 @@
 <div class="m-5 p-3 text-center"
      style="border: 1px solid gray; border-radius: 15px" id="font2">
     <!-- top끝 -->
+
 
 
     <div class="container" style="margin-top: 20px">
@@ -59,10 +61,10 @@
                     <c:if test="${userList ne null and not empty userList}">
                         <c:forEach var="user" items="${userList}">
                             <tr class="record">
-                                <td><c:out value="${user.idx}"/></td>
-                                <td><c:out value="${user.nick}"/></td>
+                                <td><c:out value="${user.idx}" /></td>
+                                <td><c:out value="${user.nick}" /></td>
                                 <td><fmt:formatDate value="${user.indate}"
-                                                    pattern="yyyy-MM-dd"/></td>
+                                                    pattern="yyyy-MM-dd" /></td>
 
                                 <td>
                                     <c:if test="${user.stat==0 }">
@@ -74,16 +76,10 @@
                                     휴먼회원
                                 </c:if> <c:if test="${user.stat==4 }">
                                     탈퇴회원
-                                    <c:if test="${user.stat==5}">
-                                        차단회원
-                                    </c:if>
-                                    <c:if test="${usesr.stat==8}">
-                                        관리자
-                                    </c:if>
                                 </c:if> <c:if test="${user.stat==9 }">
-                                    슈퍼관리자
+                                    관리자
                                 </c:if></td>
-                                <td><c:out value="${user.point}"/>포인트</td>
+                                <td><c:out value="${user.point}" />포인트</td>
 
                                 <c:if test="${user.stat==0}">
                                     <td></td>
@@ -95,7 +91,7 @@
 
                                     <td><a href="/admin/userEdit?idx=${user.idx}">회원수정</a></td>
                                 </c:if>
-                                <td><a href="userDelete('${user.idx}')">회원탈퇴</a></td>
+                                <td><a href="userDelete?idx=${user.idx}">회원탈퇴</a></td>
 
                             </tr>
                         </c:forEach>
@@ -130,8 +126,7 @@
                                          style="width: 60%; border: 1px solid silver; padding: 5px">
                         <button type="button" id="btFind"
                                 style="padding: 4px; width: 100px; background: beige; border: 1px solid silver">검
-                            색
-                        </button>
+                            색</button>
                     </form>
 
                     <!--  -->
@@ -141,7 +136,7 @@
         </div>
     </div>
 </div>
-<!-- 삭제 form---------------- -->
+<!-- 삭제  form---------------- -->
 <form name="pf" id="pf" method="post">
     <input type="hidden" name="idx" id="idx">
 </form>
@@ -154,22 +149,22 @@
 </form>
 <!-- ------------------------------------- -->
 <script type="text/javascript">
-    function deleteUser(num) {
+    function userDelete(num){
         alert(num);
         var n = $('#idx').val(num);
-        $('#pf').attr('action', '/admin/del')
+        $('#pf').attr('action','/admin/del')
         $('#pf').submit();
     }
+    /*  function userDelte(num){
 
-    function userDelte(num) {
-
-        df.idx.value = num;
-        //$('input[name="cartNum"]').val(num);
-        df.method = 'post';
-        df.submit();
-    }
+         df.idx.value = num;
+         //$('input[name="cartNum"]').val(num);
+         df.method='post';
+         df.submit();
+     } */
 
 </script>
 
 
-<c:import url="/foot"/>
+
+<c:import url="/foot" />

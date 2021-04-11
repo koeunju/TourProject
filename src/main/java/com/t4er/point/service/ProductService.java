@@ -22,4 +22,5 @@ public interface ProductService {
 
     List<ProductVO> getProdList(ProductPagingVO paging);
 
+    void delCartByOrder(int idx_fk, int pnum);
 }

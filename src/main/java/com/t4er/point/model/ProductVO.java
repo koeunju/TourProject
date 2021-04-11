@@ -15,4 +15,10 @@ public class ProductVO {
 
     private String Cg_num;
     private String Cg_name;
+
+    //admin
+    private int totalPrice;//총판매가 = 판매가 * 수량
+    private int totalPoint;//총포인트 = 포인트 * 수량
+    private String onum;
+    private int pqty;
 }

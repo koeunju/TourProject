@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.t4er.point.mapper.OrderMapper">
+	<!-- 주문 개요 정보 insert -->
+	<insert id="orderDescInsert" parameterType="Order">
+		insert into orderDesc
+		values
+		(#{ONUM},#{OTOTALPOINT},#{OPAYSTATE},sysdate,#{idx_fk}
+		)
+	</insert>
+	<!-- 주문 상품 정보 insert -->
+	<insert parameterType="Product" id="orderProductInsert"> insert into
+		order_Product(
+		onum, pnum_fk, opoint, oqty, pimage) values
+		(#{onum},
+		#{pnum},#{opoint}, #{oqty},#{pimage1:VARCHAR}
+		)
+	</insert>
+
+	<!-- 수령자 정보 insesrt -->
+
+
+	<!-- <insert parameterType="Order" id="receiverInsert"> insert into receiver(onum, 
+		rcvname, hp1, hp2, hp3, post, addr1, addr2) values (#{onum}, #{receiver.rcvname}, 
+		#{receiver.hp1}, #{receiver.hp2}, #{receiver.hp3}, #{receiver.post}, #{receiver.addr1}, 
+		#{receiver.addr2}) </insert> -->
+
+	<!-- 주문번호(onum)로 주문상세내역 가져오기 -->
+
+
+<!-- 	<select id="getOrderDesc" parameterType="string"
+		resultType="Order">
+  -->
+
+
+	<!-- 	<select parameterType="string" id="getOrderDesc"
+			resultMap="OrderJoin"> select a.ONUM, IDX_FK, OTOTALPRICE, OTOTALPOINT,
+			ODELIVERPRICE, ODELIVER, OPAYSTATE, OPAYWAY, OPOINTUSE, ORDERDATE,
+			ORDERMEMO, PNUM_FK, PIMAGE, (select pname from PRODUCT where pnum =
+			PNUM_FK) pname, OQTY, OPOINT, SALEPRICE, c.RCVNAME, HP1, HP2, HP3,
+			POST, ADDR1, ADDR2 from ORDERDESC a join ORDERPRODUCT b on a.onum =
+			b.ONUM join RECEIVER c on a.ONUM = c.ONUM and a.ONUM = #{value}
+		</select> -->
+		<!-- 주문 정보 가져오기 -->
+    <select id="listOrder" resultType="Order" parameterType="AdminPaging">
+		select * from (
+		select m.*, row_number() over(order by onum desc) rn
+		from orderdesc m )
+		
+	</select>
+ 
+</mapper>
+   

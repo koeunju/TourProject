@@ -76,10 +76,10 @@
             <mapping path="/tour/save"/>
             <beans:bean class="com.t4er.common.interceptor.LoginCheckInterceptor"/>
         </interceptor>
-<!--        <interceptor>
+		<interceptor>
             <mapping path="/admin/**"/>
-            <beans:bean class="com.my.common.interceptor.AdminCheckInterceptor"/>
-        </interceptor>-->
+            <beans:bean class="com.t4er.common.interceptor.AdminCheckInterceptor"/>
+        </interceptor>
     </interceptors>
 
    <!-- MessageResource ======================= -->

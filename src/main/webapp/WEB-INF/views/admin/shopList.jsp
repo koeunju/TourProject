@@ -60,15 +60,43 @@
             <c:if test="${pList ne null and not empty pList}">
                 <c:forEach var="pd" items="${pList}" varStatus="state">
                     <div class="col-md-3">
-                        <a href="prodDetail?pnum=${pd.pnum}"> <img
-                                src="product_images/${pd.pimage}" class="rounded img-fluid"
-                                style="height: 220px"/>
-                        </a> <br> <br>
+                        <c:if test="${pd.pimage eq null or empty pd.pimage}">
+                            <a href="prodDetail?pnum=${pd.pnum}"> <img
+                                    src="../product/noimage.png" class="rounded img-fluid"
+                                    style="height: 100px"/>
+                            </a> <br> <br>
+                        </c:if>
+                        <c:if test="${pd.pimage ne null and not empty pd.pimage }">
+                            <a href="prodDetail?pnum=${pd.pnum}"> <img
+                                    src="../product/${pd.pimage}" class="rounded img-fluid"
+                                    style="height: 100px"/>
+                            </a> <br> <br>
+                        </c:if>
                         <h6>${pd.pname}</h6>
                             ${pd.price}
-                        <H1 class="badge badge-info">Point</H1>
+                        <h1 class="badge badge-info">Point</h1><br>
+                        <a href="prodEdit?pnum=${pd.pnum}">수정</a> |
+                        <a href="prodDelete?pnum=${pd.pnum}">삭제</a>
                     </div>
                 </c:forEach>
             </c:if>
+            <tr>
+                <td colspan="3" class="text-center">
+                    <ul class="pagination justify-content-center">
+                        <!-- 페이지블럭 처리---------------------------- -->
+                        <%--   <c:forEach var="i" begin="${prevBlock+1}" end="${nextBlock-1}"
+                                     step="1">
+                              <c:if test="${i<pageCount+1 }">
+                                  <li class="page-item <c:if test="${cpage eq i}">active</c:if>">
+                                      <a class="page-link"
+                                         href="boardList?cpage=${i}&pageSize=${pageSize}#bbs">
+                                              ${i} </a>
+                                  </li>
+                              </c:if>
+                          </c:forEach> --%>
+                        <!--  ------------------------------------------->
+                    </ul>
+                </td>
+            </tr>
         </div>
     </div>

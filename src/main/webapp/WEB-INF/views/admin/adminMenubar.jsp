@@ -15,7 +15,7 @@
                 <a class="nav-link" href="${pageContext.request.contextPath}/admin/shopList">포인트 샵 관리</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">구매 정보 관리</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/admin/orderList">구매 정보 관리</a>
             </li>
         </ul>
     </div>

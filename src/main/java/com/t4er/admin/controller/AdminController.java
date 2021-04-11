@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.t4er.admin.model.AdminPagingVO;
+import com.t4er.point.model.OrderVO;
 import com.t4er.point.model.ProductPagingVO;
 import com.t4er.point.model.ProductVO;
+import com.t4er.point.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,6 +42,9 @@ public class AdminController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private OrderService orderService;
 
     @Autowired
     private CommonUtil util;
@@ -76,14 +81,13 @@ public class AdminController {
     }// ----------------------
 
     @GetMapping("/userEdit")
-    public String adminEdit(Model m, HttpServletRequest req,
-                            @RequestParam int idx) {
+    public String adminEdit(Model m, HttpServletRequest req, @RequestParam Integer idx) {
         HttpSession ses = req.getSession();
         UserVO ac = (UserVO) ses.getAttribute("loginUser");
         int adminCheck = ac.getStat();
 
         log.info("idx===" + idx);
-        if (idx == 0)
+        if (idx == null)
             return "redirect:/admin";
 
         UserVO user = this.adminService.getUser(idx);
@@ -94,10 +98,9 @@ public class AdminController {
     }
 
     @PostMapping("/userEdit")
-    public String adminEditEnd(Model m, @RequestParam int idx, @ModelAttribute("user") UserVO user) {
-        if (user.getIdx() == 0)
+    public String adminEditEnd(Model m, @RequestParam Integer idx, @ModelAttribute("user") UserVO user) {
+        if (user.getStat() != 9 || user.getStat() != 8)
             return "admin/userList";
-
 
         int n = this.adminService.updateUser(user);
         String str = (n > 0) ? "수정 성공" : "수정 실패";
@@ -106,16 +109,15 @@ public class AdminController {
     }
 
     @PostMapping("/userDelete")
-    public String adminDel(Model m, @RequestParam
-            int idx) {
-        if (idx == 0) {
+    public String adminDel(Model m, @RequestParam Integer idx) {
+        if (idx == null) {
             return util.addMsgLoc(m, "문제가 있습니다", "/index");
         }
         int n = this.adminService.deleteUser(idx);
         String str = (n > 0) ? "탈퇴 성공" : "탈퇴 실패";
-        String loc = (n > 0) ? "/logout" : "javascript:history.back()";
+        //String loc = (n > 0) ? "/logout" : "javascript:history.back()";
 
-        return util.addMsgLoc(m, str, loc);
+        return util.addMsgLoc(m, str, "/userList");
 
     }
 
@@ -135,7 +137,7 @@ public class AdminController {
         // 상품 목록 가져오기
         List<ProductVO> pList = this.productService.getProdList(paging);
         String myctx = req.getContextPath();
-        String loc = "admin/shopList";
+        String loc = "point";
         String pageNavi = paging.getPageNavi(myctx, loc, userAgent, cgnum);
 
         m.addAttribute("cgnum", cgnum);
@@ -219,8 +221,7 @@ public class AdminController {
     }
 
     @GetMapping("/prodEdit")
-    public String prodEdit(Model m, HttpServletRequest req,
-                           @RequestParam int pnum) {
+    public String prodEdit(Model m, HttpServletRequest req, @RequestParam int pnum) {
         HttpSession ses = req.getSession();
 
         log.info("pnum===" + pnum);
@@ -243,6 +244,33 @@ public class AdminController {
         String loc = (n > 0) ? "prodEdit?idx=" + product.getPnum() : "javascript:history.back()";
         return util.addMsgLoc(m, str, loc);
     }
+
+    @GetMapping("/orderList")
+    public String orderList(Model m, HttpServletRequest req, @RequestHeader("User-Agent") String userAgent,
+                            @ModelAttribute("paging") AdminPagingVO paging) {
+        log.info("paging===" + paging);
+        int totalUser = this.adminService.getUserCount(paging);
+        log.info("userConut=" + totalUser);
+
+        paging.setTotalCount(totalUser);
+        paging.setPageSize(5);
+        paging.setPagingBlock(5);
+        paging.init(req.getSession());
+
+        List<OrderVO> orderList = adminService.listOrder(paging);
+
+        String myctx = req.getContextPath();
+
+        String loc = "admin/orderList";
+        // 페이지 네비 문자열 받아오기
+        String pageNavi = paging.getPageNavi(myctx, loc, userAgent);
+
+        m.addAttribute("orderList", orderList);
+        m.addAttribute("totalCount", totalUser);
+        m.addAttribute("pageNavi", pageNavi);
+        return "/admin/orderList";
+    }// ----------------------
+
 
     @RequestMapping("/adminMenubar")
     public void adminMenubar() {

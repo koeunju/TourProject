@@ -1,6 +1,8 @@
 package com.t4er.point.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,6 +51,14 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public int getProdByCateTotalCount(ProductPagingVO paging) {
         return this.productMapper.getProdByCateTotalCount(paging);
+    }
+
+    @Override
+    public void delCartByOrder(int idx_fk, int pnum) {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("idx_fk", idx_fk);
+        map.put("pnum", pnum);
+        this.productMapper.delCartByOrder(map);
     }
 }
 

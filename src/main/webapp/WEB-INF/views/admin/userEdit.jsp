@@ -107,7 +107,7 @@
                 </tr>
 
                 <tr>
-                    <th colspan="2">내 상태</th>
+                    <th colspan="2">회원 상태</th>
                     <td colspan="2">
                         <div class="radio">
                             <c:if test="${user.stat==1 }">
@@ -120,6 +120,9 @@
                                 <label class="radio-inline text-danger"> <input type="radio"
                                                                                 id="stat" name="stat" value="4">탈퇴회원
                                 </label>
+                                <label class="radio-inline text-danger"> <input type="radio"
+                                                                                id="stat" name="stat" value="9">관리자
+                                </label>
                             </c:if>
 
                             <c:if test="${user.stat==3 }">
@@ -131,6 +134,9 @@
                                 </label>
                                 <label class="radio-inline text-danger"> <input type="radio"
                                                                                 id="stat" name="stat" value="4">탈퇴회원
+                                </label>
+                                <label class="radio-inline text-danger"> <input type="radio"
+                                                                                id="stat" name="stat" value="9">관리자
                                 </label>
 
                             </c:if>
@@ -145,6 +151,9 @@
                                 <label class="radio-inline text-danger"> <input type="radio"
                                                                                 id="stat" name="stat" value="4"
                                                                                 checked>탈퇴회원
+                                </label>
+                                <label class="radio-inline text-danger"> <input type="radio"
+                                                                                id="stat" name="stat" value="9">관리자
                                 </label>
 
                             </c:if>

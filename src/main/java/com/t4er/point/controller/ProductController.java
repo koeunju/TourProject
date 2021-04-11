@@ -38,6 +38,7 @@ public class ProductController {
         // 총 상품 수 가져오기
         int totalCount = this.productService.getProductTotalCount(paging);
         paging.setTotalCount(totalCount);
+        paging.setPageSize(10);
         paging.setPagingBlock(5);
         paging.init(req.getSession());
         log.info(paging);
@@ -72,6 +73,7 @@ public class ProductController {
 
         int totalCount = this.productService.getProdByCateTotalCount(paging);
         paging.setTotalCount(totalCount);
+        paging.setPageSize(10);
         paging.setPagingBlock(5); // 페이지에 들어가는 수
         paging.init(req.getSession());
 

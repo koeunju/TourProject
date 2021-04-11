@@ -3,6 +3,7 @@ package com.t4er.admin.service;
 import java.util.List;
 
 import com.t4er.admin.model.AdminPagingVO;
+import com.t4er.point.model.OrderVO;
 import com.t4er.point.model.ProductVO;
 import com.t4er.user.model.UserVO;
 
@@ -23,5 +24,7 @@ public interface AdminService {
 	ProductVO getProd(Integer pnum);
 
 	int updateProd(ProductVO prod);
+
+	List<OrderVO> listOrder(AdminPagingVO pvo);
 	
 }

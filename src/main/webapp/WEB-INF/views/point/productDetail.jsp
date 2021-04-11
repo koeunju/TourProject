@@ -15,7 +15,7 @@
     }
 
     function goOrder() {
-        frm.action = "user/order.do";
+        frm.action = "user/order";
         frm.method = 'get';
         frm.submit();
     }

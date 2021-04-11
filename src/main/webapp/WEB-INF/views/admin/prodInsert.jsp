@@ -40,9 +40,6 @@
                             </thead>
                             <tbody>
 
-
-
-
                             <tr>
                                 <td width="20%"><b>상품명</b></td>
                                 <td width="80%"><input type="text" name="pname" id="pname" placeholder="" class="form-control">
@@ -134,6 +131,9 @@
              history.back();
          }) */
     })
+
+
 </script>
+
 
 <c:import url="/foot" />

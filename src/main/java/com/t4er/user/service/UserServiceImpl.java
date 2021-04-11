@@ -232,4 +232,10 @@ public class UserServiceImpl implements UserService {
         return this.pointMapper.firstPoint(idx);
     }
 
+    //관리자페이지
+    @Override
+    public UserVO getUser(Integer idx) {
+        return this.userMapper.getUser(idx);
+    }
+
 }

@@ -146,7 +146,7 @@
                 <tr>
                     <th colspan="2">비밀번호 재 입력</th>
                     <td colspan="2"><input type="password" name="remypwd"
-                                           id="remypwd" class="form-control"   readonly></td>
+                                           id="remypwd" class="form-control" readonly></td>
                 </tr>
 
                 <tr>

@@ -267,12 +267,15 @@ function send3(keyword, pageNo) { // 검색 결과 없을시
 
 function showList3(keyword) { // 검색 결과 없을시 리스트
     let str = "";
-    if (keyword == "장민규" || keyword == "정성모" || keyword == "지윤성" || keyword == "천은지" || keyword == "고은주") {
+    if (keyword == "장민규" || keyword == "고은주" || keyword == "정성모" || keyword == "지윤성" || keyword == "천은지") {
         str += "<h1> 이스터 에그 발견 </h1>";
         str += "<hr>"
-        str += "<h3> 성모야 꽃길만 걷자팀 </h3>"
-        str += "<h3>장민규 :  우리팀 모두 수고했고 사랑한다!</h3>"
-        str += "<img src='../easterEgg/jys.jpg' style='width: 30%'>"
+        str += "<h3> 프로젝트 진행하면서 나온 각자의 명언이 나옵니다 </h3>"
+        str += "<h3> 장민규 : 취잉잉</h3>"
+        str += "<h3> 고은주 : 너 이제 오빠 아니다 야! 민규야! 뭐해? 마셔야지! </h3>"
+        str += "<h3> 천은지 : 윤성씨는 아무도 못말려요 </h3>"
+        str += "<h3> 정성모 : 복원중인데 오늘안에 카톡 없으면 찾지마세요 </h3>"
+        str += "<h3> 지윤성 : 나 술 끊었어 금주하고 있어 </h3>"
     } else {
         str += "<h2>" + keyword + " 검색 결과가 없습니다</h2>"
         str += "<h3>다른 키워드로 검색해주세요</h3>";

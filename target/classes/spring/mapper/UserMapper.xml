@@ -95,7 +95,7 @@
 	<delete id="deleteUser" parameterType="int">
  		delete from member where idx=#{idx}
  	</delete>
-	<!-- ? -->
+
 	<select id="getUser" parameterType="int" resultType="User">
    		select * from member where idx = #{idx,jdbcType=NUMERIC}
    </select>

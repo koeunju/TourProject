@@ -18,6 +18,7 @@
         <typeAlias type="com.t4er.review.model.ReviewPagingVO" alias="ReviewPaging"/>
         <typeAlias type="com.t4er.tour.model.TourVO" alias="Tour"/>
         <typeAlias type="com.t4er.admin.model.AdminPagingVO" alias="AdminPaging"/>
+        <typeAlias type="com.t4er.point.model.OrderVO" alias="Order"/>
     </typeAliases>
 
     <!-- 매퍼 정의================================ -->
@@ -29,5 +30,6 @@
         <mapper resource="spring/mapper/BoardMapper.xml"/>
         <mapper resource="spring/mapper/ProductMapper.xml"/>
         <mapper resource="spring/mapper/PointMapper.xml"/>
+        <mapper resource="spring/mapper/OrderMapper.xml"/>
     </mappers>
 </configuration>

@@ -34,4 +34,7 @@ public interface UserService {
 
     //첫 로그인시 포인트 부여
     int firstPoint(String id);
+
+    //관리자 페이지
+    UserVO getUser(Integer idx);
 }
