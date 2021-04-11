@@ -69,15 +69,15 @@ public class MyPageController {
     @GetMapping("/edit")
     public String mypageEdit(Model m, HttpServletRequest req,
                              @RequestParam Integer idx) {
-        log.info("idx===" + idx);
+
         if (idx == null)
             return "redirect:/mypage";
         HttpSession ses = req.getSession();
         UserVO ac = (UserVO) ses.getAttribute("loginUser");
         int adminCheck = ac.getStat();
-
         // 정보검색
         UserVO user = this.mypageService.selectMy(idx);
+        log.info("user = " +user);
         m.addAttribute("user", user);
         m.addAttribute("adminCheck", adminCheck);
 
@@ -88,13 +88,17 @@ public class MyPageController {
     public String mypageEditEnd(Model m, @RequestParam Integer idx, @ModelAttribute("user") UserVO user) {
         if (user.getIdx() == null)
             return "user/myInfo";
-
+        log.info("user.getPwd() = " + user.getPwd());
         // 비밀번호 암호화 로직 수행
-        String encryPassword = UserSha256.encrypt(user.getPwd());
-        user.setPwd(encryPassword);
+        String encryPassword = null;
+        if (!user.getPwd().trim().isEmpty()) {
+            encryPassword = UserSha256.encrypt(user.getPwd());
+            user.setPwd(encryPassword);
+        }
 
+        log.info("encryPassword = " + encryPassword);
         int n = this.mypageService.updateUser(user);
-
+        log.info("n = " + n);
         String str = (n > 0) ? "정보 수정 완료" : "정보 수정 실패";
         String loc = (n > 0) ? "/user/myInfo?idx=" + user.getIdx() : "javascript:history.back()";
         return util.addMsgLoc(m, str, loc);

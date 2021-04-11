@@ -104,8 +104,8 @@
 	<update id="updateUser" parameterType="User">
 		update member set
 		email=#{email,jdbcType=VARCHAR} , nick=#{nick,jdbcType=VARCHAR}, tel=#{tel,jdbcType=VARCHAR}, stat=#{stat,jdbcType=NUMERIC}, image = #{image:VARCHAR}
-		<if test="adminCheck == 1 and pwd != null">
-			,pwd=#{pwd}
+		<if test="adminCheck == 1 and (pwd != null and pwd != '')">
+			,pwd=#{pwd,jdbcType=VARCHAR}
 		</if>
 		<if test="adminCheck == 9 or adminCheck == 8">
 		,point=#{point,jdbcType=NUMERIC}
