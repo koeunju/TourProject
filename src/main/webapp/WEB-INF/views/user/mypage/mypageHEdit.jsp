@@ -9,11 +9,15 @@
 
     //비밀번호 변경 체크
     function checkPwd(idx){
-        let str = '<input type="text" id="repwd" name="repwd" class="form-control" onchange="checkp(${user.idx},this.value)" placeholder="현재 비밀번호를 입력해주세요">';
+        let str = '<input type="password" id="repwd" name="repwd" class="form-control" onchange="checkp(${user.idx},this.value)" placeholder="현재 비밀번호를 입력해주세요">';
         $('#msgPwd').html(str);
-        $('#checkmypwd').hide();
+        document.meF.pwd.readOnly = true;
+        document.meF.remypwd.readOnly = true;
+        $('#remypwd').val("");
+        $('#pwd').val("");
+        
     }
-
+    let cls='';
     function checkp(idx,repwd){
         $.ajax({
             type:'get',
@@ -22,16 +26,19 @@
             cache:false,
         }).done(function(res){
             let n = parseInt(res.check);
-            let cls='';
+            
             if(n>0){
+            	cls='';
                 cls='text-primary';
                 $('#pwdstate').val(1);
                 document.meF.pwd.readOnly = false;
                 document.meF.remypwd.readOnly = false;
             }else{
+            	cls='';
                 cls='text-danger'
                 $('#pwdstate').val("");
             }
+            $('#msgPwd').removeClass();
             $('#msgPwd').text(res.okPwd).addClass(cls);
 
 
@@ -49,18 +56,31 @@
             var $pwd2 = $('#remypwd');
             var $tel = $('#tel');
             var $email = $('#email');
-
+			
+            if(cls == 'text-primary'){
+            	if(!pwd == null){
+            		 alert('수정할 비밀번호를 입력해주세요');
+                     $pwd.focus();
+                     return;
+            	}
+            	if ($pwd.val() != $pwd2.val()) {
+                    alert('비밀번호가 일치하지 않습니다.');
+                    $pwd2.focus();
+                    return;
+                }
+            	if (!$pwd2.val()) {
+                    alert('비밀번호 재확인 해주세요');
+                    $pwd2.focus();
+                    return;
+                }
+            }
             if (!$nick.val()) {
                 alert('닉네임을 입력하세요');
                 $nick.focus();
                 return;
             }
 
-            if ($pwd.val() != $pwd2.val()) {
-                alert('비밀번호가 서로 달라요');
-                $pwd2.focus();
-                return;
-            }
+            
             if (!$tel.val()) {
                 alert('전화번호를 입력하세요');
                 $tel.focus();
@@ -97,15 +117,17 @@
             <h6 class="text-right font-weight-bold text-primary">관리자</h6>
         </c:if>
         <!-- 내정보 -->
-        <form name="meF" id="meF" action="edit" method="POST">
+        <form name="meF" id="meF" action="edit" method="POST" enctype="multipart/form-data">
 
             <input type="hidden" id="idx" name="idx" value="${user.idx }">
             <table class="table table-hover" id="mypageT">
                 <tr>
-                    <td rowspan="7" style="width: 30%; padding: 10px;"><img
-                            src="../image/noimage.png"
+                    <td rowspan="7" style="width: 30%; padding: 10px;">
+                    사진<br><img src="../user/upload/${user.image }"
                             style="width: 100%; j margin: 20px; border: 1px solid gray"><br>
-                        <br> 사진</td>
+                            <input type="file" name="mimage"
+                                                      id="image" placeholder="Select IMAGE" class="form-control">
+                        </td>
                 </tr>
                 <tr>
                     <th>닉네임</th>
@@ -132,7 +154,7 @@
                     <th colspan="2">비밀번호 변경여부</th>
                     <td colspan="2">
 
-                        <button type="button" id="checkmypwd"
+                        <button type="button" class="btn btn-primary" id="checkmypwd"
                                 onclick="checkPwd(${user.idx })">비밀번호 변경하기</button> <input
                             type="hidden" name="pwdState" id="pwdState">
                         <div id="msgPwd"></div>

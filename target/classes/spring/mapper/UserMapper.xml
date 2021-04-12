@@ -7,7 +7,7 @@
 
 	<insert id="createUser" parameterType="User">
 	insert into member(idx, id, pwd, email, nick, tel, image, stat, indate ,point)
-	values(member_seq.nextval, #{id}, #{pwd}, #{email}, #{nick}, #{tel}, null , 0 ,sysdate, 0)
+	values(member_seq.nextval, #{id}, #{pwd}, #{email}, #{nick}, #{tel},"noimage.png" , 0 ,sysdate, 0)
 	</insert>
 
     <select id="idCheck" parameterType="string" resultType="int">
