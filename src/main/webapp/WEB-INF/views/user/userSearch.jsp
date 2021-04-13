@@ -43,9 +43,11 @@ var idSearch_click = function(){
 }
 </script>
 
-	<div class="in" style=" display: inline-block; margin:0 auto;">
-		<div class="card align-middle"
-			style="width: 20rem; border-radius: 20px;">
+	
+<div class="col-sm-8 text-center">
+<div class="in" style=" display: inline-block; margin-left: 45%;">
+   <div class="card align-middle"
+        style="width: 30rem; border-radius: 20px;">
 			<div class="card-title" style="margin-top: 30px;">
 				<h3 class="card-title text-center" style="color: #113366;">아이디 찾기
 					</h3>
@@ -61,6 +63,7 @@ var idSearch_click = function(){
 					<button id="searchBtn" type="button" onclick="idSearch_click()" class="btn btn-primary btn-block">확인</button>
 					<a class="btn btn-danger btn-block"	href="${pageContext.request.contextPath}/user/login">취소</a>
 					</div>
+			</div>
 			</div>
 		</div>
 	</div>

@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:import url="/top_sub" />
-<c:import url="/user/mypageMenubar" />
+<c:import url="/top" />
+
 
 
 
@@ -33,9 +33,9 @@
 		<!-- 내정보 -->
 		<table class="table table-hover" id="mypageT">
 			<tr>
-				<td rowspan="7" style="width: 30%; padding: 10px;"><img
-					src="../image/noimage.png"
-					style="width: 100%; margin: 20px; border: 1px solid gray"><br>
+			 <td rowspan="7" style="width: 30%; padding: 10px;">
+                    사진<br><img src="../user/upload/${user.image }"
+                            style="width: 100%; j margin: 20px; border: 1px solid gray"><br>
 					<br> 사진</td>
 			</tr>
 			<tr>
@@ -142,4 +142,4 @@
 		$('#pf').submit();
 	}
 </script>
-<c:import url="/foot_sub" />
+<c:import url="/foot" />

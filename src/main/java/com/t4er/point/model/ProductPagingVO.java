@@ -76,11 +76,11 @@ public class ProductPagingVO {
         String qStr = "";
         if (cgnum == null) {
             qStr = "?pageSize=" + pageSize + "&findKeyword=" + findKeyword; //전체 목록
-        } else if (cgnum != null) {
+        } else {
             qStr = "?cgnum=" + cgnum + "&pageSize=" + pageSize + "&findKeyword=" + findKeyword;
             // 카테고리별 목록
         }
-
+        
         StringBuilder buf = new StringBuilder();
         buf.append("<ul class='pagination justify-content-center'>");
         if (prevBlock > 0) {
@@ -114,7 +114,7 @@ public class ProductPagingVO {
         }
         buf.append("</ul>");
 
-        log.info("cgnum=" + cgnum);
+        log.info("qStr =" + qStr);
         return buf.toString();
     }
 }

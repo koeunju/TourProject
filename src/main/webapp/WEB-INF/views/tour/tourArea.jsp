@@ -14,8 +14,8 @@
 
 <script src="../js/tourArea.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=11a513c1218b7224c39835d20851c411"></script>
-
-<div id="warp">
+<div class="m-5 p-3 text-center" style="border:1px solid gray; border-radius:15px" id="font2">
+<div class="container text-center" id="warp">
     <form action="areaList" method="get">
         <ul>
             <li>
@@ -45,6 +45,7 @@
 
         <button class="btn btn-success" id="btnArea">검색</button>
     </form>
+</div>
 </div>
 <div id="openAPI">
 

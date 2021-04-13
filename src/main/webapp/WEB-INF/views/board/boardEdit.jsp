@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="myctx" value="${pageContext.request.contextPath}"/>
 
-<c:import url="/top_sub" />
+<c:import url="/top" />
 
 
 <div class="container" style="margin-top: 30px">
@@ -108,4 +108,4 @@
     })
 </script>
 
-<c:import url="/foot_sub" />
+<c:import url="/foot" />

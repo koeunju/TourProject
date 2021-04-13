@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<c:import url="/top_sub" />
+<c:import url="/top" />
 
 <div class="container" style="margin-top: 30px">
     <div class="row">
@@ -104,4 +104,4 @@
     })
 </script>
 
-<c:import url="/foot_sub" />
+<c:import url="/foot" />

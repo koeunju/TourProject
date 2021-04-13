@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:import url="/top_sub" />
-<c:import url="/user/mypageMenubar" />
+<c:import url="/top" />
+
 <script type="text/javascript" src="../js/toursave.js">
 
 </script>
@@ -16,7 +16,7 @@
 		<h1 class="text-bold" id="font1">찜한 여행지</h1>
 		<br>
 
-
+		
 		<!--찜한 여행지 출력 -->
 		<table class="table table-hover" id="mypageT">
 			<tr>
@@ -36,8 +36,8 @@
 						<td>${status.count}</td>
 						<td>${mytour.sdate }</td>
 						<td><a href="#" onclick="Detail(${mytour.contentId})">
-								${mytour.contentId }</a></td>
-						<td><a href="#">찜 해제</a></td>
+								${mytour.title }</a></td>
+						<td><a href="/user/deleteTour?contentId=${mytour.contentId}&idx=${mytour.idx}">찜 해제</a></td>
 					</tr>
 					<tr><td colspan="4"><div id="mySaveTour" style="display:none"></div></td></tr>
 				</c:forEach>
@@ -51,4 +51,4 @@
 	<!-- 내정보 div -->
 </div>
 
-<c:import url="/foot_sub" />
+<c:import url="/foot" />

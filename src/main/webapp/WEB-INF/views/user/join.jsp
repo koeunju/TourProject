@@ -147,6 +147,7 @@
                 cls='text-danger'
                 $('#telstate').val("");
             }
+            $('#msgTel').removeClass();
             $('#msgTel').text(res.telResult).addClass(cls)
         }).fail(function(err){
             alert('error: '+err.status);
@@ -184,7 +185,7 @@
 <script src="../js/join.js"></script>
 
 
-<div class="in" style="display: inline-block; margin: 0 auto;">
+<div class="in" style="display: inline-block; margin-left:10%;">
     <div class="card align-middle"
          style="width: 50rem; border-radius: 20px;">
         <div class="card-title" style="margin-top: 30px;">

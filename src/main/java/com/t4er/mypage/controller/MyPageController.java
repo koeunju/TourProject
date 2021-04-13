@@ -1,5 +1,7 @@
 package com.t4er.mypage.controller;
 
+
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -9,10 +11,13 @@ import com.t4er.point.model.PointPagingVO;
 import com.t4er.point.model.PointVO;
 import com.t4er.tour.model.TourVO;
 import com.t4er.user.security.UserSha256;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.t4er.common.CommonUtil;
 import com.t4er.mypage.service.MypageService;
@@ -20,6 +25,7 @@ import com.t4er.user.model.UserVO;
 
 import lombok.extern.log4j.Log4j;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -85,16 +91,48 @@ public class MyPageController {
     }
 
     @PostMapping("/edit")
-    public String mypageEditEnd(Model m, @RequestParam Integer idx, @ModelAttribute("user") UserVO user) {
+    public String mypageEditEnd(Model m,
+    		HttpServletRequest req,
+            @RequestParam("mimage") MultipartFile mfilename,
+    		@RequestParam Integer idx, @ModelAttribute("user") UserVO user) {
         if (user.getIdx() == null)
             return "user/myInfo";
         log.info("user.getPwd() = " + user.getPwd());
+        
+     // 업로드 디렉토리의 절대경로
+        ServletContext app = req.getServletContext();
+        String upDir = app.getRealPath("/user/upload");
+        log.info("upDir==" + upDir);
+        
+        File dir = new File(upDir);
+        if (!dir.exists()) {
+            dir.mkdirs(); // 디렉토리 생성
+        }
+        
+     // 파일첨부
+        if (!mfilename.isEmpty()) {
+            // 1.첨부파일명, 파일크기
+            String fileName = mfilename.getOriginalFilename(); // 파일이름
+            log.info(fileName);
+            int rand = (int)(Math.random()*100);
+            String imageName = rand+fileName;
+            user.setImage(imageName);
+            
+            // 2.업로드 처리
+            try {
+                mfilename.transferTo(new File(dir, imageName));
+            } catch (IOException e) {
+                log.error("파일 업로드 중 에러 발생 : " + e);
+            }
+        }
+        
+        
         // 비밀번호 암호화 로직 수행
         String encryPassword = null;
         if (!user.getPwd().trim().isEmpty()) {
             encryPassword = UserSha256.encrypt(user.getPwd());
-            user.setPwd(encryPassword);
         }
+        
 
         log.info("encryPassword = " + encryPassword);
         int n = this.mypageService.updateUser(user);
@@ -204,4 +242,16 @@ public class MyPageController {
         m.addAttribute("mytour",mytour);
         return "/user/mypage/myTour";
     }
+    
+    @GetMapping("/deleteTour")
+    public String deleteTour(Model m, @RequestParam("contentId") Integer contentId, @RequestParam("idx") Integer idx) {
+    	log.info("contentId="+contentId +"//idx="+idx);
+    	Map<String,Integer> map = new HashMap();
+    	map.put("contentId",contentId);
+    	map.put("idx",idx);
+    	this.mypageService.deleteTour(map);
+  
+    	return util.addMsgLoc(m, "삭제 성공", "/user/myTour?idx="+idx);
+    }
+
 }

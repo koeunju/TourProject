@@ -15,6 +15,7 @@ import com.t4er.user.mapper.UserMapper;
 import com.t4er.user.model.UserVO;
 
 import java.util.List;
+import java.util.Map;
 
 @Service("mypageService")
 public class MypageServiceImpl implements MypageService {
@@ -100,4 +101,11 @@ public class MypageServiceImpl implements MypageService {
 	public List<TourVO> myTour(Integer idx) {
 		return this.tourMapper.myTour(idx);
 	}
+
+	//여행찜 지우기
+	@Override
+	public Integer deleteTour(Map<String, Integer> map) {
+		return  this.tourMapper.deleteTour(map);
+	}
+	
 }

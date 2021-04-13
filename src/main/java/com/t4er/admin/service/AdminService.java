@@ -26,5 +26,9 @@ public interface AdminService {
 	int updateProd(ProductVO prod);
 
 	List<OrderVO> listOrder(AdminPagingVO pvo);
+
+	String myTotalPoint2(Integer idx);
+
+	UserVO selectMy2(Integer idx);
 	
 }

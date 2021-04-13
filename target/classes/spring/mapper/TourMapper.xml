@@ -17,4 +17,8 @@
 	<select id="myTour" resultType="Tour" parameterType="int">
 		select * from travelsave where idx =#{idx}
 	</select>
+	
+	<select id ="deleteTour" parameterType="java.util.HashMap" resultType="int">
+		delete from travelsave where contentId = #{contentId} and idx = #{idx}
+	</select>
 </mapper>
