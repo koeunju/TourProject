@@ -12,13 +12,13 @@ public interface AdminService {
 	int getUserCount(AdminPagingVO pvo);
 
 	List<UserVO> listUser(AdminPagingVO pvo);
-	
+
 	int deleteUser(Integer idx);
 
 	int updateUser(UserVO user);
-	
+
 	UserVO getUser(Integer idx);
-	
+
 	int insertProd(ProductVO product);
 
 	ProductVO getProd(Integer pnum);
@@ -30,5 +30,5 @@ public interface AdminService {
 	String myTotalPoint2(Integer idx);
 
 	UserVO selectMy2(Integer idx);
-	
+
 }

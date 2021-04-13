@@ -7,7 +7,8 @@
 <form name="saveF" id="saveF" action="save" method="post">
     <input type="hidden" name="contentId" value="${contentId}">
     <input type="hidden" name="idx" value="${idx}">
-    <input type="text" name="title" value="${title}">
+    <input type="text" name="title" readonly value="${title}">
+    <input type="hidden" name="sn" readonly value="${sn}">
     <button>여행지 저장</button>
 </form>
 

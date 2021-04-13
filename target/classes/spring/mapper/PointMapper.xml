@@ -49,11 +49,8 @@
 	]]>
 	</select>
 
-
-
 	<!-- 포인트 목록 전체 수 -->
 	<select id = "myTotalCountPoint"  resultType="int" parameterType="PointPaging">
 		select count(*) cnt from point where idx=#{idx}
 	</select>
-
 </mapper>

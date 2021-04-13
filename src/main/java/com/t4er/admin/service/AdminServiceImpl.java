@@ -79,15 +79,15 @@ public class AdminServiceImpl implements AdminService {
         return this.orderMapper.listOrder(pvo);
     }
 
-	@Override
-	public String myTotalPoint2(Integer idx) {
-		return this.pointMapper.myTotalPoint(idx);
-	}
+    @Override
+    public String myTotalPoint2(Integer idx) {
+        return this.pointMapper.myTotalPoint(idx);
+    }
 
-	@Override
-	public UserVO selectMy2(Integer idx) {
-		return this.userMapper.selectMy(idx);
-	}
+    @Override
+    public UserVO selectMy2(Integer idx) {
+        return this.userMapper.selectMy(idx);
+    }
 
 
 

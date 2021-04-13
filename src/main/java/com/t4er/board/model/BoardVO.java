@@ -31,5 +31,4 @@ public class BoardVO {
 
     private int newImg; // new이미지
     private int isFile; // 첨부파일 유무(있으면 1, 없으면 0)
-    
 }

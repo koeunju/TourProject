@@ -11,7 +11,9 @@ public interface TourMapper {
 
     //내 여행지 조회
     List<TourVO> myTour(Integer idx);
-    
+
     //여행찜 삭제
-	Integer deleteTour(Map<String, Integer> map);
+    Integer deleteTour(Map<String, Integer> map);
+
+    int countSave(Integer idx);
 }

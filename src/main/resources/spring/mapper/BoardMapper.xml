@@ -45,7 +45,7 @@
     <select id="getBoardList" resultType="Board"
             parameterType="BoardPaging">
         select * from (
-        select board.*, 
+        select board.*,
         sysdate - to_date(to_char(wdate,
         'yyyy-mm-dd')) newImg,
         row_number()

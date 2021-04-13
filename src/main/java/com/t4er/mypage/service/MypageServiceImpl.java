@@ -19,7 +19,7 @@ import java.util.Map;
 
 @Service("mypageService")
 public class MypageServiceImpl implements MypageService {
-	
+
 	@Autowired
 	private UserMapper userMapper;
 
@@ -107,5 +107,5 @@ public class MypageServiceImpl implements MypageService {
 	public Integer deleteTour(Map<String, Integer> map) {
 		return  this.tourMapper.deleteTour(map);
 	}
-	
+
 }

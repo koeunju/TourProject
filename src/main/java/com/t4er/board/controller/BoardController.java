@@ -45,7 +45,7 @@ public class BoardController {
         UserVO user = (UserVO) ses.getAttribute("loginUser");
         Integer idx = user.getIdx();
         m.addAttribute("idx", idx);
-        
+
 
         return "board/boardInsert";
     }
@@ -68,7 +68,7 @@ public class BoardController {
         HttpSession ses = req.getSession();
         UserVO user = (UserVO) ses.getAttribute("loginUser");
         Integer idx = user.getIdx();
-       
+
 
         // 업로드 디렉토리의 절대경로
         ServletContext app = req.getServletContext();

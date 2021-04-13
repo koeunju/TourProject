@@ -5,4 +5,6 @@ import com.t4er.tour.model.TourVO;
 public interface TourService {
 
     int insertSaveTour(TourVO tvo);
+
+    int countSave(Integer idx);
 }

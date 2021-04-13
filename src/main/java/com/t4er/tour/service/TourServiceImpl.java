@@ -15,4 +15,9 @@ public class TourServiceImpl implements TourService{
     public int insertSaveTour(TourVO tvo) {
         return this.tourMapper.insertSaveTour(tvo);
     }
+
+    @Override
+    public int countSave(Integer idx) {
+        return this.tourMapper.countSave(idx);
+    }
 }

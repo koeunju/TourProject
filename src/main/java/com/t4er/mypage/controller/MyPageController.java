@@ -92,24 +92,24 @@ public class MyPageController {
 
     @PostMapping("/edit")
     public String mypageEditEnd(Model m,
-    		HttpServletRequest req,
-            @RequestParam("mimage") MultipartFile mfilename,
-    		@RequestParam Integer idx, @ModelAttribute("user") UserVO user) {
+                                HttpServletRequest req,
+                                @RequestParam("mimage") MultipartFile mfilename,
+                                @RequestParam Integer idx, @ModelAttribute("user") UserVO user) {
         if (user.getIdx() == null)
             return "user/myInfo";
         log.info("user.getPwd() = " + user.getPwd());
-        
-     // 업로드 디렉토리의 절대경로
+
+        // 업로드 디렉토리의 절대경로
         ServletContext app = req.getServletContext();
         String upDir = app.getRealPath("/user/upload");
         log.info("upDir==" + upDir);
-        
+
         File dir = new File(upDir);
         if (!dir.exists()) {
             dir.mkdirs(); // 디렉토리 생성
         }
-        
-     // 파일첨부
+
+        // 파일첨부
         if (!mfilename.isEmpty()) {
             // 1.첨부파일명, 파일크기
             String fileName = mfilename.getOriginalFilename(); // 파일이름
@@ -117,7 +117,7 @@ public class MyPageController {
             int rand = (int)(Math.random()*100);
             String imageName = rand+fileName;
             user.setImage(imageName);
-            
+
             // 2.업로드 처리
             try {
                 mfilename.transferTo(new File(dir, imageName));
@@ -125,14 +125,14 @@ public class MyPageController {
                 log.error("파일 업로드 중 에러 발생 : " + e);
             }
         }
-        
-        
+
+
         // 비밀번호 암호화 로직 수행
         String encryPassword = null;
         if (!user.getPwd().trim().isEmpty()) {
             encryPassword = UserSha256.encrypt(user.getPwd());
         }
-        
+
 
         log.info("encryPassword = " + encryPassword);
         int n = this.mypageService.updateUser(user);
@@ -242,16 +242,16 @@ public class MyPageController {
         m.addAttribute("mytour",mytour);
         return "/user/mypage/myTour";
     }
-    
+
     @GetMapping("/deleteTour")
     public String deleteTour(Model m, @RequestParam("contentId") Integer contentId, @RequestParam("idx") Integer idx) {
-    	log.info("contentId="+contentId +"//idx="+idx);
-    	Map<String,Integer> map = new HashMap();
-    	map.put("contentId",contentId);
-    	map.put("idx",idx);
-    	this.mypageService.deleteTour(map);
-  
-    	return util.addMsgLoc(m, "삭제 성공", "/user/myTour?idx="+idx);
+        log.info("contentId="+contentId +"//idx="+idx);
+        Map<String,Integer> map = new HashMap();
+        map.put("contentId",contentId);
+        map.put("idx",idx);
+        this.mypageService.deleteTour(map);
+
+        return util.addMsgLoc(m, "삭제 성공", "/user/myTour?idx="+idx);
     }
 
 }

@@ -22,6 +22,7 @@
     <resources mapping="/upload/**" location="/upload/"/>
     <resources mapping="/review/**" location="/review/"/>
     <resources mapping="/board/**" location="/board/"/>
+    <resources mapping="/user/upload/**" location="/user/upload/"/>
     <resources mapping="/product/**" location="/product/"/>
     <resources mapping="/easterEgg/**" location="/easterEgg/"/>
     

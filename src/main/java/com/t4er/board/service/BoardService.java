@@ -41,9 +41,9 @@ public interface BoardService {
     BoardVO selectRefLevSunbun(Integer bnum);// [답변형]
 
     int updateSunbun(BoardVO parent);// [답변형]
-    
-    
+
+
     //포인트 부여
-	int writePoint(Integer idx);
+    int writePoint(Integer idx);
 
 }

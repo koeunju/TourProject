@@ -37,6 +37,6 @@ public interface MypageService {
     List<TourVO> myTour(Integer idx);
 
 
-	Integer deleteTour(Map<String, Integer> map);
+    Integer deleteTour(Map<String, Integer> map);
 
 }

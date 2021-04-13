@@ -196,6 +196,10 @@ public class TourController {
         log.info("tourSave idx = " + idx);
         log.info("tourSave title = " + title);
 
+        int sn = tourService.countSave(idx);
+        log.info(sn);
+
+        m.addAttribute("sn", sn);
         m.addAttribute("contentId", contentId);
         m.addAttribute("title", title);
         m.addAttribute("idx", idx);
@@ -205,7 +209,15 @@ public class TourController {
 
     @PostMapping("/save")
     public String saveInsert(Model m, HttpServletRequest req,
-                             @ModelAttribute("tvo") TourVO tvo) {
+                             @ModelAttribute("tvo") TourVO tvo, @RequestParam int idx, @RequestParam int sn) {
+
+        if (sn >= 5) {
+            String str = "여행지 저장은 5개까지만 가능합니다";
+            String loc = "/index";
+            m.addAttribute("msg", str);
+            m.addAttribute("loc", loc);
+            return "message";
+        }
 
         int n = tourService.insertSaveTour(tvo);
 
