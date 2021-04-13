@@ -17,21 +17,20 @@
 		= 1 and idx=#{idx}
 	</select>
 
-	<!-- 글 작성시 포인트 부여 _ 자유 게시판 -->
+	<!-- 글 작성시 포인트 부여 _ 자유 게시판 100p 부여-->
 	<select id="writePoint" parameterType="int" resultType="string">
 		insert into point values(POINT_SEQ.nextval,'200',sysdate,100
-		,(
-		<include refid="totalP" />
-		)+100,#{idx})
+		,(select PTOTALPOINT from(select * from point order by pdate desc)where ROWNUM
+		= 1 and idx=#{idx})+100,#{idx})
+
 	</select>
 
-	<!-- 글 작성시 포인트 부여 _ 여행지 추천 -->
+	<!-- 글 작성시 포인트 부여 _ 여행지 추천  500p 부여-->
 	<select id="tourWritePoint" parameterType="int"
 			resultType="string">
 		insert into point values(POINT_SEQ.nextval,'200',sysdate,500
-		,(
-		<include refid="totalP" />
-		)+500,#{idx})
+		,(select PTOTALPOINT from(select * from point order by pdate desc)where ROWNUM
+		= 1 and idx=#{idx})+100,#{idx})
 	</select>
 
 	<!--[포인트 조회] 내 포인트 전체 조회 -->
@@ -39,31 +38,22 @@
 		select * from point where idx=#{idx} order by pdate asc
 	</select>
 
-	<sql id="totalP">
-		select PTOTALPOINT from(select * from point order by pdate desc)where ROWNUM
-		= 1 and idx=#{idx}
-	</sql>
-
 	<!--[포인트 조회] 내 포인트 전체 조회 -->
 	<select id="mypoint" parameterType="PointPaging"
 			resultType="Point">
 		select * from(
 		select point.*, row_number() over(order by pdate desc) rn from point
-		<include refid="whereIdx" />
+		where idx=#{idx}
 		)<![CDATA[
 	where rn > #{start} and rn < #{end}
 	]]>
 	</select>
 
-	<sql id="whereIdx">
-		<where>
-			idx=#{idx}
-		</where>
-	</sql>
+
 
 	<!-- 포인트 목록 전체 수 -->
 	<select id = "myTotalCountPoint"  resultType="int" parameterType="PointPaging">
-		select count(*) cnt from point <include refid="whereIdx" />
+		select count(*) cnt from point where idx=#{idx}
 	</select>
 
 </mapper>

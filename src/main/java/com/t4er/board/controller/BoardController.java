@@ -43,9 +43,9 @@ public class BoardController {
 
         HttpSession ses = req.getSession();
         UserVO user = (UserVO) ses.getAttribute("loginUser");
-        int idx = user.getIdx();
-
+        Integer idx = user.getIdx();
         m.addAttribute("idx", idx);
+        
 
         return "board/boardInsert";
     }
@@ -62,9 +62,13 @@ public class BoardController {
     public String boardInsert(Model m,
                               HttpServletRequest req,
                               @RequestParam("mfilename") MultipartFile mfilename,//여기가 문제가 맞는
-                              @ModelAttribute("board") BoardVO board, @RequestParam("idx") Integer idx) {
+                              @ModelAttribute("board") BoardVO board) {
         log.info("mode===" + board.getMode());
         log.info("board==" + board);
+        HttpSession ses = req.getSession();
+        UserVO user = (UserVO) ses.getAttribute("loginUser");
+        Integer idx = user.getIdx();
+       
 
         // 업로드 디렉토리의 절대경로
         ServletContext app = req.getServletContext();
@@ -107,6 +111,7 @@ public class BoardController {
         String str = "";
         if (mode.equals("insert")) {
             n = boardService.insertBoard(board);
+            int addp = this.boardService.writePoint(idx);
         } else if (mode.equals("edit")) {
             n = boardService.updateBoard(board);
         } else if (mode.equals("reInsert")) {

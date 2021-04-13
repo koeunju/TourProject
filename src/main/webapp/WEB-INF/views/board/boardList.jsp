@@ -27,7 +27,7 @@
     </div>
 
     <!-- 분류 -->
-    <table class="table table-striped table-hover col-md-10" id="bbs">
+    <table class="table table-striped table-hover " id="bbs">
         <tr class="table-secondary">
             <th width="10%">글번호</th>
             <th width="30%">제 목</th>
@@ -57,7 +57,7 @@
                                                                end="${board.lev}">
                         &nbsp;&nbsp;&nbsp;
                     </c:forEach> <c:if test="${board.lev>0}">
-                        <img src="../image/re.png">
+                        <img src="../image/re.png" style="width:5%">
                     </c:if> <!-- 글머리(제목 앞에 카테고리 넣어보기) -->
                         <c:if test="${board.cg_num==0 }">
                             <label>[여행지 추천]</label>

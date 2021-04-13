@@ -37,6 +37,10 @@ public class IndexController {
     public void top() {
 
     }
+    @RequestMapping("/top_new")
+    public void top_new() {
+    	
+    }
 
     @RequestMapping("/foot")
     public void foot(){
@@ -51,6 +55,10 @@ public class IndexController {
     @RequestMapping("/foot_sub")
     public void foot_sub(){
 
+    }
+    @RequestMapping("/foot_new")
+    public void foot_new(){
+    	
     }
 
 }

@@ -15,7 +15,7 @@ public interface PointMapper {
 	List<PointVO> mypoint_old(Integer idx);
 
 	//글 작성 포인트 부여 - 자유 게시판
-	String writePoint(Integer idx);
+	int writePoint(Integer idx);
 	//여행지 추천
 	String tourWritePoint(Integer idx);
 

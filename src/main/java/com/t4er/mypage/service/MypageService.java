@@ -8,6 +8,7 @@ import com.t4er.tour.model.TourVO;
 import com.t4er.user.model.UserVO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MypageService {
 
@@ -34,5 +35,8 @@ public interface MypageService {
     int myTotalCountBoard(BoardPagingVO paging);
 
     List<TourVO> myTour(Integer idx);
+
+
+	Integer deleteTour(Map<String, Integer> map);
 
 }

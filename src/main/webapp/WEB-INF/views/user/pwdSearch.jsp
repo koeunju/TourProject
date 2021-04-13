@@ -20,9 +20,11 @@
 </script>
 
 
-	<div class="in" style=" display: inline-block; margin:0 auto;">
-		<div class="card align-middle"
-			style="width: 20rem; border-radius: 20px;">
+	
+<div class="col-sm-8 text-center">
+<div class="in" style=" display: inline-block; margin-left: 45%;">
+   <div class="card align-middle"
+        style="width: 30rem; border-radius: 20px;">
 			<div class="card-title" style="margin-top: 30px;">
 				<h3 class="card-title text-center" style="color: #113366;">비밀번호 찾기
 					</h3>
@@ -42,6 +44,7 @@
 					</div>
 				</form>
 			</div>
+		</div>
 		</div>
 	</div>
 

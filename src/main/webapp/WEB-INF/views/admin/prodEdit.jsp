@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:import url="/top_sub"/>
-<c:import url="/admin/adminMenubar"/>
+<c:import url="/top"/>
 
 
 
@@ -38,15 +37,15 @@
 					</tr>
 					<tr>
 						<td><b>상품번호</b></td>
-						<td>
-							<input type="text" name="pnum"
-								   value="${item.pnum}" id="pnum" >
+						<td>${product.pnum}
+							<input type="hidden" name="pnum"
+								   value="${product.pnum}" id="pnum" >
 						</td>
 					</tr>
 					<tr>
 						<td width="20%"><b>상품명</b></td>
 						<td width="80%">
-							<input type="text" name="pname" value="${item.pname}"
+							<input type="text" name="pname" value="${product.pname}"
 								   id="pname">
 							<span style="color: red">
 							</span>
@@ -56,16 +55,16 @@
 					<tr>
 						<td rowspan="2">상품이미지</td>
 						<td>
-							${item.pimage}/${item.pimage2}
-							<img src="../product_images/${item.pimage}"
+							${product.pimage}/${product.pimage2}
+							<img src="../product/upload/${product.pimage}"
 								 class="img-thumbnail" style="width:20%"
 								 alt="상품이미지">
 
-							<img src="../product_images/${item.pimage2}"
+							<img src="../product/upload/${product.pimage2}"
 								 class="img-thumbnail" style="width:20%"
 								 alt="상품이미지2">
 
-							<img src="../product_images/${item.pimage3}"
+							<img src="../product/upload/${product.pimage3}"
 								 class="img-thumbnail" style="width:20%"
 								 alt="상품이미지3">
 
@@ -75,9 +74,9 @@
 						<!-- <td>상품이미지</td> -->
 						<td>
 							<!-- hidden file data(기존에 첨부한 이미지파일을 hidden data로)----- -->
-							<input type="hidden" name="old_pimage" value="${item.pimage}">
-							<input type="hidden" name="old_pimage2" value="${item.pimage2}">
-							<input type="hidden" name="old_pimage3" value="${item.pimage3}">
+							<input type="hidden" name="old_pimage" value="${product.pimage}">
+							<input type="hidden" name="old_pimage2" value="${product.pimage2}">
+							<input type="hidden" name="old_pimage3" value="${product.pimage3}">
 							<!-- ---------------------------------- -->
 							<input type="file" name="pimage"><br>
 							<input type="file" name="pimage2"><br>
@@ -87,7 +86,7 @@
 					<tr>
 						<td width="20%"><b>상품판매가</b></td>
 						<td width="80%"><input type="text" name="price"
-											   value="${item.price}"
+											   value="${product.price}"
 											   id="price"> 원
 							<span style="color: red">
 					</span>
@@ -97,12 +96,12 @@
 					<tr>
 						<td width="20%"><b>상품설명</b></td>
 						<td width="80%"><textarea name="pcontent" id="pcontent"
-												  rows="5" cols="60">${item.pcontent}</textarea></td>
+												  rows="5" cols="60">${product.pcontent}</textarea></td>
 					</tr>
 
 					<tr>
 						<td colspan="2">
-							<button class="btn btn-info">상품수정</button>
+							<button class="btn btn-info" onclick="submit()">상품수정</button>
 							<button type="reset"
 									class="btn btn-danger">다시쓰기</button>
 						</td>

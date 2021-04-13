@@ -2,13 +2,14 @@ package com.t4er.admin.service;
 
 import java.util.List;
 
-import com.t4er.admin.model.AdminPagingVO;
-import com.t4er.point.mapper.OrderMapper;
-import com.t4er.point.model.OrderVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.t4er.admin.model.AdminPagingVO;
+import com.t4er.point.mapper.OrderMapper;
+import com.t4er.point.mapper.PointMapper;
 import com.t4er.point.mapper.ProductMapper;
+import com.t4er.point.model.OrderVO;
 import com.t4er.point.model.ProductVO;
 import com.t4er.user.mapper.UserMapper;
 import com.t4er.user.model.UserVO;
@@ -21,6 +22,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private PointMapper pointMapper;
 
     @Autowired
     private ProductMapper productMapper;
@@ -74,6 +78,18 @@ public class AdminServiceImpl implements AdminService {
     public List<OrderVO> listOrder(AdminPagingVO pvo) {
         return this.orderMapper.listOrder(pvo);
     }
+
+	@Override
+	public String myTotalPoint2(Integer idx) {
+		return this.pointMapper.myTotalPoint(idx);
+	}
+
+	@Override
+	public UserVO selectMy2(Integer idx) {
+		return this.userMapper.selectMy(idx);
+	}
+
+
 
 
 }

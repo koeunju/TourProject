@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:import url="/top_sub" />
+<c:import url="/top" />
 
 <div id="wrap" align="center">
     <h2>자유게시판</h2>
@@ -120,4 +120,4 @@
 </tr>
 
 
-<c:import url="/foot_sub" />
+<c:import url="/foot" />

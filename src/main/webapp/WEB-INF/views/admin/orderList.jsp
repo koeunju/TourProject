@@ -2,10 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<c:import url="/top_sub" />
+<c:import url="/top" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<c:import url="/admin/adminMenubar"/>
 
 <div class="m-5 p-3 text-center"
      style="border: 1px solid gray; border-radius: 15px" id="font2">

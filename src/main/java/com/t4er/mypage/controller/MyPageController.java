@@ -1,6 +1,7 @@
 package com.t4er.mypage.controller;
 
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -99,8 +100,8 @@ public class MyPageController {
         log.info("user.getPwd() = " + user.getPwd());
         
      // 업로드 디렉토리의 절대경로
-      //  ServletContext app = req.getServletContext();
-        String upDir = "C:\\Users\\USER\\git\\TourProject\\src\\main\\webapp\\user\\upload"; //자기 파일 경로로 옮기기
+        ServletContext app = req.getServletContext();
+        String upDir = app.getRealPath("/user/upload");
         log.info("upDir==" + upDir);
         
         File dir = new File(upDir);
@@ -241,4 +242,16 @@ public class MyPageController {
         m.addAttribute("mytour",mytour);
         return "/user/mypage/myTour";
     }
+    
+    @GetMapping("/deleteTour")
+    public String deleteTour(Model m, @RequestParam("contentId") Integer contentId, @RequestParam("idx") Integer idx) {
+    	log.info("contentId="+contentId +"//idx="+idx);
+    	Map<String,Integer> map = new HashMap();
+    	map.put("contentId",contentId);
+    	map.put("idx",idx);
+    	this.mypageService.deleteTour(map);
+  
+    	return util.addMsgLoc(m, "삭제 성공", "/user/myTour?idx="+idx);
+    }
+
 }

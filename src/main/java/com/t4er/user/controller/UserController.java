@@ -59,8 +59,9 @@ public class UserController {
 
         if (n > 0) {
             ses.setAttribute("authUser", user);
+            this.userService.firstPoint(user.getId());
         }
-
+        
         String str = (n > 0) ? "회원가입 완료" : "회원가입 실패";
         String loc = (n > 0) ? "/user/chkMail" : "javascript:history.back()";
         return util.addMsgLoc(m, str, loc);

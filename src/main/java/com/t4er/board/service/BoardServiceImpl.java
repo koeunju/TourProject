@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.t4er.board.mapper.BoardMapper;
 import com.t4er.board.model.BoardPagingVO;
 import com.t4er.board.model.BoardVO;
+import com.t4er.point.mapper.PointMapper;
 
 import lombok.extern.log4j.Log4j;
 
@@ -18,6 +19,9 @@ public class BoardServiceImpl implements BoardService {
 
     @Autowired
     private BoardMapper boardMapper; // 영속성계층
+    
+    @Autowired
+    private PointMapper pointMapper; 
 
     @Override
     public int insertBoard(BoardVO board) {
@@ -107,4 +111,13 @@ public class BoardServiceImpl implements BoardService {
 
         return 0;
     }
+
+    //포인트- 자유게시판 100점 부여
+	@Override
+	public int writePoint(Integer idx) {
+		return this.pointMapper.writePoint(idx);
+	}
+
+    
+    
 }
