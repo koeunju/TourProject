@@ -131,6 +131,7 @@ public class MyPageController {
         String encryPassword = null;
         if (!user.getPwd().trim().isEmpty()) {
             encryPassword = UserSha256.encrypt(user.getPwd());
+            user.setPwd(encryPassword);
         }
 
 

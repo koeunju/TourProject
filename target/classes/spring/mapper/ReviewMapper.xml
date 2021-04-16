@@ -17,12 +17,12 @@
 	</select>
 
 	<select id="selectReview" resultType="Review" parameterType="ReviewPaging">
-		select * from (
-		select review.*, row_number() over (order by rnum desc) rn from review
-		where contentId = #{contentId})
-		<![CDATA[
-		where rn > #{start} and rn < #{end}
-		]]>
+      select * from (
+      select review.*,nick row_number() over (order by rnum desc) rn from review join member on review.idx = member.idx
+      where contentId = #{contentId})
+      <![CDATA[
+      where rn > #{start} and rn < #{end}
+      ]]>
 	</select>
 
 </mapper>

@@ -5,9 +5,9 @@
 
 <mapper namespace="com.t4er.board.mapper.BoardMapper">
     <select id="totalCount" resultType="int">
-		select count(*) cnt from
-		board
-	</select>
+      select count(*) cnt from
+      board
+   </select>
 
     <!-- 글작성(자유게시판) -->
     <insert id="insertBoard" parameterType="Board">
@@ -45,67 +45,67 @@
     <select id="getBoardList" resultType="Board"
             parameterType="BoardPaging">
         select * from (
-        select board.*,
+        select board.*, nick,
         sysdate - to_date(to_char(wdate,
         'yyyy-mm-dd')) newImg,
         row_number()
         over(order by refer desc, sunbun
         asc) rn
-        from board
+        from board join member on board.idx = member.idx
         <include refid="findWhere" />
         )
         <![CDATA[
-		where rn > #{start} and rn < #{end} and cg_num in(0,1)
-		]]>
+      where rn > #{start} and rn < #{end} and cg_num in(0,1)
+      ]]>
     </select>
 
     <!-- 글목록(고객센터) -->
     <select id="getBoardList2" resultType="Board"
             parameterType="BoardPaging">
         select * from (
-        select board.*,
+        select board.*, nick,
         sysdate - to_date(to_char(wdate,
         'yyyy-mm-dd')) newImg,
         row_number()
         over(order by refer desc, sunbun
         asc) rn
-        from board
+        from board  join member on board.idx = member.idx
         <include refid="findWhere" />
         )
         <![CDATA[
-		where rn > #{start} and rn < #{end} and cg_num = 2
-		]]>
+      where rn > #{start} and rn < #{end} and cg_num = 2
+      ]]>
     </select>
 
     <!--페이징 처리 게시목록 -->
     <!-- 자유게시판 -->
     <select id="selectBoardAllPaging" resultType="Board"
             parameterType="BoardPaging">
-		select * from (
-		select board.*,
-		sysdate - to_date(to_char(bdate,
-		'yyyy-mm-dd')) newImg,
-		row_number() over(order by refer desc, sunbun
-		asc) rn
-		from board where cg_num in (0,1))
-		<![CDATA[
-		where rn > #{start} and rn < #{end}
-		]]>
+      select * from (
+      select board.*, nick,
+      sysdate - to_date(to_char(bdate,
+      'yyyy-mm-dd')) newImg,
+      row_number() over(order by refer desc, sunbun
+      asc) rn
+      from board  join member on board.idx = member.idx where cg_num in (0,1))
+      <![CDATA[
+      where rn > #{start} and rn < #{end}
+      ]]>
     </select>
     <!-- 고객센터 -->
     <select id="selectBoardAllPaging2" resultType="Board"
             parameterType="BoardPaging">
-		select * from (
-		select board.*,
-		sysdate - to_date(to_char(bdate,
-		'yyyy-mm-dd')) newImg,
-		row_number() over(order by refer desc, sunbun
-		asc) rn
-		from board where cg_num = 2
-		)
-		<![CDATA[
-		where rn > #{start} and rn < #{end}
-		]]>
+      select * from (
+      select board.*, nick,
+      sysdate - to_date(to_char(bdate,
+      'yyyy-mm-dd')) newImg,
+      row_number() over(order by refer desc, sunbun
+      asc) rn
+      from board join member on board.idx = member.idx where cg_num = 2
+      )
+      <![CDATA[
+      where rn > #{start} and rn < #{end}
+      ]]>
     </select>
 
     <!-- 글검색 -->
@@ -133,8 +133,8 @@
 
     <select id="getTotalCount" resultType="int"
             parameterType="BoardPaging">
-		select count(*) cnt from board
-	</select>
+      select count(*) cnt from board
+   </select>
 
     <!-- 글 검색 목록 -->
     <select id="getFindList" resultType="Board" parameterType="map">
@@ -149,22 +149,22 @@
     <!-- 글 상세 -->
     <select id="selectBoardBybnum" resultType="Board"
             parameterType="int">
-		select * from board where bnum=#{bnum}
-	</select>
+      select board.*, nick from board  join member on board.idx = member.idx where bnum=#{bnum}
+   </select>
 
     <!-- 글 조회수 -->
     <update id="updateReadnum" parameterType="int">
-		update board set
-		binquiry = binquiry+1 where bnum=#{bnum}
-	</update>
+      update board set
+      binquiry = binquiry+1 where bnum=#{bnum}
+   </update>
 
     <!-- 글 추천 -->
 
     <!-- 글 삭제 -->
     <delete id="deleteBoard" parameterType="int">
-		delete from board where
-		bnum=#{bnum}
-	</delete>
+      delete from board where
+      bnum=#{bnum}
+   </delete>
 
     <!-- 글수정 -->
     <update id="updateBoard" parameterType="Board">
@@ -181,15 +181,15 @@
     <!-- 답변 글 원글의 refer, lev, sunbun가져오기 -->
     <select id="selectReferLevSunbun" parameterType="int"
             resultType="Board">
-		select refer, lev, sunbun from board where bnum =#{bnum}
-	</select>
+      select refer, lev, sunbun from board where bnum =#{bnum}
+   </select>
 
     <!-- 답변글들의 순번을 하나씩 증가 -->
     <update id="updateSunbun" parameterType="Board">
-		update board set sunbun
-		= sunbun+1
-		where refer = #{refer} and sunbun > #{sunbun}
-	</update>
+      update board set sunbun
+      = sunbun+1
+      where refer = #{refer} and sunbun > #{sunbun}
+   </update>
 
     <!-- 답변글 추가 -->
     <insert id="reInsertBoard" parameterType="Board">
@@ -209,32 +209,32 @@
 
     <!-- 글 카테고리 -->
     <select id="getCategory" resultType="BoardCategory">
-		select * from board_category
-	</select>
+      select * from board_category
+   </select>
 
     <!-- 글 카테고리 선택 -->
     <select id="selectByCategory" resultType="Board"
             parameterType="string">
-		select * from board where cg_num =#{value}
-	</select>
+      select * from board where cg_num =#{value}
+   </select>
 
     <!-- mypage -->
     <!-- 내정보에서 글 검색 -->
     <select id="selMyBoard_old" parameterType="int"
             resultType="Board">
-		select * from board where idx=#{idx}
-	</select>
+      select * from board where idx=#{idx}
+   </select>
 
     <select id="selMyBoard" parameterType="BoardPaging" resultType="Board">
-		select * from (
-		select board.*, row_number() over(order by bdate desc) rn
-		from board where idx=#{idx})
-		<![CDATA[
-		where rn > #{start} and rn < #{end}
-		]]>
+      select * from (
+      select board.*, row_number() over(order by bdate desc) rn
+      from board where idx=#{idx})
+      <![CDATA[
+      where rn > #{start} and rn < #{end}
+      ]]>
     </select>
 
     <select id = "myTotalCountBoard" resultType="int" parameterType="BoardPaging">
-	select count(*) cnt from board where idx = #{idx}
-	</select>
+   select count(*) cnt from board where idx = #{idx}
+   </select>
 </mapper>
