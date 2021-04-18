@@ -21,7 +21,7 @@
 # 1등 최우수팀 
 ## 우리팀 모두 수고했어!!
 
-<img src="src/main/webapp/upload/1st.jpg" width="50%" heigth="50%"></img>
+<img src="src/main/webapp/upload/최우수.jpg" width="50%" heigth="50%"></img>
 
 
 ***
