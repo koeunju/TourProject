@@ -267,7 +267,7 @@ function send3(keyword, pageNo) { // 검색 결과 없을시
 
 function showList3(keyword) { // 검색 결과 없을시 리스트
     let str = "";
-    if (keyword == "장민규" || keyword == "고은주" || keyword == "정성모" || keyword == "지윤성" || keyword == "천은지") {
+    if (keyword == "장민규" || keyword == "고은주" || keyword == "정성모" || keyword == "천은지") {
         str += "<h1> 이스터 에그 발견 </h1>";
         str += "<hr>"
         str += "<h3> 프로젝트 진행하면서 나온 각자의 명언이 나옵니다 </h3>"
