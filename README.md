@@ -14,7 +14,6 @@
 [팀장.장민규](https://github.com/Dokkabei97),   
 [부팀장.고은주](https://github.com/koeunju),   
 [정성모](https://github.com/JeongSM94),    
-[지윤성](https://github.com/YunSeong-Ji),    
 [천은지](https://github.com/cheonej95)
 
 ***
